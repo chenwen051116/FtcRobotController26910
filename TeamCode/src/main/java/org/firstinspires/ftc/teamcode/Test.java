@@ -34,7 +34,7 @@ public class Test extends LinearOpMode {
         HuskyLens.Block[] myHuskyLensBlocks = HL.blocks();
         // Put initialization blocks here.
         telemetry.addData(">>", HL.knock() ? "Touch start to continue" : "Problem communicating with HuskyLens");
-        HL.selectAlgorithm(HuskyLens.Algorithm.OBJECT_TRACKING);
+        HL.selectAlgorithm(HuskyLens.Algorithm.COLOR_RECOGNITION);
         telemetry.update();
         myElapsedTime = new ElapsedTime();
         waitForStart();
