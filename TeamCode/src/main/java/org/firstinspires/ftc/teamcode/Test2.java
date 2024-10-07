@@ -65,6 +65,7 @@ public class Test2 extends LinearOpMode {
                     telemetry.addData("txnc", result.getTxNC());
                     telemetry.addData("ty", result.getTy());
                     telemetry.addData("tync", result.getTyNC());
+
                     // Access fiducial results
                     List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
                     for (LLResultTypes.FiducialResult fr : fiducialResults) {
@@ -73,6 +74,7 @@ public class Test2 extends LinearOpMode {
                         if (botposeb != null) {
                             double x = botposeb.getPosition().x;
                             double y = botposeb.getPosition().y;
+
                             telemetry.addData("MT1 Location", "(" + x + ", " + y + ")");
                         }
                     }
