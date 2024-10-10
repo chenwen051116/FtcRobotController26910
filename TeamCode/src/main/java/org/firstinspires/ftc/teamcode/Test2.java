@@ -9,10 +9,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.hardware.dfrobot.HuskyLens;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
-
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
 import java.util.List;
@@ -21,10 +22,11 @@ import java.util.List;
 public class Test2 extends LinearOpMode {
 
     private Limelight3A limelight;
-
+    private IMU imu;
     @Override
     public void runOpMode() throws InterruptedException
     {
+        imu = hardwareMap.get(IMU.class, "imu");
         limelight = hardwareMap.get(Limelight3A.class, "lm");
 
         limelight.setPollRateHz(100);
@@ -38,6 +40,17 @@ public class Test2 extends LinearOpMode {
 
         telemetry.addData(">", "Robot Ready.  Press Play.");
         telemetry.update();
+        imu.initialize(
+                new IMU.Parameters(
+                        new RevHubOrientationOnRobot(
+                                RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
+                        )
+                )
+        );
+
+//// Initialize IMU using Parameters
+//        imu.initialize(myIMUparameters);
         waitForStart();
 
         while (opModeIsActive()) {
@@ -66,16 +79,27 @@ public class Test2 extends LinearOpMode {
                     telemetry.addData("ty", result.getTy());
                     telemetry.addData("tync", result.getTyNC());
 
-                    // Access fiducial results
-                    List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
-                    for (LLResultTypes.FiducialResult fr : fiducialResults) {
-                        telemetry.addData("Fiducial", "ID: %d, Family: %s, X: %.2f, Y: %.2f", fr.getFiducialId(), fr.getFamily(),fr.getTargetXDegrees(), fr.getTargetYDegrees());
-                        Pose3D botposeb = fr.getRobotPoseTargetSpace();
-                        if (botposeb != null) {
-                            double x = botposeb.getPosition().x;
-                            double y = botposeb.getPosition().y;
-
-                            telemetry.addData("MT1 Location", "(" + x + ", " + y + ")");
+//                    // Access fiducial results
+//                    List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
+//                    for (LLResultTypes.FiducialResult fr : fiducialResults) {
+//                        telemetry.addData("Fiducial", "ID: %d, Family: %s, X: %.2f, Y: %.2f", fr.getFiducialId(), fr.getFamily(),fr.getTargetXDegrees(), fr.getTargetYDegrees());
+//                        Pose3D botposeb = fr.getRobotPoseTargetSpace();
+//                        if (botposeb != null) {
+//                            double x = botposeb.getPosition().x;
+//                            double y = botposeb.getPosition().y;
+//
+//                            telemetry.addData("MT1 Location", "(" + x + ", " + y + ")");
+//                        }
+//                    }
+                    //double robotYaw = imu.getAngularOrientation().firstAngle;
+                    double robotYaw = imu.getRobotYawPitchRollAngles().getYaw();
+                    limelight.updateRobotOrientation(robotYaw);
+                    if (result != null && result.isValid()) {
+                        Pose3D botpose_mt2 = result.getBotpose_MT2();
+                        if (botpose_mt2 != null) {
+                            double x = botpose_mt2.getPosition().x;
+                            double y = botpose_mt2.getPosition().y;
+                            telemetry.addData("MT2 Location:", "(" + x + ", " + y + ")");
                         }
                     }
 
