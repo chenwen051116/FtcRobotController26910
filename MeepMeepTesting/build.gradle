@@ -3,14 +3,15 @@ plugins {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 repositories {
+    maven { url = 'https://jitpack.io' }
     maven { url = 'https://maven.brott.dev/' }
 }
 
 dependencies {
-    implementation 'com.acmerobotics.roadrunner:MeepMeep:0.1.6'
+    implementation 'com.github.rh-robotics:MeepMeep:v1.0.0'
 }
