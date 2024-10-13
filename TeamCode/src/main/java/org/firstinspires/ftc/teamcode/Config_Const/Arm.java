@@ -78,15 +78,17 @@ public class Arm {
         mainArmr.setPower(0.3);
     }
 
-    public void drops() {
+    public void takes() {//夹样本
+        //爪子夹样本的位置
         claw.setPosition(0);
     }
 
-    public void takes() {
-        int k = 10;
-        claw.setPosition(0);
-        sleep(250);
+    public void drops() {//放下样本松手
+        int k = 10;    //向下移动多少
         mainarmset(mainArml.getCurrentPosition()-k);
+        sleep(250);    
+        claw.setPosition(0);//松手舵机位置
+        
     }
 
     public void frontarmp(double power){
@@ -101,53 +103,53 @@ public class Arm {
         mainArmr.setPower(0.3);
     }
 
-    public void take(){
-        flipArml.setPosition(0);
-        flipArmr.setPosition(0);
-        intakem.setPower(0.5);
+    public void take(){//放下前面arm开始吸
+        flipArml.setPosition(0);//左arm位置
+        flipArmr.setPosition(0);//右arm位置
+        intakem.setPower(0.5);//滚吸功率
     }
 
-    public void trans(){
-        flipArml.setPosition(0);
-        flipArmr.setPosition(0);
+    public void trans(){//收回arm并反转
+        flipArml.setPosition(0);//左arm位置
+        flipArmr.setPosition(0);//右arm位置
         sleep(500);
-        intakem.setPower(-0.2);
+        intakem.setPower(-0.2);//滚吸反转功率
         sleep(500);
         intakem.setPower(0);
     }
 
     public void reve(){
-        intakem.setPower(-0.2);
+        intakem.setPower(-0.2);//滚吸反转功率
     }
 
     public void highbasket(){
-        mainarmset(10);
+        mainarmset(10);//高框arm位置
     }
 
     public void lowbasket(){
-        mainarmset(10);
+        mainarmset(10);//低框arm位置
     }
 
     public void highbar(){
-        mainarmset(10);
+        mainarmset(10);//高杆arm位置
     }
 
     public void lowbar(){
-        mainarmset(10);
+        mainarmset(10);//低杆arm位置
     }
 
     public void mainback(){
         mainarmset(0);
     }
 
-    public void dump(){
-        endArml.setPosition(0);
-        endArmr.setPosition(0);
+    public void dump(){//倒到框里
+        endArml.setPosition(0);//左arm位置
+        endArmr.setPosition(0);//右arm位置
     }
 
-    public void endback(){
-        endArml.setPosition(0);
-        endArmr.setPosition(0);
+    public void endback(){//框里收回来
+        endArml.setPosition(0);//左arm位置
+        endArmr.setPosition(0);//右arm位置
     }
 
     private void sleep(long milliseconds) {
