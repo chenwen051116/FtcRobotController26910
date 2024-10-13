@@ -89,10 +89,16 @@ public class Arm {
         mainarmset(mainArml.getCurrentPosition()-k);
     }
 
-    public void frontarmp(int power){
+    public void frontarmp(double power){
         if(mainArmf.getCurrentPosition()>10) {
             mainArmf.setPower(power);
         }
+    }
+
+    public void frontarmset(int pos){
+        mainArmr.setTargetPosition(pos);
+        mainArmr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        mainArmr.setPower(0.3);
     }
 
     public void take(){

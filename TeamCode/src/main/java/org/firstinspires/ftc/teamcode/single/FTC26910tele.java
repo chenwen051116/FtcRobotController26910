@@ -27,11 +27,11 @@ public class FTC26910tele extends LinearOpMode {
 
             if (gamepad2.y)
                 robot.cla.take();
-            else if (gamepad2.a)
+            if (gamepad2.a)
                 robot.cla.trans();
-            else if (gamepad2.right_trigger > 0.1)
+            if (gamepad2.right_trigger > 0.1)
                 robot.cla.reve();
-            else if (gamepad2.left_trigger > 0.1 && gamepad2.left_stick_y>0.8)
+            if (gamepad2.left_trigger > 0.1 && gamepad2.left_stick_y>0.8)
                 robot.cla.highbasket();
             else if (gamepad2.left_trigger > 0.1 && gamepad2.left_stick_y == 0)
                 robot.cla.lowbar();
@@ -41,18 +41,17 @@ public class FTC26910tele extends LinearOpMode {
                 robot.cla.highbasket();
             else if (gamepad2.left_trigger > 0.1 && gamepad2.dpad_down)
                 robot.cla.lowbasket();
-            else if (gamepad2.left_trigger > 0.1 && gamepad2.left_stick_y>0.8)
+            else if (gamepad2.left_trigger > 0.1 && gamepad2.left_stick_y<-0.8)
                 robot.cla.mainback();
-            else if (gamepad2.x)
+            if (gamepad2.x)
                 robot.cla.takes();
-            else if (gamepad2.b)
+            if (gamepad2.b)
                 robot.cla.drops();
-            else if (gamepad2.dpad_left)
+            if (gamepad2.dpad_left)
                 robot.cla.dump();
-            else if (gamepad2.dpad_right)
+            if (gamepad2.dpad_right)
                 robot.cla.endback();
-
-
+            robot.cla.frontarmp(gamepad2.right_stick_y);
             robot.c.teleDrive(x, y, rx);
         }
     }
