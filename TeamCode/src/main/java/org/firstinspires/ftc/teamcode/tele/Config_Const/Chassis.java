@@ -92,6 +92,22 @@ public class Chassis {
         drive.setMotorPowers(0,0,0,0);
     }
 
+    public void posvisual(Pose2d pos){
+        if(pos.getHeading() != 0){
+            Pose2d curpos = drive.getPoseEstimate();
+            drive.setPoseEstimate(new Pose2d(pos.getX(), pos.getY(), curpos.getHeading()));
+        }
+    }
+
+    public void correctHeading(double heading){
+        Pose2d curpos = drive.getPoseEstimate();
+        drive.setPoseEstimate(new Pose2d(curpos.getX(), curpos.getY(), Math.toRadians(heading)));
+    }
+
+    public double returnHeading(){
+        return Math.toDegrees(drive.getPoseEstimate().getHeading());
+    }
+
 }
 
 

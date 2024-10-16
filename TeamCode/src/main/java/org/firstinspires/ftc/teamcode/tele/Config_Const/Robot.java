@@ -13,10 +13,11 @@ import java.util.Timer;
 public class Robot {
     public ElapsedTime timer = new ElapsedTime();
     public Arm cla = new Arm();
-    public boolean SecondDriver = false;
+    //public boolean SecondDriver = false;
     HardwareMap hardwareMap;
     Pose2d endpose;
     public Chassis c = new Chassis(hardwareMap, endpose);
+    public Visual v = new Visual();
     public Robot(HardwareMap mp, Pose2d endpos)
     {
         this.hardwareMap = mp;
@@ -34,10 +35,8 @@ public class Robot {
         c.TeleInit(hwm);
         cla.teleInit(hwm);
         timer.reset();
+        v.apt();
     }
-
-
-
 
 
     private void sleep(long milliseconds) {
@@ -46,6 +45,14 @@ public class Robot {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    public void updatevisualposMT1(){
+        c.posvisual(v.getfieldposeMT1());
+    }
+
+    public void updatevisualposMT2(){
+        c.posvisual(v.getfieldposeMT2());
     }
 
 }
