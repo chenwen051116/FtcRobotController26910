@@ -1,12 +1,12 @@
-package org.firstinspires.ftc.teamcode.tele.Config_Const;
+package org.firstinspires.ftc.teamcode.Tele.Config_Const;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import static org.firstinspires.ftc.teamcode.tele.Config_Const.ConfigsNConst.LEFTFRONT;
-import static org.firstinspires.ftc.teamcode.tele.Config_Const.ConfigsNConst.LEFTREAR;
-import static org.firstinspires.ftc.teamcode.tele.Config_Const.ConfigsNConst.RIGHTFRONT;
-import static org.firstinspires.ftc.teamcode.tele.Config_Const.ConfigsNConst.RIGHTREAR;
+import static org.firstinspires.ftc.teamcode.Tele.Config_Const.ConfigsNConst.LEFTFRONT;
+import static org.firstinspires.ftc.teamcode.Tele.Config_Const.ConfigsNConst.LEFTREAR;
+import static org.firstinspires.ftc.teamcode.Tele.Config_Const.ConfigsNConst.RIGHTFRONT;
+import static org.firstinspires.ftc.teamcode.Tele.Config_Const.ConfigsNConst.RIGHTREAR;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;

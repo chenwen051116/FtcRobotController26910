@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Tele.Config_Const;
+package org.firstinspires.ftc.teamcode.Auto;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -10,15 +10,14 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import java.util.Timer;
 
 
-public class Robot {
+public class AutoRobot {
     public ElapsedTime timer = new ElapsedTime();
-    public Arm cla = new Arm();
+    public AutoArm cla = new AutoArm();
     //public boolean SecondDriver = false;
     HardwareMap hardwareMap;
     Pose2d endpose;
-    public Chassis c = new Chassis(hardwareMap, endpose);
-    public Visual v = new Visual();
-    public Robot(HardwareMap mp, Pose2d endpos)
+    public AutoChassis c = new AutoChassis(hardwareMap, endpose);
+    public AutoRobot(HardwareMap mp, Pose2d endpos)
     {
         this.hardwareMap = mp;
         this.endpose = endpos;
@@ -31,13 +30,6 @@ public class Robot {
 
     }
 
-    public void Teleinit(HardwareMap hwm){
-        c.TeleInit(hwm);
-        cla.teleInit(hwm);
-        timer.reset();
-        v.apt();
-    }
-
 
     private void sleep(long milliseconds) {
         try {
@@ -45,14 +37,6 @@ public class Robot {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-    }
-
-    public void updatevisualposMT1(){
-        c.posvisual(v.getfieldposeMT1());
-    }
-
-    public void updatevisualposMT2(){
-        c.posvisual(v.getfieldposeMT2());
     }
 
 }

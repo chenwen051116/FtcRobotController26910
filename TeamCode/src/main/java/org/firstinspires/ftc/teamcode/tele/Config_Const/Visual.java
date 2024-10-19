@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.tele.Config_Const;
+package org.firstinspires.ftc.teamcode.Tele.Config_Const;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotor;

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Tele.Config_Const;
+package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import java.util.Timer;
 
-public class Arm {
+public class AutoArm {
     public DcMotorEx mainArml = null;
     public DcMotorEx mainArmr = null;
     public DcMotorEx mainArmf = null;

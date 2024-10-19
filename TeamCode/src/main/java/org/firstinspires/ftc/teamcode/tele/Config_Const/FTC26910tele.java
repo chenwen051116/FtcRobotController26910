@@ -1,14 +1,14 @@
-package org.firstinspires.ftc.teamcode.tele.Config_Const;
+package org.firstinspires.ftc.teamcode.Tele.Config_Const;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.tele.Config_Const.Robot;
+import org.firstinspires.ftc.teamcode.Tele.Config_Const.Robot;
 
-import static org.firstinspires.ftc.teamcode.tele.Config_Const.ConfigsNConst.rx;
-import static org.firstinspires.ftc.teamcode.tele.Config_Const.ConfigsNConst.x;
-import static org.firstinspires.ftc.teamcode.tele.Config_Const.ConfigsNConst.y;
+import static org.firstinspires.ftc.teamcode.Tele.Config_Const.ConfigsNConst.rx;
+import static org.firstinspires.ftc.teamcode.Tele.Config_Const.ConfigsNConst.x;
+import static org.firstinspires.ftc.teamcode.Tele.Config_Const.ConfigsNConst.y;
 
 @TeleOp
 public class FTC26910tele extends LinearOpMode {

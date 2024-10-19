@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+import org.firstinspires.ftc.teamcode.Tele.Config_Const.Robot;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 @Config
@@ -20,25 +21,14 @@ public class Autotest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
-
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-
-        Trajectory trajectory1 = drive.trajectoryBuilder(new Pose2d(-34.9, 56.9, Math.toRadians(270)))
-                .lineToLinearHeading(new Pose2d(-26, 15, Math.toRadians(0)) )
-                .build();
+        AutoRobot robot = new AutoRobot(hardwareMap, endpos);
 
         waitForStart();
 
         if (isStopRequested()) return;
 
-        drive.followTrajectory(trajectory1);
+        robot.c.Runtra1();
 
-        Pose2d poseEstimate = drive.getPoseEstimate();
-        telemetry.addData("finalX", poseEstimate.getX());
-        telemetry.addData("finalY", poseEstimate.getY());
-        telemetry.addData("finalHeading", poseEstimate.getHeading());
-        telemetry.update();
-        endpos = poseEstimate;
         while (!isStopRequested() && opModeIsActive()) ;
     }
 

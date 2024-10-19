@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.tele.Config_Const;
+package org.firstinspires.ftc.teamcode.Tele.Config_Const;
 
 public class ConfigsNConst {
 
