@@ -17,7 +17,7 @@ public class Robot {
     HardwareMap hardwareMap;
     Pose2d endpose;
     public Chassis c = new Chassis(hardwareMap, endpose);
-    public Visual v = new Visual();
+    //public Visual v = new Visual();
     public Robot(HardwareMap mp, Pose2d endpos)
     {
         this.hardwareMap = mp;
@@ -35,7 +35,7 @@ public class Robot {
         c.TeleInit(hwm);
         cla.teleInit(hwm);
         timer.reset();
-        v.apt();
+        //v.apt();
     }
 
 
@@ -47,12 +47,12 @@ public class Robot {
         }
     }
 
-    public void updatevisualposMT1(){
-        c.posvisual(v.getfieldposeMT1());
-    }
-
-    public void updatevisualposMT2(){
-        c.posvisual(v.getfieldposeMT2());
-    }
+//    public void updatevisualposMT1(){
+//        c.posvisual(v.getfieldposeMT1());
+//    }
+//
+//    public void updatevisualposMT2(){
+//        c.posvisual(v.getfieldposeMT2());
+//    }
 
 }
