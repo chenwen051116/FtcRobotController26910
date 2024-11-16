@@ -13,10 +13,11 @@ import static org.firstinspires.ftc.teamcode.Tele.Config_Const.ConfigsNConst.y;
 @TeleOp
 public class FTC26910tele extends LinearOpMode {
     private Pose2d endpos = new Pose2d(-34.9, 56.9, Math.toRadians(270));
-    private Robot robot = new Robot(hardwareMap, endpos);
+
 
     @Override
     public void runOpMode() {
+        Robot robot = new Robot(hardwareMap, endpos);
         robot.Teleinit(hardwareMap);
 
         waitForStart();
