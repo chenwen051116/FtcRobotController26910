@@ -50,8 +50,8 @@ public class Chassis {
         if(!isAuto) {
             double leftFront = ((y - x - rx) * kp);
             double leftBack = ((y + x - rx) * kp);
-            double rightFront = ((y + x + rx) * kp);
-            double rightBack = ((y - x + rx) * kp);
+            double rightFront = ((y - x + rx) * kp);
+            double rightBack = ((y + x + rx) * kp);
             drive.setMotorPowers(leftFront, leftBack, rightFront, rightBack);
         }
     }

@@ -99,10 +99,10 @@ public class SampleMecanumDrive extends MecanumDrive {
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(org.firstinspires.ftc.teamcode.lib.drive.DriveConstants.LOGO_FACING_DIR, org.firstinspires.ftc.teamcode.lib.drive.DriveConstants.USB_FACING_DIR));
         imu.initialize(parameters);
 
-        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
-        leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
-        rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
-        rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+        leftFront = hardwareMap.get(DcMotorEx.class, "lF");
+        leftRear = hardwareMap.get(DcMotorEx.class, "lR");
+        rightRear = hardwareMap.get(DcMotorEx.class, "rR");
+        rightFront = hardwareMap.get(DcMotorEx.class, "rF");
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 
@@ -133,7 +133,7 @@ public class SampleMecanumDrive extends MecanumDrive {
         List<Integer> lastTrackingEncVels = new ArrayList<>();
 
         // TODO: if desired, use setLocalizer() to change the localization method
-        setLocalizer(new StandardTrackingWheelLocalizer(hardwareMap, lastTrackingEncPositions, lastTrackingEncVels));
+        //setLocalizer(new StandardTrackingWheelLocalizer(hardwareMap, lastTrackingEncPositions, lastTrackingEncVels));
 
         trajectorySequenceRunner = new TrajectorySequenceRunner(
                 follower, HEADING_PID, batteryVoltageSensor,
