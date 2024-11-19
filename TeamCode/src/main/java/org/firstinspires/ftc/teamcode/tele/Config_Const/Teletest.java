@@ -1,18 +1,8 @@
 package org.firstinspires.ftc.teamcode.Tele.Config_Const;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-import org.firstinspires.ftc.teamcode.lib.drive.SampleMecanumDrive;
-
-import java.util.Timer;
-import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
-import org.firstinspires.ftc.teamcode.Tele.Config_Const.Robot;
 
 import static org.firstinspires.ftc.teamcode.Tele.Config_Const.ConfigsNConst.rx;
 import static org.firstinspires.ftc.teamcode.Tele.Config_Const.ConfigsNConst.x;
@@ -25,7 +15,6 @@ public class Teletest extends LinearOpMode{
 
     @Override
     public void runOpMode() {
-
         Chassis c = new Chassis(hardwareMap, endpose);
         c.TeleInit(hardwareMap);
         waitForStart();

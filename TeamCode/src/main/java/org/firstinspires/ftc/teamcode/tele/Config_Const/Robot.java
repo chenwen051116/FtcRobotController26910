@@ -16,12 +16,13 @@ public class Robot {
     //public boolean SecondDriver = false;
     HardwareMap hardwareMap;
     Pose2d endpose;
-    public Chassis c = new Chassis(hardwareMap, endpose);
+    public Chassis c;
     //public Visual v = new Visual();
     public Robot(HardwareMap mp, Pose2d endpos)
     {
         this.hardwareMap = mp;
         this.endpose = endpos;
+        c = new Chassis(hardwareMap, endpose);
     }
 
     public void AutoinitRemote(HardwareMap hwm){
