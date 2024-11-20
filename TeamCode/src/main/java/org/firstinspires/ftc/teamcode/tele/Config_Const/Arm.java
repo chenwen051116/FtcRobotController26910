@@ -20,19 +20,21 @@ public class Arm {
     public Servo endArmr = null;
     public boolean rev = false;
     public boolean gathering = false;
+    public int armfpos = 5;
 
 
 
     public void autoInit(HardwareMap hwm) {
+
+        intakem = hwm.get(DcMotorEx.class, "in");
         mainArml = hwm.get(DcMotorEx.class, "al");
         mainArmr = hwm.get(DcMotorEx.class, "ar");
         mainArmf = hwm.get(DcMotorEx.class, "af");
-        intakem = hwm.get(DcMotorEx.class, "in");
-        claw = hwm.get(Servo.class, "cl");
-        flipArml = hwm.get(Servo.class, "fal");
-        flipArmr = hwm.get(Servo.class, "far");
-        endArml = hwm.get(Servo.class, "eal");
-        endArmr = hwm.get(Servo.class, "eal");
+        claw = hwm.get(Servo.class, "cL");
+        flipArml = hwm.get(Servo.class, "lia");
+        flipArmr = hwm.get(Servo.class, "ria");
+        endArml = hwm.get(Servo.class, "oL");
+        endArmr = hwm.get(Servo.class, "oR");
         mainArml.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         mainArml.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         mainArml.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
@@ -40,10 +42,12 @@ public class Arm {
         mainArmr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         mainArmr.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         mainArmf.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        mainArmf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        mainArmr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         mainArmf.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         intakem.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         intakem.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        endback();
+        trans();
         takes();
     }
 
@@ -65,7 +69,8 @@ public class Arm {
         mainArmr.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         mainArmf.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         mainArmr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mainArmf.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        mainArmf.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        mainArmf.setPower(0.8);
         intakem.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         intakem.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         endback();
@@ -100,20 +105,27 @@ public class Arm {
     }
 //mudheadcar
     public void frontarmp(double power){
-        if(power>0 && mainArmf.getCurrentPosition() > 1500) {
-            mainArmf.setPower(0);
+        armfpos += 10*power;
+        if(armfpos > 1500) {
+            mainArmf.setTargetPosition(1500);
+            armfpos = 1500;
+        }
+        else if (armfpos< 5) {
+            mainArmf.setTargetPosition(5);
+            armfpos = 5;
         }
         else {
-            mainArmf.setPower(power);
+            mainArmf.setTargetPosition(armfpos);
         }
+        mainArmf.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
-    public void frontarmset(int pos){
-        mainArmr.setPower(0.3);
-        mainArmr.setTargetPosition(pos);
-        mainArmr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-    }
+//    public void frontarmset(int pos){
+//        mainArmr.setPower(0.3);
+//        mainArmr.setTargetPosition(pos);
+//        mainArmr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//
+//    }
 
     public void take(){//放下前面arm开始吸
         flipArml.setPosition(0.8157);//左arm位置
@@ -140,6 +152,11 @@ public class Arm {
         gathering = false;
     }
 
+    public void fback(){//收回arm并反转
+        mainArmf.setTargetPosition(5);
+    }
+
+
     public void reve(){
         rev = true;
     }
@@ -160,16 +177,20 @@ public class Arm {
         mainarmset(1561);//高杆arm位置
     }
 
-    //public void lowbar(){
-    //    mainarmset(10);//低杆arm位置
-    //}
+    public void lowbar(){
+        mainarmset(1000);//低杆arm位置
+    }
 
     public void spepos(){
         mainarmset(147);//夹取样本位置
     }
 
     public void mainback(){
-        mainarmset(10);
+        if(mainArmf.getCurrentPosition()<=100 && mainArml.getCurrentPosition()>100) {
+            mainArmf.setTargetPosition(100);
+        }
+
+        mainarmset(5);
     }
 
     public void dump(){//倒到框里
@@ -180,6 +201,9 @@ public class Arm {
 
     public void endback(){//框里收回来
         double diffe=0.89-0.61;
+        if(mainArmf.getCurrentPosition()<=100) {
+            mainArmf.setTargetPosition(100);
+        }
         endArml.setPosition(0.61+diffe);//左arm位置
         endArmr.setPosition(0.5-diffe);//右arm位置
     }
