@@ -6,10 +6,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.Servo
 
 
-class ArmKt(
-    val isTele : Boolean,
-    val hwMap : HardwareMap = shLinOp!!.hardwareMap,
-){
+object ArmKt{
+    var isTele : Boolean = true
     val vtSlider_lfMt: DcMotorEx
     val vtSlider_rtMt: DcMotorEx
     val vtSliderMtPower = 0.7
@@ -29,6 +27,7 @@ class ArmKt(
     val bkSpFlipper_rtSv: Servo
 
     init {
+        val hwMap = shLinOp!!.hardwareMap
         frSpIntake_mt = hwMap.get(DcMotorEx::class.java, "in")
         vtSlider_lfMt = hwMap.get(DcMotorEx::class.java, "al")
         vtSlider_rtMt = hwMap.get(DcMotorEx::class.java, "ar")
@@ -54,6 +53,15 @@ class ArmKt(
         frSpIntake_mt.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
         BkSpFlipperState.DOWN.moveTo();
         FrSpFlipperState.UP.moveTo();
+    }
+
+    fun teleInit() {
+        isTele = true
+        BkSpClawState.OPEN.moveTo();
+    }
+
+    fun autoInit(){
+        isTele = false
         BkSpClawState.CLOSE.moveTo();
     }
 
@@ -82,13 +90,13 @@ class ArmKt(
             hzSlider_mt.mode = DcMotor.RunMode.RUN_TO_POSITION
         }
 
-    enum class HzSliderLenState(val pos : Int){
+    enum class HzSliderLenState(val pos : Int) {
         LONGEST(1500),
         BK_FLIPPER_NO_CONFLICT_MIN(100),
         VT_SLIDER_NO_CONFLICT_MIN(100),
         SHORTEST(5);
         fun moveTo(){
-            shArm!!.hzSliderLenAdj = pos
+            hzSliderLenAdj = pos
         }
     }
 
@@ -102,8 +110,8 @@ class ArmKt(
         SIDE_SP(147),
         LOWEST(5){
             override fun moveTo(){
-                if (shArm!!.hzSliderLenAdj < HzSliderLenState.VT_SLIDER_NO_CONFLICT_MIN.pos
-                    && shArm!!.vtSliderHeiAdj > HZ_SLIDER_NO_CONFLICT_MAX.pos
+                if (hzSliderLenAdj < HzSliderLenState.VT_SLIDER_NO_CONFLICT_MIN.pos
+                    && vtSliderHeiAdj > HZ_SLIDER_NO_CONFLICT_MAX.pos
                     ){
                     HzSliderLenState.VT_SLIDER_NO_CONFLICT_MIN.moveTo()
                 }
@@ -111,7 +119,7 @@ class ArmKt(
             }
         };
         open fun moveTo(){
-            shArm!!.vtSliderHeiAdj = pos
+            vtSliderHeiAdj = pos
         }
     }
 
@@ -119,7 +127,7 @@ class ArmKt(
         OPEN(0.37),
         CLOSE(0.15);
         fun moveTo(){
-            shArm!!.bkSpClaw_sv.position = pos
+            bkSpClaw_sv.position = pos
         }
     }
 
@@ -127,8 +135,8 @@ class ArmKt(
         UP(0.1, 1.0),
         DOWN(0.8157, 0.2843);
         fun moveTo(){
-            shArm!!.frSpFlipper_lfSv.position = lPos
-            shArm!!.frSpFlipper_rtSv.position = rPos
+            frSpFlipper_lfSv.position = lPos
+            frSpFlipper_rtSv.position = rPos
         }
     }
 
@@ -137,15 +145,15 @@ class ArmKt(
         IN(1.0),
         STOP(0.0);
         fun moveTo(){
-            shArm!!.frSpIntake_mt.power = power
-            shArm!!.frSpIntakeState = this
+            frSpIntake_mt.power = power
+            frSpIntakeState = this
         }
     }
 
     enum class BkSpFlipperState(val lPos : Double, val rPos : Double) {
         UP(0.2767, 0.8333){
             override fun moveTo(){
-                if (shArm!!.hzSliderLenAdj < HzSliderLenState.BK_FLIPPER_NO_CONFLICT_MIN.pos){
+                if (hzSliderLenAdj < HzSliderLenState.BK_FLIPPER_NO_CONFLICT_MIN.pos){
                     HzSliderLenState.BK_FLIPPER_NO_CONFLICT_MIN.moveTo()
                 }
                 moveTo();
@@ -153,8 +161,8 @@ class ArmKt(
         },
         DOWN(0.89, 0.22);
         open fun moveTo() {
-            shArm!!.bkSpFlipper_lfSv.position = lPos
-            shArm!!.bkSpFlipper_rtSv.position = rPos
+            bkSpFlipper_lfSv.position = lPos
+            bkSpFlipper_rtSv.position = rPos
         }
     }
 
