@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.lib.RobotKt
 import org.firstinspires.ftc.teamcode.lib.shLinOp
 import org.firstinspires.ftc.teamcode.lib.toRad
 
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp
 class TeleOpKt : LinearOpMode() {
     val lastPos = Pose2d(-34.9, 56.9, 270.0.toRad())
     lateinit var robot : RobotKt
