@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.lib;
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
-import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.Servo
 
 
@@ -13,7 +12,7 @@ object ArmKt{
     val vtSliderMtPower = 0.7
 
     val hzSlider_mt: DcMotorEx
-    val HzSliderMtPower = 0.7
+    val hzSliderMtPower = 0.7
 
     val frSpIntake_mt: DcMotorEx
     var frSpIntakeState = FrSpIntakeState.STOP
@@ -28,15 +27,15 @@ object ArmKt{
 
     init {
         val hwMap = shLinOp!!.hardwareMap
-        frSpIntake_mt = hwMap.get(DcMotorEx::class.java, "in")
-        vtSlider_lfMt = hwMap.get(DcMotorEx::class.java, "al")
-        vtSlider_rtMt = hwMap.get(DcMotorEx::class.java, "ar")
-        hzSlider_mt = hwMap.get(DcMotorEx::class.java, "af")
-        bkSpClaw_sv = hwMap.get(Servo::class.java, "cL")
-        frSpFlipper_lfSv = hwMap.get(Servo::class.java, "lia")
-        frSpFlipper_rtSv = hwMap.get(Servo::class.java, "ria") // tele 是正确
-        bkSpFlipper_lfSv = hwMap.get(Servo::class.java, "oL")
-        bkSpFlipper_rtSv = hwMap.get(Servo::class.java, "oR")
+        frSpIntake_mt = hwMap.get(DcMotorEx::class.java, "frSpIntake_mt")
+        vtSlider_lfMt = hwMap.get(DcMotorEx::class.java, "vtSlider_lfMt")
+        vtSlider_rtMt = hwMap.get(DcMotorEx::class.java, "vtSlider_rtMt")
+        hzSlider_mt = hwMap.get(DcMotorEx::class.java, "hzSlider_mt")
+        bkSpClaw_sv = hwMap.get(Servo::class.java, "bkSpClaw_sv")
+        frSpFlipper_lfSv = hwMap.get(Servo::class.java, "frSpFlipper_lfSv")
+        frSpFlipper_rtSv = hwMap.get(Servo::class.java, "frSpFlipper_rtSv")
+        bkSpFlipper_lfSv = hwMap.get(Servo::class.java, "bkSpFlipper_lfSv")
+        bkSpFlipper_rtSv = hwMap.get(Servo::class.java, "bkSpFlipper_rtSv")
 
         vtSlider_lfMt.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         vtSlider_lfMt.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
@@ -86,7 +85,7 @@ object ArmKt{
         set(value) {
             val adjVal = value.coerceIn(HzSliderLenState.SHORTEST.pos, HzSliderLenState.LONGEST.pos)
             hzSlider_mt.targetPosition = adjVal
-            hzSlider_mt.power = HzSliderMtPower
+            hzSlider_mt.power = hzSliderMtPower
             hzSlider_mt.mode = DcMotor.RunMode.RUN_TO_POSITION
         }
 

@@ -22,6 +22,6 @@ object ChassisKt{
     }
 
     fun setMotion(x : Double, y : Double, rot : Double){
-        MecDrive.setWeightedDrivePower(Pose2d(x * powerCoef, y * powerCoef, rot * powerCoef))
+        MecDrive.setWeightedDrivePower(Pose2d(y * powerCoef, x * powerCoef, rot * powerCoef))
     }
 }
