@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.lib;
 
+import static java.lang.Math.abs;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
@@ -43,7 +45,7 @@ public class Chassis {
             double leftBack = ((y + x - rx) * kp);
             double rightFront = ((y - x + rx) * kp);
             double rightBack = ((y + x + rx) * kp);
-            double pmax = Math.max(Math.max(Math.max(leftFront, leftBack), rightFront), rightBack);
+            double pmax = Math.max(Math.max(Math.max(abs(leftFront), abs(leftBack)), abs(rightFront)), abs(rightBack));
             if(pmax>1) {
                 drive.setMotorPowers(leftFront/pmax, leftBack/pmax, rightFront/pmax, rightBack/pmax);
             }

@@ -81,7 +81,7 @@ public class TeleOp extends LinearOpMode {
                 robot.arm.VtBack();
             else if (gamepad2.right_bumper && -gamepad2.right_stick_y > -0.2 && -gamepad2.left_stick_y < 0.2)
                 robot.arm.takeSpePos();
-            else if (gamepad2.right_bumper && -gamepad2.right_stick_y  > 0.8)
+            else if (gamepad2.right_bumper && -gamepad2.right_stick_y  > 0.5)
                 robot.arm.highBar();
             else if (gamepad2.right_bumper && -gamepad2.right_stick_y  < -0.8)
                 robot.arm.lowBar();

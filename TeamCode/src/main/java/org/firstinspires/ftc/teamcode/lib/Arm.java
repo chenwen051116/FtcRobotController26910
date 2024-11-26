@@ -17,7 +17,7 @@ public class Arm {
     public Servo outArmRight = null;
     public boolean reverseIntake = false;
     public boolean getIntake = false;
-    public int frontArmPos = 5;
+    public int frontArmPos = 0;
 
 
 
@@ -39,13 +39,13 @@ public class Arm {
         VtRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         VtRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         HzFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        VtRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        HzFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         HzFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         intakeMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         intakeMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
-        basketBack();
-        inArmTrans();
-        closeClaw();
+        //basketBack();
+        //inArmTrans();
+        //closeClaw();
     }
 
     public void teleInit(HardwareMap hwm) {
@@ -65,14 +65,16 @@ public class Arm {
         VtRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         VtRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         HzFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        VtRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        HzFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         HzFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        HzFront.setPower(0.7);
+
         intakeMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         intakeMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         basketBack();
+
         inArmTrans();
         speClaw.setPosition(0.37);
+        HzArmSet(5);
     }
 
     public void VtArmSet(int pos){
@@ -86,6 +88,7 @@ public class Arm {
     }
 
     public void HzArmSet(int pos){
+        HzFront.setPower(0.7);
         frontArmPos = pos;
         HzFront.setTargetPosition(-frontArmPos);
         HzFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
