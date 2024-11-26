@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.lib.shLinOp
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp
 class TeleOpKt : LinearOpMode() {
     private val endPos = Pose2d(-34.9, 56.9, Math.toRadians(270.0))
-    lateinit var robot : RobotKt
+    lateinit var robot: RobotKt
     override fun runOpMode() {
         // Initialize the robot components
         shLinOp = this
@@ -92,6 +92,7 @@ class TeleOpKt : LinearOpMode() {
                 rightStickY < -0.8 -> ArmKt.VtSliderHeiState.LOW_BASKET.moveTo()
                 rightStickY in -0.2..0.2 -> ArmKt.VtSliderHeiState.LOWEST.moveTo()
             }
+
             gamepad2.right_bumper -> when {
                 rightStickY > 0.8 -> ArmKt.VtSliderHeiState.HIGH_BAR.moveTo()
                 rightStickY < -0.8 -> ArmKt.VtSliderHeiState.LOW_BAR.moveTo()

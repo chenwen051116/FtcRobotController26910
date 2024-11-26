@@ -20,7 +20,6 @@ public class Arm {
     public int frontArmPos = 0;
 
 
-
     public void autoInit(HardwareMap hwm) {
 
         intakeMotor = hwm.get(DcMotorEx.class, "frSpIntake_mt");
@@ -77,7 +76,7 @@ public class Arm {
         HzArmSet(5);
     }
 
-    public void VtArmSet(int pos){
+    public void VtArmSet(int pos) {
         VtLeft.setTargetPosition(pos);
         VtLeft.setPower(0.7);
         VtLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -87,7 +86,7 @@ public class Arm {
 
     }
 
-    public void HzArmSet(int pos){
+    public void HzArmSet(int pos) {
         hzFront.setPower(0.7);
         frontArmPos = pos;
         hzFront.setTargetPosition(-frontArmPos);
@@ -101,32 +100,31 @@ public class Arm {
 
     public void dropSpe() {//放下样本松手
         int k = 350;    //向下移动多少
-        if(VtLeft.getCurrentPosition()>800) {
+        if (VtLeft.getCurrentPosition() > 800) {
             VtArmSet(VtLeft.getCurrentPosition() - k);
             sleep(500);
         }
 
         speClaw.setPosition(0.37);//松手舵机位置
-        
+
     }
-//mudheadcar
-    public void HzArmVel(double power){
+
+    //mudheadcar
+    public void HzArmVel(double power) {
         // 控制目标点
-        frontArmPos += 10*power;
-        if(frontArmPos > 1500) {
+        frontArmPos += 10 * power;
+        if (frontArmPos > 1500) {
             HzArmSet(1500);
-        }
-        else if (frontArmPos < 5) {
+        } else if (frontArmPos < 5) {
             HzArmSet(5);
-        }
-        else {
+        } else {
             HzArmSet(frontArmPos);
         }
 
     }
 
 
-    public void frontIntake(){//放下前面arm开始吸
+    public void frontIntake() {//放下前面arm开始吸
         // 把两个 servo 放下去
         // 把滚吸过放下去
         inArmLeft.setPosition(0.8157);//左arm位置
@@ -135,21 +133,19 @@ public class Arm {
     }
 
 
-    public void intakeMupdate(){
+    public void intakeMupdate() {
         // rev 是吐出来
         // getIntake 是正着吸
-        if(reverseIntake) {
+        if (reverseIntake) {
             intakeMotor.setPower(1);//滚吸反转功率
-        }
-        else if(getIntake) {
+        } else if (getIntake) {
             intakeMotor.setPower(-1);//滚吸功率
-        }
-        else{
+        } else {
             intakeMotor.setPower(0);
         }
     }
 
-    public void inArmTrans(){//收回arm并反转
+    public void inArmTrans() {//收回arm并反转
         // 滚吸收回来
         // getIntake false 不再吸了
         inArmLeft.setPosition(0.1);//左arm位置
@@ -157,32 +153,31 @@ public class Arm {
         getIntake = false;
     }
 
-    public void frontArmBack(){//收回arm并反转
+    public void frontArmBack() {//收回arm并反转
         // 快捷键收回横着的滑轨
         HzArmSet(5);
     }
 
-    
 
-    public void highBasket(){
+    public void highBasket() {
         VtArmSet(2755);//高框arm位置
     }
 
-    public void lowBasket(){
+    public void lowBasket() {
         VtArmSet(1242);//低框arm位置
     }
 
-    public void highBar(){
+    public void highBar() {
         VtArmSet(1561);//高杆arm位置
     }
 
-    public void lowBar(){
+    public void lowBar() {
         VtArmSet(1000);//低杆arm位置
     }
 
-    public void takeSpePos(){
+    public void takeSpePos() {
         // 场边的 specimen 的位置
-        if(frontArmPos <= 100  && VtLeft.getCurrentPosition()>100) {
+        if (frontArmPos <= 100 && VtLeft.getCurrentPosition() > 100) {
             HzArmSet(200);
             // set 到 200 避免冲突
         }
@@ -190,9 +185,9 @@ public class Arm {
 
     }
 
-    public void VtBack(){
+    public void VtBack() {
         //
-        if(frontArmPos <= 100  && VtLeft.getCurrentPosition()>100) {
+        if (frontArmPos <= 100 && VtLeft.getCurrentPosition() > 100) {
             HzArmSet(200);
 
             // set 到 200 避免冲突
@@ -201,20 +196,20 @@ public class Arm {
         VtArmSet(5); // 竖着
     }
 
-    public void basketOut(){//倒到框里
-        double d=0.61-0.2767;
-        outArmLeft.setPosition(0.61-d);//左arm位置
-        outArmRight.setPosition(0.5+d);//右arm位置
+    public void basketOut() {//倒到框里
+        double d = 0.61 - 0.2767;
+        outArmLeft.setPosition(0.61 - d);//左arm位置
+        outArmRight.setPosition(0.5 + d);//右arm位置
     }
 
-    public void basketBack(){//框里收回来
-        double d=0.89-0.61;
-        if(frontArmPos < 200) {
+    public void basketBack() {//框里收回来
+        double d = 0.89 - 0.61;
+        if (frontArmPos < 200) {
             // 如果竖着的杆太低了，横着的杆又收的抬回来了。
             HzArmSet(200);
         }
-        outArmLeft.setPosition(0.61+d);//左arm位置
-        outArmRight.setPosition(0.5-d);//右arm位置
+        outArmLeft.setPosition(0.61 + d);//左arm位置
+        outArmRight.setPosition(0.5 - d);//右arm位置
     }
 
     private void sleep(long milliseconds) {

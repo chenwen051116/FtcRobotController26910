@@ -1,20 +1,16 @@
 package org.firstinspires.ftc.teamcode.tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
 import com.qualcomm.robotcore.hardware.DcMotor;
-
 
 import org.firstinspires.ftc.teamcode.ext.roadrunner.util.PIDController;
 
 
 @TeleOp(name = "Testmotor")
 public class Testmotor extends LinearOpMode {
+    PIDController control = new PIDController(0.05, 0.0, 0.1);
     private DcMotor m1;
-    PIDController control = new PIDController(0.05,0.0,0.1);
-
 
     @Override
     public void runOpMode() {

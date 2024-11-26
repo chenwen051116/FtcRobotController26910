@@ -1,17 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
 import static org.firstinspires.ftc.teamcode.lib.ConfigsNConst.rx;
 import static org.firstinspires.ftc.teamcode.lib.ConfigsNConst.x;
 import static org.firstinspires.ftc.teamcode.lib.ConfigsNConst.y;
+
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.lib.Robot;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp
 public class TeleOp extends LinearOpMode {
-    private Pose2d endpos = new Pose2d(-34.9, 56.9, Math.toRadians(270));
+    private final Pose2d endpos = new Pose2d(-34.9, 56.9, Math.toRadians(270));
 
 
     @Override
@@ -22,10 +22,9 @@ public class TeleOp extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             //gamepad1 base and front arm controll
-            if (gamepad1.left_bumper|| gamepad1.y) {
+            if (gamepad1.left_bumper || gamepad1.y) {
                 robot.chassis.lowSpeed();
-            }
-            else {
+            } else {
                 robot.chassis.normalSpeed();
             }
             x = gamepad1.left_stick_x;
@@ -61,23 +60,13 @@ public class TeleOp extends LinearOpMode {
                 robot.arm.basketBack();
 
             //force reverse intake motor
-            if (gamepad2.dpad_up){
-                robot.arm.reverseIntake = true;
-            }
-            else {
-                robot.arm.reverseIntake = false;
-            }
+            robot.arm.reverseIntake = gamepad2.dpad_up;
 
             //quick horizontal slide back
 //            if (gamepad2.dpad_down)
 //                robot.arm.frontArmBack();
-            if (gamepad2.dpad_down||gamepad2.y) {
-                //robot.arm.frontIntake();
-                robot.arm.getIntake = true;
-            }
-            else{
-                robot.arm.getIntake = false;
-            }
+            //robot.arm.frontIntake();
+            robot.arm.getIntake = gamepad2.dpad_down || gamepad2.y;
             //all position of vertical arm
             if (gamepad2.left_bumper && -gamepad2.right_stick_y > 0.8)
                 robot.arm.highBasket();
@@ -87,9 +76,9 @@ public class TeleOp extends LinearOpMode {
                 robot.arm.VtBack();
             else if (gamepad2.right_bumper && -gamepad2.right_stick_y > -0.2 && -gamepad2.right_stick_y < 0.2)
                 robot.arm.takeSpePos();
-            else if (gamepad2.right_bumper && -gamepad2.right_stick_y  > 0.5)
+            else if (gamepad2.right_bumper && -gamepad2.right_stick_y > 0.5)
                 robot.arm.highBar();
-            else if (gamepad2.right_bumper && -gamepad2.right_stick_y  < -0.8)
+            else if (gamepad2.right_bumper && -gamepad2.right_stick_y < -0.8)
                 robot.arm.lowBar();
         }
     }

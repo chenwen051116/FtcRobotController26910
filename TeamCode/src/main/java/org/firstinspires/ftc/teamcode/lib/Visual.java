@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode.lib;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
-import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
@@ -29,12 +29,12 @@ public class Visual {
     }
 
 
-    public void apt(){
+    public void apt() {
         limelight.pipelineSwitch(0);
         limelight.start();
     }
 
-    public Pose2d getfieldposeMT1(){
+    public Pose2d getfieldposeMT1() {
         double x = 0;
         double y = 0;
         double d = 0;
@@ -49,18 +49,18 @@ public class Visual {
                 }
             }
         }
-        return new Pose2d(x,y,d);
+        return new Pose2d(x, y, d);
     }
 
-    public void updateyaw(double yaw){
+    public void updateyaw(double yaw) {
         limelight.updateRobotOrientation(yaw);
     }
 
-    public void selfyaw(double yaw){
+    public void selfyaw(double yaw) {
         limelight.updateRobotOrientation(imu.getRobotYawPitchRollAngles().getYaw());
     }
 
-    public Pose2d getfieldposeMT2(){
+    public Pose2d getfieldposeMT2() {
         double x = 0;
         double y = 0;
         double d = 0;
@@ -75,10 +75,10 @@ public class Visual {
                 }
             }
         }
-        return new Pose2d(x,y,d);
+        return new Pose2d(x, y, d);
     }
 
-    public void llstop(){
+    public void llstop() {
         limelight.stop();
     }
 
