@@ -14,7 +14,7 @@ android {
         buildConfigField "String", "APP_BUILD_TIME", '"' + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.ROOT).format(new Date())) + '"'
     }
 
-    compileSdkVersion 29
+    compileSdkVersion 35
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -23,4 +23,9 @@ android {
     namespace = 'com.qualcomm.ftcrobotcontroller'
 }
 
+dependencies {
+    implementation 'androidx.core:core-ktx:1.15.0'
+}
+
 apply from: '../build.dependencies.gradle'
+apply plugin: 'org.jetbrains.kotlin.android'

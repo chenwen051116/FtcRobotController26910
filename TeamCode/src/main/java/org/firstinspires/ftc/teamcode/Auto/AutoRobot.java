@@ -4,11 +4,6 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-import org.firstinspires.ftc.teamcode.lib.drive.SampleMecanumDrive;
-
-import java.util.Timer;
-
 
 public class AutoRobot {
     public ElapsedTime timer = new ElapsedTime();
