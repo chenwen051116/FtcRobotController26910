@@ -66,7 +66,7 @@ object ArmKt{
 
     var vtSliderHeiAdj : Int
         get(){
-            assert (vtSlider_lfMt.currentPosition == -vtSlider_rtMt.currentPosition)
+            //assert (vtSlider_lfMt.currentPosition == -vtSlider_rtMt.currentPosition)
             return vtSlider_lfMt.currentPosition
         }
         set(value) {
@@ -95,7 +95,7 @@ object ArmKt{
         VT_SLIDER_NO_CONFLICT_MIN(100),
         SHORTEST(5);
         fun moveTo(){
-            hzSliderLenAdj = pos
+            hzSliderLenAdj = -pos
         }
     }
 

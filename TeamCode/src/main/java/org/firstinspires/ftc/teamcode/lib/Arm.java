@@ -67,7 +67,7 @@ public class Arm {
         mainArmf.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         mainArmr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         mainArmf.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        mainArmf.setPower(0.8);
+        mainArmf.setPower(0.7);
         intakem.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         intakem.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         endback();
@@ -105,15 +105,15 @@ public class Arm {
         // 控制目标点
         armfpos += 10*power;
         if(armfpos > 1500) {
-            mainArmf.setTargetPosition(1500);
+            mainArmf.setTargetPosition(-1500);
             armfpos = 1500;
         }
         else if (armfpos< 5) {
-            mainArmf.setTargetPosition(5);
+            mainArmf.setTargetPosition(-5);
             armfpos = 5;
         }
         else {
-            mainArmf.setTargetPosition(armfpos);
+            mainArmf.setTargetPosition(-armfpos);
         }
         mainArmf.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
@@ -158,7 +158,8 @@ public class Arm {
 
     public void fback(){//收回arm并反转
         // 快捷键收回横着的滑轨
-        mainArmf.setTargetPosition(5);
+        mainArmf.setTargetPosition(-5);
+        armfpos = 5;
     }
 
 
@@ -193,8 +194,9 @@ public class Arm {
 
     public void mainback(){
         //
-        if(mainArmf.getCurrentPosition()<=100 && mainArml.getCurrentPosition()>100) {
-            mainArmf.setTargetPosition(100);
+        if(mainArmf.getCurrentPosition()>=-100 && mainArml.getCurrentPosition()>100) {
+            mainArmf.setTargetPosition(-100);
+            armfpos = 100;
             // set 到 100 避免冲突
         }
 
@@ -209,9 +211,10 @@ public class Arm {
 
     public void endback(){//框里收回来
         double diffe=0.89-0.61;
-        if(mainArmf.getCurrentPosition()<=100) {
+        if(mainArmf.getCurrentPosition()>-100) {
             // 如果竖着的杆太低了，横着的杆又收的抬回来了。
-            mainArmf.setTargetPosition(100);
+            mainArmf.setTargetPosition(-100);
+            armfpos = 100;
         }
         endArml.setPosition(0.61+diffe);//左arm位置
         endArmr.setPosition(0.5-diffe);//右arm位置
