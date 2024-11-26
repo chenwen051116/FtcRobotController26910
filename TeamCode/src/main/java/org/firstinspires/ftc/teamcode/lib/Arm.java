@@ -182,7 +182,12 @@ public class Arm {
 
     public void takeSpePos(){
         // 场边的 specimen 的位置
+        if(frontArmPos <= 100  && VtLeft.getCurrentPosition()>100) {
+            HzArmSet(200);
+            // set 到 200 避免冲突
+        }
         VtArmSet(147);//夹取样本位置
+
     }
 
     public void VtBack(){

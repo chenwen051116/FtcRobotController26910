@@ -22,7 +22,7 @@ public class TeleOp extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             //gamepad1 base and front arm controll
-            if (gamepad1.left_bumper|| gamepad1.a) {
+            if (gamepad1.left_bumper|| gamepad1.y) {
                 robot.chassis.lowSpeed();
             }
             else {
@@ -34,15 +34,15 @@ public class TeleOp extends LinearOpMode {
             robot.chassis.teleDrive(x, y, rx);
             robot.arm.HzArmVel(-gamepad1.right_stick_y);
             robot.arm.intakeMupdate();
+            if (gamepad1.a) {
+                //robot.arm.frontIntake();
+                robot.arm.frontArmBack();
+            }
 
             //gamepad2 arm control
             //front intake control
             if (gamepad2.y) {
                 robot.arm.frontIntake();
-                robot.arm.getIntake = true;
-            }
-            else{
-                robot.arm.getIntake = false;
             }
             if (gamepad2.a) {
                 robot.arm.inArmTrans();
@@ -69,17 +69,23 @@ public class TeleOp extends LinearOpMode {
             }
 
             //quick horizontal slide back
-            if (gamepad2.dpad_down)
-                robot.arm.frontArmBack();
-
+//            if (gamepad2.dpad_down)
+//                robot.arm.frontArmBack();
+            if (gamepad2.dpad_down||gamepad2.y) {
+                //robot.arm.frontIntake();
+                robot.arm.getIntake = true;
+            }
+            else{
+                robot.arm.getIntake = false;
+            }
             //all position of vertical arm
             if (gamepad2.left_bumper && -gamepad2.right_stick_y > 0.8)
                 robot.arm.highBasket();
             else if (gamepad2.left_bumper && -gamepad2.right_stick_y < -0.8)
                 robot.arm.lowBasket();
-            else if (gamepad2.left_bumper && -gamepad2.right_stick_y > -0.2 && -gamepad2.left_stick_y < 0.2)
+            else if (gamepad2.left_bumper && -gamepad2.right_stick_y > -0.2 && -gamepad2.right_stick_y < 0.2)
                 robot.arm.VtBack();
-            else if (gamepad2.right_bumper && -gamepad2.right_stick_y > -0.2 && -gamepad2.left_stick_y < 0.2)
+            else if (gamepad2.right_bumper && -gamepad2.right_stick_y > -0.2 && -gamepad2.right_stick_y < 0.2)
                 robot.arm.takeSpePos();
             else if (gamepad2.right_bumper && -gamepad2.right_stick_y  > 0.5)
                 robot.arm.highBar();
