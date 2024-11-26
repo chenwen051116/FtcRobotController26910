@@ -61,7 +61,7 @@ public class TeleOp extends LinearOpMode {
                 robot.arm.basketBack();
 
             //force reverse intake motor
-            if (gamepad2.dpad_up||gamepad2.a){
+            if (gamepad2.dpad_up){
                 robot.arm.reverseIntake = true;
             }
             else {

@@ -80,12 +80,12 @@ object ArmKt{
             vtSlider_rtMt.mode = DcMotor.RunMode.RUN_TO_POSITION
         }
 
-    var hzSliderLenAdj : Int
-        get() = hzSlider_mt.currentPosition
+    var hzSliderLenAdj : Int = 0
         set(value) {
+            field = value
             val adjVal = value.coerceIn(HzSliderLenState.SHORTEST.pos, HzSliderLenState.LONGEST.pos)
-            hzSlider_mt.targetPosition = adjVal
             hzSlider_mt.power = hzSliderMtPower
+            hzSlider_mt.targetPosition = -adjVal
             hzSlider_mt.mode = DcMotor.RunMode.RUN_TO_POSITION
         }
 
@@ -114,7 +114,7 @@ object ArmKt{
                     ){
                     HzSliderLenState.VT_SLIDER_NO_CONFLICT_MIN.moveTo()
                 }
-                moveTo()
+                super.moveTo()
             }
         };
         open fun moveTo(){
@@ -140,8 +140,8 @@ object ArmKt{
     }
 
     enum class FrSpIntakeState(val power : Double) {
-        OUT(-1.0),
-        IN(1.0),
+        OUT(1.0),
+        IN(-1.0),
         STOP(0.0);
         fun moveTo(){
             frSpIntake_mt.power = power
@@ -155,7 +155,7 @@ object ArmKt{
                 if (hzSliderLenAdj < HzSliderLenState.BK_FLIPPER_NO_CONFLICT_MIN.pos){
                     HzSliderLenState.BK_FLIPPER_NO_CONFLICT_MIN.moveTo()
                 }
-                moveTo();
+                super.moveTo()
             }
         },
         DOWN(0.89, 0.22);

@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Arm {
     public DcMotorEx VtLeft = null;
     public DcMotorEx VtRight = null;
-    public DcMotorEx HzFront = null;
+    public DcMotorEx hzFront = null;
     public DcMotorEx intakeMotor = null;
     public Servo speClaw = null;
     public Servo inArmLeft = null;
@@ -26,7 +26,7 @@ public class Arm {
         intakeMotor = hwm.get(DcMotorEx.class, "frSpIntake_mt");
         VtLeft = hwm.get(DcMotorEx.class, "vtSlider_lfMt");
         VtRight = hwm.get(DcMotorEx.class, "vtSlider_rtMt");
-        HzFront = hwm.get(DcMotorEx.class, "hzSlider_mt");
+        hzFront = hwm.get(DcMotorEx.class, "hzSlider_mt");
         speClaw = hwm.get(Servo.class, "bkSpClaw_sv");
         inArmLeft = hwm.get(Servo.class, "frSpFlipper_lfSv");
         inArmRight = hwm.get(Servo.class, "frSpFlipper_rtSv");
@@ -38,9 +38,9 @@ public class Arm {
         VtRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         VtRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         VtRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        HzFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        HzFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        HzFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        hzFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        hzFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hzFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         intakeMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         intakeMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         //basketBack();
@@ -52,7 +52,7 @@ public class Arm {
         intakeMotor = hwm.get(DcMotorEx.class, "frSpIntake_mt");
         VtLeft = hwm.get(DcMotorEx.class, "vtSlider_lfMt");
         VtRight = hwm.get(DcMotorEx.class, "vtSlider_rtMt");
-        HzFront = hwm.get(DcMotorEx.class, "hzSlider_mt");
+        hzFront = hwm.get(DcMotorEx.class, "hzSlider_mt");
         speClaw = hwm.get(Servo.class, "bkSpClaw_sv");
         inArmLeft = hwm.get(Servo.class, "frSpFlipper_lfSv");
         inArmRight = hwm.get(Servo.class, "frSpFlipper_rtSv");
@@ -64,9 +64,9 @@ public class Arm {
         VtRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         VtRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         VtRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        HzFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        HzFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        HzFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        hzFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        hzFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hzFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
         intakeMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         intakeMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
@@ -88,10 +88,10 @@ public class Arm {
     }
 
     public void HzArmSet(int pos){
-        HzFront.setPower(0.7);
+        hzFront.setPower(0.7);
         frontArmPos = pos;
-        HzFront.setTargetPosition(-frontArmPos);
-        HzFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        hzFront.setTargetPosition(-frontArmPos);
+        hzFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public void closeClaw() {//夹样本
