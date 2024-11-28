@@ -45,7 +45,7 @@ public class Chassis {
             double rightBack = ((y + x + rx) * kp);
             double pmax = Math.max(Math.max(Math.max(abs(leftFront), abs(leftBack)), abs(rightFront)), abs(rightBack));
             if (pmax > 1) {
-                drive.setMotorPowers(leftFront / pmax, leftBack / pmax, rightFront / pmax, rightBack / pmax);
+                drive.setMotorPowers(-leftFront / pmax, -leftBack / pmax, -rightFront / pmax, -rightBack / pmax);
             } else {
                 drive.setMotorPowers(-leftFront, -leftBack, -rightFront, -rightBack);
             }
