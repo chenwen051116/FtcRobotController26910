@@ -100,7 +100,7 @@ public class Arm {
     }
 
     public void dropSpe() {//放下样本松手
-        int k = 350;    //向下移动多少
+        int k = 500;    //向下移动多少
         if(VtLeft.getCurrentPosition()>800) {
             VtArmSet(VtLeft.getCurrentPosition() - k);
             sleep(500);
@@ -182,7 +182,7 @@ public class Arm {
 
     public void takeSpePos(){
         // 场边的 specimen 的位置
-        if(frontArmPos <= 100  && VtLeft.getCurrentPosition()>100) {
+        if(frontArmPos <= 100  && VtLeft.getCurrentPosition()>200) {
             HzArmSet(200);
             // set 到 200 避免冲突
         }
@@ -192,7 +192,7 @@ public class Arm {
 
     public void VtBack(){
         //
-        if(frontArmPos <= 100  && VtLeft.getCurrentPosition()>100) {
+        if(frontArmPos <= 100  && VtLeft.getCurrentPosition()>200) {
             HzArmSet(200);
 
             // set 到 200 避免冲突
@@ -209,7 +209,7 @@ public class Arm {
 
     public void basketBack(){//框里收回来
         double d=0.89-0.61;
-        if(frontArmPos < 200) {
+        if(frontArmPos < 200 && VtLeft.getCurrentPosition()<200) {
             // 如果竖着的杆太低了，横着的杆又收的抬回来了。
             HzArmSet(200);
         }
