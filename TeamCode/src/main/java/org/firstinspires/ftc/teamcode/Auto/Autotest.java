@@ -14,6 +14,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Autotest extends LinearOpMode {
 
     public Pose2d endpos;
+
     @Override
     public void runOpMode() throws InterruptedException {
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -28,7 +29,7 @@ public class Autotest extends LinearOpMode {
         while (!isStopRequested() && opModeIsActive()) ;
     }
 
-    public Pose2d returnpos(){
+    public Pose2d returnpos() {
         return endpos;
     }
 }

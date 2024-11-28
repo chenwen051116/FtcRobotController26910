@@ -1,16 +1,13 @@
 package org.firstinspires.ftc.teamcode.tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
 @TeleOp(name = "Testencoder")
 public class Testencoder extends LinearOpMode {
     private DcMotor m2;
-
 
 
     @Override

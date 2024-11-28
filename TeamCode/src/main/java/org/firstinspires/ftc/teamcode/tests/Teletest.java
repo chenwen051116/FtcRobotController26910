@@ -1,19 +1,19 @@
 package org.firstinspires.ftc.teamcode.tests;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
 import static org.firstinspires.ftc.teamcode.lib.ConfigsNConst.rx;
 import static org.firstinspires.ftc.teamcode.lib.ConfigsNConst.x;
 import static org.firstinspires.ftc.teamcode.lib.ConfigsNConst.y;
+
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.lib.Chassis;
 import org.firstinspires.ftc.teamcode.lib.ShVarsKt;
 
 @TeleOp
-public class Teletest extends LinearOpMode{
-    private Pose2d endpose = new Pose2d(-34.9, 56.9, Math.toRadians(270));
+public class Teletest extends LinearOpMode {
+    private final Pose2d endpose = new Pose2d(-34.9, 56.9, Math.toRadians(270));
 
 
     @Override

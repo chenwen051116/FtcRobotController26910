@@ -6,69 +6,84 @@ import org.firstinspires.ftc.teamcode.lib.ArmKt
 import org.firstinspires.ftc.teamcode.lib.ChassisKt
 import org.firstinspires.ftc.teamcode.lib.RobotKt
 import org.firstinspires.ftc.teamcode.lib.shLinOp
-import org.firstinspires.ftc.teamcode.lib.toRad
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp
 class TeleOpKt : LinearOpMode() {
-    val lastPos = Pose2d(-34.9, 56.9, 270.0.toRad())
-    lateinit var robot : RobotKt
+    private val endPos = Pose2d(-34.9, 56.9, Math.toRadians(270.0))
+    lateinit var robot: RobotKt
     override fun runOpMode() {
+        // Initialize the robot components
         shLinOp = this
-        robot = RobotKt(lastPos, true)
+        robot = RobotKt(endPos, true)
+        ArmKt.teleInit()
+
+        // Initialize chassis
         waitForStart()
-
         while (opModeIsActive()) {
-            // Adjust Chassis Speed
-            if (gamepad1.left_bumper){
-                ChassisKt.SpeedState.SLOW.setTo()
-            } else {
-                ChassisKt.SpeedState.NORMAL.setTo()
-            }
+            // Gamepad1 controls
+            handleGamepad1Controls()
 
-            // Chassis Motion
-            ChassisKt.setMotion(
-                x = gamepad1.left_stick_x.toDouble(),
-                y = gamepad1.left_stick_y.toDouble(),
-                rot = gamepad1.right_stick_x.toDouble()
-            )
-
-            // Horizontal Slider Adjustment
-            ArmKt.hzSliderLenAdj -= (gamepad1.right_stick_y * 10).toInt()
-
-            // Gamepad2 Controls
+            // Gamepad2 controls
             handleGamepad2Controls()
         }
     }
 
-    // Extracted Function to Handle Gamepad2 Controls
+    private fun handleGamepad1Controls() {
+        // Adjust chassis speed
+        if (gamepad1.left_bumper || gamepad1.a) {
+            ChassisKt.SpeedState.SLOW.setTo()
+        } else {
+            ChassisKt.SpeedState.NORMAL.setTo()
+        }
+
+        // Chassis motion
+        val x = gamepad1.left_stick_x.toDouble()
+        val y = gamepad1.left_stick_y.toDouble()
+        val rx = gamepad1.right_stick_x.toDouble()
+        ChassisKt.setMotion(x, y, rx)
+
+        // Horizontal slider adjustment
+        ArmKt.hzSliderLenAdj += (gamepad1.right_stick_y * 10).toInt()
+    }
+
     private fun handleGamepad2Controls() {
-        // Front Flipper and Intake
+        // Front intake control
         if (gamepad2.y) {
             ArmKt.FrSpFlipperState.DOWN.moveTo()
             ArmKt.FrSpIntakeState.IN.moveTo()
+        } else {
+            ArmKt.FrSpIntakeState.STOP.moveTo()
         }
-
         if (gamepad2.a) {
             ArmKt.FrSpFlipperState.UP.moveTo()
             ArmKt.FrSpIntakeState.STOP.moveTo()
         }
 
-        // Back Claw and Dropping
-        if (gamepad2.x) ArmKt.BkSpClawState.CLOSE.moveTo()
-        if (gamepad2.b) ArmKt.dropSpOnClaw()
+        // Back claw and dropping
+        if (gamepad2.x) {
+            ArmKt.BkSpClawState.CLOSE.moveTo()
+        }
+        if (gamepad2.b) {
+            ArmKt.dropSpOnClaw()
+        }
 
-        // Back Flipper Position
-        if (gamepad2.dpad_left) ArmKt.BkSpFlipperState.UP.moveTo()
-        if (gamepad2.dpad_right) ArmKt.BkSpFlipperState.DOWN.moveTo()
+        // Back flipper position
+        if (gamepad2.dpad_left) {
+            ArmKt.BkSpFlipperState.UP.moveTo()
+        }
+        if (gamepad2.dpad_right) {
+            ArmKt.BkSpFlipperState.DOWN.moveTo()
+        }
 
-        // Intake Outward Movement
-        if (gamepad2.dpad_up || gamepad2.a) ArmKt.FrSpIntakeState.OUT.moveTo()
+        // Intake outward movement
+        if (gamepad2.dpad_up || gamepad2.a) {
+            ArmKt.FrSpIntakeState.OUT.moveTo()
+        }
 
-        // Vertical Slider Height Control
+        // Vertical slider height control
         handleVerticalSliderControl()
     }
 
-    // Extracted Function for Vertical Slider Control
     private fun handleVerticalSliderControl() {
         val rightStickY = gamepad2.right_stick_y
         when {
@@ -77,6 +92,7 @@ class TeleOpKt : LinearOpMode() {
                 rightStickY < -0.8 -> ArmKt.VtSliderHeiState.LOW_BASKET.moveTo()
                 rightStickY in -0.2..0.2 -> ArmKt.VtSliderHeiState.LOWEST.moveTo()
             }
+
             gamepad2.right_bumper -> when {
                 rightStickY > 0.8 -> ArmKt.VtSliderHeiState.HIGH_BAR.moveTo()
                 rightStickY < -0.8 -> ArmKt.VtSliderHeiState.LOW_BAR.moveTo()

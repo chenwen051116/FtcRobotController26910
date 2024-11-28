@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
+
 @TeleOp(name = "Test")
 public class Test extends LinearOpMode {
 
@@ -13,12 +14,12 @@ public class Test extends LinearOpMode {
 
     /**
      * This OpMode illustrates how to use the DFRobot HuskyLens.
-     *
+     * <p>
      * The HuskyLens is a Vision Sensor with a built-in object detection model. It can
      * detect a number of predefined objects and AprilTags in the 36h11 family, can
      * recognize colors, and can be trained to detect custom objects. See this website for
      * documentation: https://wiki.dfrobot.com/HUSKYLENS_V1.0_SKU_SEN0305_SEN0336
-     *
+     * <p>
      * This sample illustrates how to detect AprilTags, but can be used to detect other types
      * of objects by changing the algorithm. It assumes that the HuskyLens is configured with
      * a name of "huskylens".

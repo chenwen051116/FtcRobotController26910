@@ -12,13 +12,13 @@ public class AutoRobot {
     HardwareMap hardwareMap;
     Pose2d endpose;
     public AutoChassis c = new AutoChassis(hardwareMap, endpose);
-    public AutoRobot(HardwareMap mp, Pose2d endpos)
-    {
+
+    public AutoRobot(HardwareMap mp, Pose2d endpos) {
         this.hardwareMap = mp;
         this.endpose = endpos;
     }
 
-    public void AutoinitRemote(HardwareMap hwm){
+    public void AutoinitRemote(HardwareMap hwm) {
         cla.autoInit(hwm);
         timer.reset();
         c.AutoInit(hwm);

@@ -14,7 +14,7 @@ fun telePrint(str: String) {
     }
 }
 
-inline fun <reified T> T.getFromHwMap(name : String) : T{
+inline fun <reified T> T.getFromHwMap(name: String): T {
     return shLinOp!!.hardwareMap.get(T::class.java, name)
 }
 
