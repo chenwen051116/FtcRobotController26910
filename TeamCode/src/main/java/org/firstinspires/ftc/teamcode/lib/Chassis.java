@@ -47,7 +47,7 @@ public class Chassis {
             if (pmax > 1) {
                 drive.setMotorPowers(leftFront / pmax, leftBack / pmax, rightFront / pmax, rightBack / pmax);
             } else {
-                drive.setMotorPowers(leftFront, leftBack, rightFront, rightBack);
+                drive.setMotorPowers(-leftFront, -leftBack, -rightFront, -rightBack);
             }
         }
     }
