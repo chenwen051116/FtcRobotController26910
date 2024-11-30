@@ -11,13 +11,11 @@ public class Robot {
     public Chassis chassis;
     //public boolean SecondDriver = false;
     HardwareMap hardwareMap;
-    Pose2d endPos;
 
     //public Visual v = new Visual();
-    public Robot(HardwareMap mp, Pose2d endpos) {
+    public Robot(HardwareMap mp) {
         this.hardwareMap = mp;
-        this.endPos = endpos;
-        chassis = new Chassis(hardwareMap, endPos);
+        chassis = new Chassis(hardwareMap);
     }
 
     public void Autoinit(HardwareMap hwm) {

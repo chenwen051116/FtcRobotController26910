@@ -12,13 +12,14 @@ public class Chassis {
     public double kp = 1;
     public Pose2d lastpos;
     public boolean isAuto = false;
+
+    public Pose2d endPos = new Pose2d(12, -61.7, Math.toRadians(270));
     HardwareMap hardwareMap;
     SampleMecanumDrive drive;
 
-    public Chassis(HardwareMap mp, Pose2d endpos) {
+    public Chassis(HardwareMap mp) {
         this.hardwareMap = mp;
         this.drive = new SampleMecanumDrive(mp);
-        this.drive.setPoseEstimate(endpos);
     }
 
     public void AutoInit(HardwareMap hwm) {
@@ -27,6 +28,7 @@ public class Chassis {
 
     public void TeleInit(HardwareMap hwm) {
         hardwareMap = hwm;
+        this.drive.setPoseEstimate(endPos);
     }
 
     public void lowSpeed() {
@@ -60,12 +62,23 @@ public class Chassis {
         drive.followTrajectoryAsync(trajectory);
     }
 
+
+    public void goOrigin() {
+        lastpos = drive.getPoseEstimate();
+        Trajectory trajectory = drive.trajectoryBuilder(lastpos)
+                .lineToLinearHeading(endPos)
+                .build();
+        drive.followTrajectoryAsync(trajectory);
+        turnAutoMode();
+    }
+
     public void turnAutoMode() {
         isAuto = true;
     }
 
     public void turnTeleMode() {
         isAuto = false;
+
         if (drive.isBusy()) {
             lastpos = drive.getPoseEstimate();
             Trajectory trajectory = drive.trajectoryBuilder(lastpos)

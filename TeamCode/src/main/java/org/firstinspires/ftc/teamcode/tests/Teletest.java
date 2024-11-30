@@ -13,13 +13,12 @@ import org.firstinspires.ftc.teamcode.lib.ShVarsKt;
 
 @TeleOp
 public class Teletest extends LinearOpMode {
-    private final Pose2d endpose = new Pose2d(-34.9, 56.9, Math.toRadians(270));
 
 
     @Override
     public void runOpMode() {
         ShVarsKt.shLinOp = this;
-        Chassis c = new Chassis(hardwareMap, endpose);
+        Chassis c = new Chassis(hardwareMap);
         c.TeleInit(hardwareMap);
         waitForStart();
         while (opModeIsActive()) {

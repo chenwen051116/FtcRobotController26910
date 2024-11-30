@@ -11,12 +11,11 @@ import org.firstinspires.ftc.teamcode.lib.Robot;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp
 public class TeleOp extends LinearOpMode {
-    private final Pose2d endpos = new Pose2d(-34.9, 56.9, Math.toRadians(270));
 
 
     @Override
     public void runOpMode() {
-        Robot robot = new Robot(hardwareMap, endpos);
+        Robot robot = new Robot(hardwareMap);
         robot.Teleinit(hardwareMap);
 
         waitForStart();
@@ -31,6 +30,15 @@ public class TeleOp extends LinearOpMode {
             y = gamepad1.left_stick_y;
             rx = gamepad1.right_stick_x;
             robot.chassis.teleDrive(x, y, rx);
+            if (gamepad1.y) {
+                robot.chassis.turnTeleMode();
+            }
+            if (gamepad1.a) {
+                robot.chassis.goOrigin();
+            }
+
+
+
             robot.arm.HzArmVel(-gamepad2.left_stick_y);
             robot.arm.intakeMupdate();
             if (gamepad2.dpad_down) {
