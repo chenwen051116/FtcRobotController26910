@@ -7,22 +7,30 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class AutoRobot {
     public ElapsedTime timer = new ElapsedTime();
-    public AutoArm cla = new AutoArm();
+    public AutoArm arm = new AutoArm();
+    public AutoChassis chassis;
     //public boolean SecondDriver = false;
     HardwareMap hardwareMap;
-    Pose2d endpose;
-    public AutoChassis c = new AutoChassis(hardwareMap, endpose);
+    Pose2d endPos;
 
-    public AutoRobot(HardwareMap mp, Pose2d endpos) {
+    //public Visual v = new Visual();
+    public AutoRobot(HardwareMap mp) {
         this.hardwareMap = mp;
-        this.endpose = endpos;
+        chassis = new AutoChassis(hardwareMap);
     }
 
-    public void AutoinitRemote(HardwareMap hwm) {
-        cla.autoInit(hwm);
+    public void Autoinit(HardwareMap hwm) {
+        arm.autoInit(hwm);
         timer.reset();
-        c.AutoInit(hwm);
+        chassis.AutoInit(hwm);
+        arm.closeClaw();
+    }
 
+    public void Teleinit(HardwareMap hwm) {
+        chassis.TeleInit(hwm);
+        arm.teleInit(hwm);
+        timer.reset();
+        //v.apt();
     }
 
 
@@ -33,5 +41,13 @@ public class AutoRobot {
             Thread.currentThread().interrupt();
         }
     }
+
+//    public void updatevisualposMT1(){
+//        c.posvisual(v.getfieldposeMT1());
+//    }
+//
+//    public void updatevisualposMT2(){
+//        c.posvisual(v.getfieldposeMT2());
+//    }
 
 }

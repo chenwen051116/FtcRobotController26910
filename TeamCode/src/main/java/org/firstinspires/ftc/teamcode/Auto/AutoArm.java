@@ -6,160 +6,207 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class AutoArm {
-    public DcMotorEx mainArml = null;
-    public DcMotorEx mainArmr = null;
-    public DcMotorEx mainArmf = null;
-    public DcMotorEx intakem = null;
-    public Servo claw = null;
-    public Servo flipArml = null;
-    public Servo flipArmr = null;
-    public Servo endArml = null;
-    public Servo endArmr = null;
-    public boolean rev = false;
-    public boolean gathering = false;
+    public DcMotorEx VtLeft = null;
+    public DcMotorEx VtRight = null;
+    public DcMotorEx hzFront = null;
+    public DcMotorEx intakeMotor = null;
+    public Servo speClaw = null;
+    public Servo inArmLeft = null;
+    public Servo inArmRight = null;
+    public Servo outArmLeft = null;
+    public Servo outArmRight = null;
+    public boolean reverseIntake = false;
+    public boolean getIntake = false;
+    public int frontArmPos = 0;
 
 
     public void autoInit(HardwareMap hwm) {
-        mainArml = hwm.get(DcMotorEx.class, "ml");
-        mainArmr = hwm.get(DcMotorEx.class, "mr");
-        mainArmf = hwm.get(DcMotorEx.class, "mf");
-        intakem = hwm.get(DcMotorEx.class, "im");
-        claw = hwm.get(Servo.class, "cl");
-        flipArml = hwm.get(Servo.class, "fal");
-        flipArmr = hwm.get(Servo.class, "far");
-        endArml = hwm.get(Servo.class, "eal");
-        endArmr = hwm.get(Servo.class, "eal");
-        mainArml.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        mainArml.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mainArml.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        mainArmr.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        mainArmr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mainArmr.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        mainArmf.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        mainArmf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mainArmf.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        intakem.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        intakem.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
-        takes();
+
+        intakeMotor = hwm.get(DcMotorEx.class, "frSpIntake_mt");
+        VtLeft = hwm.get(DcMotorEx.class, "vtSlider_lfMt");
+        VtRight = hwm.get(DcMotorEx.class, "vtSlider_rtMt");
+        hzFront = hwm.get(DcMotorEx.class, "hzSlider_mt");
+        speClaw = hwm.get(Servo.class, "bkSpClaw_sv");
+        inArmLeft = hwm.get(Servo.class, "frSpFlipper_lfSv");
+        inArmRight = hwm.get(Servo.class, "frSpFlipper_rtSv");
+        outArmLeft = hwm.get(Servo.class, "bkSpFlipper_lfSv");
+        outArmRight = hwm.get(Servo.class, "bkSpFlipper_rtSv");
+        VtLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        VtLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        VtLeft.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        VtRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        VtRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        VtRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        hzFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        hzFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hzFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        intakeMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        intakeMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void teleInit(HardwareMap hwm) {
-        mainArml = hwm.get(DcMotorEx.class, "ml");
-        mainArmr = hwm.get(DcMotorEx.class, "mr");
-        mainArmf = hwm.get(DcMotorEx.class, "mf");
-        claw = hwm.get(Servo.class, "cl");
-        flipArml = hwm.get(Servo.class, "fal");
-        flipArmr = hwm.get(Servo.class, "far");
-        endArml = hwm.get(Servo.class, "eal");
-        endArmr = hwm.get(Servo.class, "eal");
-        mainArml.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        mainArml.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mainArml.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        mainArmr.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        mainArmr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mainArmr.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        mainArmf.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        mainArmf.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
-        intakem.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        intakem.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        intakeMotor = hwm.get(DcMotorEx.class, "frSpIntake_mt");
+        VtLeft = hwm.get(DcMotorEx.class, "vtSlider_lfMt");
+        VtRight = hwm.get(DcMotorEx.class, "vtSlider_rtMt");
+        hzFront = hwm.get(DcMotorEx.class, "hzSlider_mt");
+        speClaw = hwm.get(Servo.class, "bkSpClaw_sv");
+        inArmLeft = hwm.get(Servo.class, "frSpFlipper_lfSv");
+        inArmRight = hwm.get(Servo.class, "frSpFlipper_rtSv");
+        outArmLeft = hwm.get(Servo.class, "bkSpFlipper_lfSv");
+        outArmRight = hwm.get(Servo.class, "bkSpFlipper_rtSv");
+        VtLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        VtLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        VtLeft.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        VtRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        VtRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        VtRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        hzFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        hzFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hzFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+
+        intakeMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        intakeMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        basketBack();
+
+        inArmTrans();
+        speClaw.setPosition(0.37);
+        HzArmSet(5);
     }
 
-    public void mainarmset(int pos) {
-        mainArml.setTargetPosition(pos);
-        mainArml.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        mainArml.setPower(0.3);
-        mainArmr.setTargetPosition(pos);
-        mainArmr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        mainArmr.setPower(0.3);
+    public void VtArmSet(int pos) {
+        VtLeft.setTargetPosition(pos);
+        VtLeft.setPower(0.7);
+        VtLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        VtRight.setPower(0.7);
+        VtRight.setTargetPosition(-pos);
+        VtRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
     }
 
-    public void takes() {//夹样本
+    public void HzArmSet(int pos) {
+        hzFront.setPower(0.7);
+        frontArmPos = pos;
+        hzFront.setTargetPosition(-frontArmPos);
+        hzFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    public void closeClaw() {//夹样本
         //爪子夹样本的位置
-        claw.setPosition(0);
+        speClaw.setPosition(0.15);
     }
 
-    public void drops() {//放下样本松手
-        int k = 10;    //向下移动多少
-        mainarmset(mainArml.getCurrentPosition() - k);
-        sleep(250);
-        claw.setPosition(0);//松手舵机位置
-
-    }
-
-    public void frontarmp(double power) {
-        if (mainArmf.getCurrentPosition() > 10) {
-            mainArmf.setPower(power);
+    public void dropSpe() {//放下样本松手
+        int k = 500;    //向下移动多少
+        if(VtLeft.getCurrentPosition() > 800) {
+            VtArmSet(VtLeft.getCurrentPosition() - k);
+            sleep(500);
         }
+
+        speClaw.setPosition(0.37);//松手舵机位置
+
     }
 
-    public void frontarmset(int pos) {
-        mainArmr.setTargetPosition(pos);
-        mainArmr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        mainArmr.setPower(0.3);
-    }
-
-    public void take() {//放下前面arm开始吸
-        flipArml.setPosition(0);//左arm位置
-        flipArmr.setPosition(0);//右arm位置
-        gathering = true;
-    }
-
-    public void updatefm() {
-        if (rev) {
-            intakem.setPower(-0.2);//滚吸反转功率
-        } else if (gathering) {
-            intakem.setPower(0.5);//滚吸功率
+    //mudheadcar
+    public void HzArmVel(double power) {
+        // 控制目标点
+        frontArmPos += 10 * power;
+        if (frontArmPos > 1500) {
+            HzArmSet(1500);
+        } else if (frontArmPos < 5) {
+            HzArmSet(5);
         } else {
-            intakem.setPower(0);
+            HzArmSet(frontArmPos);
+        }
+
+    }
+
+
+    public void frontIntake() {//放下前面arm开始吸
+        // 把两个 servo 放下去
+        // 把滚吸过放下去
+        inArmLeft.setPosition(0.8157);//左arm位置
+        inArmRight.setPosition(0.2843);//右arm位置
+        //gathering = true;
+    }
+
+
+    public void intakeMupdate() {
+        // rev 是吐出来
+        // getIntake 是正着吸
+        if (reverseIntake) {
+            intakeMotor.setPower(1);//滚吸反转功率
+        } else if (getIntake) {
+            intakeMotor.setPower(-1);//滚吸功率
+        } else {
+            intakeMotor.setPower(0);
         }
     }
 
-    public void trans() {//收回arm并反转
-        flipArml.setPosition(0);//左arm位置
-        flipArmr.setPosition(0);//右arm位置
-        gathering = false;
+    public void inArmTrans() {//收回arm并反转
+        // 滚吸收回来
+        // getIntake false 不再吸了
+        inArmLeft.setPosition(0.1);//左arm位置
+        inArmRight.setPosition(1);//右arm位置
+        getIntake = false;
     }
 
-    public void reve() {
-        rev = true;
+    public void frontArmBack() {//收回arm并反转
+        // 快捷键收回横着的滑轨
+        HzArmSet(5);
     }
 
-    public void rollback() {
-        rev = false;
+
+    public void highBasket() {
+        VtArmSet(2755);//高框arm位置
     }
 
-    public void highbasket() {
-        mainarmset(10);//高框arm位置
+    public void lowBasket() {
+        VtArmSet(1242);//低框arm位置
     }
 
-    public void lowbasket() {
-        mainarmset(10);//低框arm位置
+    public void highBar() {
+        VtArmSet(1561);//高杆arm位置
     }
 
-    public void highbar() {
-        mainarmset(10);//高杆arm位置
+    public void lowBar() {
+        VtArmSet(1000);//低杆arm位置
     }
 
-    public void lowbar() {
-        mainarmset(10);//低杆arm位置
+    public void takeSpePos() {
+        // 场边的 specimen 的位置
+        if(frontArmPos <= 100  && VtLeft.getCurrentPosition() > 200) {
+            HzArmSet(200);
+            // set 到 200 避免冲突
+        }
+        VtArmSet(147);//夹取样本位置
+
     }
 
-    public void spepos() {
-        mainarmset(10);//夹取样本位置
+    public void VtBack() {
+        //
+        if(frontArmPos <= 100  && VtLeft.getCurrentPosition() > 200) {
+            HzArmSet(200);
+
+            // set 到 200 避免冲突
+        }
+
+        VtArmSet(5); // 竖着
     }
 
-    public void mainback() {
-        mainarmset(0);
+    public void basketOut() {//倒到框里
+        double d = 0.61 - 0.2767;
+        outArmLeft.setPosition(0.61 - d);//左arm位置
+        outArmRight.setPosition(0.5 + d);//右arm位置
     }
 
-    public void dump() {//倒到框里
-        endArml.setPosition(0);//左arm位置
-        endArmr.setPosition(0);//右arm位置
-    }
-
-    public void endback() {//框里收回来
-        endArml.setPosition(0);//左arm位置
-        endArmr.setPosition(0);//右arm位置
+    public void basketBack() {//框里收回来
+        double d= 0.89 - 0.61;
+        if(frontArmPos < 200 && VtLeft.getCurrentPosition() < 200) {
+            // 如果竖着的杆太低了，横着的杆又收的抬回来了。
+            HzArmSet(200);
+        }
+        outArmLeft.setPosition(0.61 + d);//左arm位置
+        outArmRight.setPosition(0.5 - d);//右arm位置
     }
 
     private void sleep(long milliseconds) {
