@@ -7,13 +7,14 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.ext.roadrunner.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.ext.roadrunner.trajectorysequence.TrajectorySequence;
 
 public class Chassis {
     public double kp = 1;
     public Pose2d lastpos;
     public boolean isAuto = false;
 
-    public Pose2d endPos = new Pose2d(12, -61.7, Math.toRadians(270));
+    public Pose2d endPos = new Pose2d(0, 0, Math.toRadians(0));
     HardwareMap hardwareMap;
     SampleMecanumDrive drive;
 
@@ -65,10 +66,11 @@ public class Chassis {
 
     public void goOrigin() {
         lastpos = drive.getPoseEstimate();
-        Trajectory trajectory = drive.trajectoryBuilder(lastpos)
+        TrajectorySequence trajectoryse = drive.trajectorySequenceBuilder(lastpos)
                 .lineToLinearHeading(endPos)
                 .build();
-        drive.followTrajectoryAsync(trajectory);
+
+        drive.followTrajectorySequence(trajectoryse);
         turnAutoMode();
     }
 
@@ -78,13 +80,14 @@ public class Chassis {
 
     public void turnTeleMode() {
         isAuto = false;
-
+        lastpos = drive.getPoseEstimate();
         if (drive.isBusy()) {
+
             lastpos = drive.getPoseEstimate();
             Trajectory trajectory = drive.trajectoryBuilder(lastpos)
                     .lineToLinearHeading(lastpos)
                     .build();
-            drive.followTrajectoryAsync(trajectory);
+            drive.followTrajectory(trajectory);
         }
     }
 

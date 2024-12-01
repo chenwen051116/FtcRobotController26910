@@ -168,7 +168,7 @@ public class Arm {
     }
 
     public void highBar() {
-        VtArmSet(1561);//高杆arm位置
+        VtArmSet(1500);//高杆arm位置
     }
 
     public void lowBar() {
