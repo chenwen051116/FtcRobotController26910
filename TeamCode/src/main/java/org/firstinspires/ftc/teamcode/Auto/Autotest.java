@@ -190,6 +190,28 @@ public class Autotest extends LinearOpMode {
                 })
 
 
+                .lineToLinearHeading(speIntakePos)//夹样本位置
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
+                    robot.arm.dropSpe();//打开夹子
+                    robot.arm.takeSpePos();//夹样本高度
+                })
+                .waitSeconds(0.5)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.closeClaw();//关夹子
+                })
+                .lineToLinearHeading(highBarPos4)//放的位置
+                .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> {
+                    robot.arm.highBar();//把arm伸上去
+                })
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.dropSpe();//挂上并松手
+                })
+                .waitSeconds(0.5)//操作等待时间
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.takeSpePos();//把arm收回来
+                })
+
+
                 .lineToLinearHeading(speIntakePos)//回到夹样本位置park
                  */
 
