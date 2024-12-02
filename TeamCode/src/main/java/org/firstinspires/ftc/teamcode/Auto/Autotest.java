@@ -20,8 +20,8 @@ public class Autotest extends LinearOpMode {
     public Pose2d g1tPos = new Pose2d(-15.693, 14.9348, 0.8477);
     public Pose2d g2Pos = new Pose2d(-14.9978, 24.2948, 2.1414);//需要调整
 
-    public Pose2d g3Pos = new Pose2d(-14.9978, 24.2948, 2.1414);//需要调整
-    public Pose2d speIntakePos = new Pose2d(-14.9978, 24.2948, 2.1414);//需要调整
+    public Pose2d g3Pos = new Pose2d(-14.9978, 34.2948, 2.1414);//需要调整
+    public Pose2d speIntakePos = new Pose2d(0, 8, 0);//需要调整
 
     public Pose2d highBarPos1 = new Pose2d(-28.4918, -2.8298, 0);//需要调整
     public Pose2d highBarPos2 = new Pose2d(-28.4918, -3.8298, 0);//需要调整
