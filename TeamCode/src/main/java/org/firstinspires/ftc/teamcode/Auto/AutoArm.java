@@ -79,16 +79,16 @@ public class AutoArm {
 
     public void VtArmSet(int pos) {
         VtLeft.setTargetPosition(pos);
-        VtLeft.setPower(0.7);
+        VtLeft.setPower(1);
         VtLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        VtRight.setPower(0.7);
+        VtRight.setPower(1);
         VtRight.setTargetPosition(-pos);
         VtRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
     }
 
     public void HzArmSet(int pos) {
-        hzFront.setPower(0.7);
+        hzFront.setPower(0.8);
         frontArmPos = pos;
         hzFront.setTargetPosition(-frontArmPos);
         hzFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -100,7 +100,7 @@ public class AutoArm {
     }
 
     public void dropSpe() {//放下样本松手
-        int k = 500;    //向下移动多少
+        int k = 650;    //向下移动多少
         if(VtLeft.getCurrentPosition() > 800) {
             VtArmSet(VtLeft.getCurrentPosition() - k);
             sleep(500);
