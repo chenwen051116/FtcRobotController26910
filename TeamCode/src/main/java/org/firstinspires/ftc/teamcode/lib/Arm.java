@@ -58,13 +58,13 @@ public class Arm {
         outArmLeft = hwm.get(Servo.class, "bkSpFlipper_lfSv");
         outArmRight = hwm.get(Servo.class, "bkSpFlipper_rtSv");
         VtLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        VtLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //VtLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         VtLeft.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         VtRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        VtRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //VtRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         VtRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         hzFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        hzFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //hzFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hzFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
         intakeMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -78,9 +78,9 @@ public class Arm {
 
     public void VtArmSet(int pos) {
         VtLeft.setTargetPosition(pos);
-        VtLeft.setPower(0.7);
+        VtLeft.setPower(1);
         VtLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        VtRight.setPower(0.7);
+        VtRight.setPower(1);
         VtRight.setTargetPosition(-pos);
         VtRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
