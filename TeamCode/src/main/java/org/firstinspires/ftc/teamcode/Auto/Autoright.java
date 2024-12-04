@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.ext.roadrunner.trajectorysequence.Trajecto
 @Config
 @Autonomous
 //@com.qualcomm.robotcore.eventloop.opmode.TeleOp
-public class Autotest extends LinearOpMode {
+public class Autoright extends LinearOpMode {
 
     public Pose2d startPos = new Pose2d(0, 0, 0);
     public Pose2d highBarPos = new Pose2d(-29.7918, -5.8298, 0);
