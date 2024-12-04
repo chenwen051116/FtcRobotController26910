@@ -79,9 +79,9 @@ public class AutoArm {
 
     public void VtArmSet(int pos) {
         VtLeft.setTargetPosition(pos);
-        VtLeft.setPower(1);
+        VtLeft.setPower(0.8);
         VtLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        VtRight.setPower(1);
+        VtRight.setPower(0.8);
         VtRight.setTargetPosition(-pos);
         VtRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -100,13 +100,13 @@ public class AutoArm {
     }
 
     public void dropSpe() {//放下样本松手
-        int k = 650;    //向下移动多少
+        int k = 600;    //向下移动多少
         if(VtLeft.getCurrentPosition() > 800) {
             VtArmSet(VtLeft.getCurrentPosition() - k);
             sleep(500);
         }
 
-        speClaw.setPosition(0.37);//松手舵机位置
+        speClaw.setPosition(0.45);//松手舵机位置
 
     }
 
@@ -182,7 +182,7 @@ public class AutoArm {
             HzArmSet(200);
             // set 到 200 避免冲突
         }
-        VtArmSet(147);//夹取样本位置
+        VtArmSet(40);//夹取样本位置
 
     }
 
