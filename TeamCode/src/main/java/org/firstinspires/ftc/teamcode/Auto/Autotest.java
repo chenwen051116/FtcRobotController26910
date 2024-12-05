@@ -14,11 +14,12 @@ import org.firstinspires.ftc.teamcode.ext.roadrunner.trajectorysequence.Trajecto
 @Autonomous
 //@com.qualcomm.robotcore.eventloop.opmode.TeleOp
 public class Autotest extends LinearOpMode {
-
+    // x 轴是前后移动
+    // y 轴是左右移动
     public Pose2d startPos = new Pose2d(0, 0, 0);
     public Pose2d highBarPos = new Pose2d(-29.7918, -5.8298, 0);
     public Pose2d g1Pos = new Pose2d(-16.693, 7.9348, 2.0572);
-    public Pose2d g1tPos = new Pose2d(-15.693, 14.9348, 0.8477);
+    public Pose2d g1tPos = new Pose2d(-15.93, 14.9348, 0.8477);
     public Pose2d g2Pos = new Pose2d(-14.9978, 24.2948, 2.1514);//需要调整
 
     //public Pose2d g3Pos = new Pose2d(-17.7793, 30.1948, 1.9523);//需要调整
