@@ -23,11 +23,11 @@ public class Autoright extends LinearOpMode {
 
     //public Pose2d g3Pos = new Pose2d(-17.7793, 30.1948, 1.9523);//需要调整
     public Pose2d speIntakePos = new Pose2d(12, 40, 3.09159);//需要调整
-    public Pose2d speIntakePos3 = new Pose2d(-4.03, 0, 6.08);//需要调整
+    public Pose2d speIntakePos3 = new Pose2d(-3.98, 0, 6.08);//需要调整
     public Pose2d speIntakePos2 = new Pose2d(-2, -1, 0.5);//需要调整
     public Pose2d speIntakePos4 = new Pose2d(-1, 0, 0.5);//需要调整
     public Pose2d highBarPos1 = new Pose2d(41.852, 55.178, 3.15159);//需要调整
-    public Pose2d highBarPos2 = new Pose2d(34.152, 60.178, 3.15159);//需要调整
+    public Pose2d highBarPos2 = new Pose2d(34.152, 65.178, 3.15159);//需要调整
     public Pose2d highBarPos3 = new Pose2d(38.552, 67.178, 3.15159);//需要调整
 
     @Override
@@ -116,14 +116,15 @@ public class Autoright extends LinearOpMode {
         TrajectorySequence FinalAuto2 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.HzArmSet(100);//收回前滑轨
+                    robot.arm.closeClaw();//关夹子
+                    //robot.arm.HzArmSet(100);//收回前滑轨
                     robot.arm.inArmTrans();
                     robot.arm.getIntake=false;
                     robot.arm.reverseIntake=false;
                     robot.arm.intakeMupdate();//停止滚吸
-                    robot.arm.closeClaw();//关夹子
+
                 })
-                .waitSeconds(1)
+                .waitSeconds(1.5)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> {
                     robot.arm.highBar();//把arm伸上去
                 })
@@ -146,7 +147,7 @@ public class Autoright extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.closeClaw();//关夹子
                 })
-                .waitSeconds(1)
+                .waitSeconds(1.5)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> {
                     robot.arm.highBar();//把arm伸上去
                 })

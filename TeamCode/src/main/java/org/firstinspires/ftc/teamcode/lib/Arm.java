@@ -137,7 +137,7 @@ public class Arm {
         // rev 是吐出来
         // getIntake 是正着吸
         if (reverseIntake) {
-            intakeMotor.setPower(1);//滚吸反转功率
+            intakeMotor.setPower(0.8);//滚吸反转功率
         } else if (getIntake) {
             intakeMotor.setPower(-1);//滚吸功率
         } else {
