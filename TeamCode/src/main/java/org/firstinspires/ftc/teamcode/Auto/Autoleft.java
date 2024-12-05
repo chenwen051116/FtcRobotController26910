@@ -51,7 +51,7 @@ public class Autoleft extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.getIntake=true;
                     robot.arm.intakeMupdate();//开启滚吸
-                    robot.arm.HzArmSet(1500);//往前申滑轨
+                    robot.arm.HzArmSet(1000);//往前申滑轨
                 })
                 .waitSeconds(1)//操作时间
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
@@ -92,7 +92,7 @@ public class Autoleft extends LinearOpMode {
 
         TrajectorySequence FinalAuto2 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
 
-                .lineToLinearHeading(g2Pos)//准备吸取第一个地上的
+                .lineToLinearHeading(g2Pos)//准备吸取第2个地上的
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.getIntake=true;
                     robot.arm.intakeMupdate();//开启滚吸
