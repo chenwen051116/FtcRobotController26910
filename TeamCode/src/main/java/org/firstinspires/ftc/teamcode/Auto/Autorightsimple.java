@@ -4,14 +4,15 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.ext.roadrunner.trajectorysequence.TrajectorySequence;
 
 @Config
-//@Autonomous
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp
+@Autonomous
+//@com.qualcomm.robotcore.eventloop.opmode.TeleOp
 public class Autorightsimple extends LinearOpMode {
 
     public Pose2d startPos = new Pose2d(0, 0, 0);
