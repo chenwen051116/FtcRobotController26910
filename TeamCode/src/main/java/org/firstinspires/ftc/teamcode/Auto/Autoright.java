@@ -101,7 +101,7 @@ public class Autoright extends LinearOpMode {
                 .waitSeconds(0.3)
 
                 .lineToLinearHeading(speIntakePos)//夹样本位置
-                .UNSTABLE_addTemporalMarkerOffset(-1.5, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(-1.8, () -> {
                     robot.arm.HzArmSet(100);//收回前滑轨
                     robot.arm.inArmTrans();
                     robot.arm.getIntake=false;

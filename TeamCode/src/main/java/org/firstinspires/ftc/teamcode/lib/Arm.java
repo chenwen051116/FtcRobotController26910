@@ -113,8 +113,8 @@ public class Arm {
     public void HzArmVel(double power) {
         // 控制目标点
         frontArmPos += 10 * power;
-        if (frontArmPos > 1500) {
-            HzArmSet(1500);
+        if (frontArmPos > 1450) {
+            HzArmSet(1450);
         } else if (frontArmPos < 5) {
             HzArmSet(5);
         } else {

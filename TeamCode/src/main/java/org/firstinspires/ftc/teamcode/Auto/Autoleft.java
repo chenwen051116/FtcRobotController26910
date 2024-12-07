@@ -21,9 +21,10 @@ public class Autoleft extends LinearOpMode {
     public Pose2d g2Pos = new Pose2d(39.298, 5.125, Math.toRadians(122.795));//需要调整
     public Pose2d g3Pos = new Pose2d(35.05,23.511, Math.toRadians(151.99));
     //public Pose2d g3Pos = new Pose2d(-17.7793, 30.1948, 1.9523);//需要调整
-    public Pose2d highBarPos1 = new Pose2d(3.818, -51.4428, Math.toRadians(121.259));//需要调整
-    public Pose2d highBarPos2 = new Pose2d(0.2, 1.5, -0.1);//需要调整
-    public Pose2d highBarPos3 = new Pose2d(-0.3, 0, 0);//需要调整
+    private double barOffsetX = .08;
+    public Pose2d highBarPos1 = new Pose2d(3.818 - barOffsetX, -51.4428 - barOffsetX, Math.toRadians(121.259));//需要调整
+    public Pose2d highBarPos2 = new Pose2d(0.2 - barOffsetX, 1.5 - barOffsetX, -0.1);//需要调整
+    public Pose2d highBarPos3 = new Pose2d(-0.3 - barOffsetX, 0 - barOffsetX, 0);//需要调整
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -141,7 +142,7 @@ public class Autoleft extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.getIntake=true;
                     robot.arm.intakeMupdate();//开启滚吸
-                    robot.arm.HzArmSet(1000);//往前申滑轨
+                    robot.arm.HzArmSet(800);//往前申滑轨
                 })
                 .waitSeconds(1.3)//操作时间
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
