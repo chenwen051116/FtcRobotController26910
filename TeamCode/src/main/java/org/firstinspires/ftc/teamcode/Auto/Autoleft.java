@@ -98,7 +98,7 @@ public class Autoleft extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     robot.arm.getIntake=true;
                     robot.arm.intakeMupdate();//开启滚吸
-                    robot.arm.HzArmSet(1300);//往前申滑轨
+                    robot.arm.HzArmSet(1400);//往前申滑轨
                 })
                 .waitSeconds(0.8)//操作时间
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
