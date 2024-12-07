@@ -187,13 +187,18 @@ public class Arm {
 
     public void VtBack() {
         //
-        if(frontArmPos <= 100  && VtLeft.getCurrentPosition() > 200) {
+        if (frontArmPos <= 100 && VtLeft.getCurrentPosition() > 200) {
             HzArmSet(200);
 
             // set 到 200 避免冲突
         }
 
-        VtArmSet(5); // 竖着
+        VtArmSet(0); // 竖着
+        if (VtLeft.getCurrentPosition() < 5){
+            VtLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            VtRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
     }
 
     public void basketOut() {//倒到框里
