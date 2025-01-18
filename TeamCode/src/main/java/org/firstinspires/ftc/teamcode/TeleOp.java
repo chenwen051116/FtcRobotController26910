@@ -49,6 +49,9 @@ public class TeleOp extends LinearOpMode {
                 //robot.arm.frontIntake();
                 robot.arm.frontArmBack();
             }
+            if(gamepad2.dpad_up){
+                robot.arm.finalClimb();
+            }
 
             //gamepad2 arm control
             //front intake control

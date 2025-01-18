@@ -17,5 +17,6 @@ public class ServoZeroing extends LinearOpMode {
         while (opModeIsActive()){
             robot.arm.speClaw.setPosition(0);
         }
-    }g
+    }
 }
+

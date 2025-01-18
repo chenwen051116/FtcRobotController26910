@@ -52,6 +52,7 @@ public class Arm {
         inArmTrans();
         speClaw.setPosition(0.37);
         HzArmSet(5);
+        inTurn(0);
     }
 
     public void VtArmSet(int pos) {
@@ -116,20 +117,21 @@ public class Arm {
     public void frontIntakeDown() {//放下前面arm开始吸
         // 把两个 servo 放下去
         // 把滚吸过放下去
-        inClaw.setPosition(0.3);
-        inArmLeft.setPosition(0.85);//左arm位置
-        inArmRight.setPosition(0.28);//右arm位置
-        inAngleLeft.setPosition(0.32);
-        inAngleRight.setPosition(0.85);
-        sleep(500);
         if(!backPos) {
+            inClaw.setPosition(0.3);
+            inArmLeft.setPosition(0.85);//左arm位置
+            inArmRight.setPosition(0.28);//右arm位置
+            inAngleLeft.setPosition(0.32);
+            inAngleRight.setPosition(0.85);
+            sleep(500);
             inClaw.setPosition(0.7);
             sleep(500);
+        }
             inArmLeft.setPosition(0.65);//左arm位置
             inArmRight.setPosition(0.48);//右arm位置
             inAngleLeft.setPosition(0.47);
             inAngleRight.setPosition(0.7);
-        }
+        sleep(500);
         backPos = false;
     }
 
@@ -143,8 +145,8 @@ public class Arm {
         // getIntake false 不再吸了
         HzArmSet(5);
         if(-hzFront.getCurrentPosition()<10) {
-            inArmLeft.setPosition(0.45);//左arm位置
-            inArmRight.setPosition(0.78);//右arm位置
+            inArmLeft.setPosition(0.5);//左arm位置
+            inArmRight.setPosition(0.73);//右arm位置
             inAngleLeft.setPosition(0.92);
             inAngleRight.setPosition(0.25);
             sleep(500);
@@ -209,6 +211,15 @@ public class Arm {
         outArmRight.setPosition(0.5 + d);//右arm位置
     }
 
+    public void finalClimb() {//倒到框里
+        double d = 0.40;
+        outArmLeft.setPosition(0.61 - d);//左arm位置
+        outArmRight.setPosition(0.5 + d);//右arm位置
+        speClaw.setPosition(0.6);//松手舵机位置
+        VtArmSet(2300);
+        HzArmSet(200);
+
+    }
     public void basketBack() {//框里收回来
         double d= 0.89 - 0.61;
         if(frontArmPos < 200 && VtLeft.getCurrentPosition() < 200) {
