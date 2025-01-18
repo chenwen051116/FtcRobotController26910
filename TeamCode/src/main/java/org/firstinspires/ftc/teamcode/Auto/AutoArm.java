@@ -13,26 +13,30 @@ public class AutoArm {
     public DcMotorEx VtLeft = null;
     public DcMotorEx VtRight = null;
     public DcMotorEx hzFront = null;
-    public DcMotorEx intakeMotor = null;
     public Servo speClaw = null;
     public Servo inArmLeft = null;
     public Servo inArmRight = null;
+    public Servo inAngleLeft = null;
+    public Servo inAngleRight = null;
+    public Servo inAngleTurn = null;
+    public Servo inClaw = null;
     public Servo outArmLeft = null;
     public Servo outArmRight = null;
-    public boolean reverseIntake = false;
-    public boolean getIntake = false;
     public int frontArmPos = 0;
 
 
     public void autoInit(HardwareMap hwm) {
 
-        intakeMotor = hwm.get(DcMotorEx.class, "frSpIntake_mt");
         VtLeft = hwm.get(DcMotorEx.class, "vtSlider_lfMt");
         VtRight = hwm.get(DcMotorEx.class, "vtSlider_rtMt");
         hzFront = hwm.get(DcMotorEx.class, "hzSlider_mt");
         speClaw = hwm.get(Servo.class, "bkSpClaw_sv");
         inArmLeft = hwm.get(Servo.class, "frSpFlipper_lfSv");
         inArmRight = hwm.get(Servo.class, "frSpFlipper_rtSv");
+        inAngleLeft = hwm.get(Servo.class, "frTurn_lfSv");
+        inAngleRight = hwm.get(Servo.class, "frTurn_rtSv");
+        inAngleTurn = hwm.get(Servo.class, "frAiming_Sv");
+        inClaw = hwm.get(Servo.class, "frInClaw_Sv");
         outArmLeft = hwm.get(Servo.class, "bkSpFlipper_lfSv");
         outArmRight = hwm.get(Servo.class, "bkSpFlipper_rtSv");
         VtLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -44,18 +48,19 @@ public class AutoArm {
         hzFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         hzFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hzFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        intakeMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        intakeMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void teleInit(HardwareMap hwm) {
-        intakeMotor = hwm.get(DcMotorEx.class, "frSpIntake_mt");
         VtLeft = hwm.get(DcMotorEx.class, "vtSlider_lfMt");
         VtRight = hwm.get(DcMotorEx.class, "vtSlider_rtMt");
         hzFront = hwm.get(DcMotorEx.class, "hzSlider_mt");
         speClaw = hwm.get(Servo.class, "bkSpClaw_sv");
         inArmLeft = hwm.get(Servo.class, "frSpFlipper_lfSv");
         inArmRight = hwm.get(Servo.class, "frSpFlipper_rtSv");
+        inAngleLeft = hwm.get(Servo.class, "frTurn_lfSv");
+        inAngleRight = hwm.get(Servo.class, "frTurn_rtSv");
+        inAngleTurn = hwm.get(Servo.class, "frAiming_Sv");
+        inClaw = hwm.get(Servo.class, "frInClaw_Sv");
         outArmLeft = hwm.get(Servo.class, "bkSpFlipper_lfSv");
         outArmRight = hwm.get(Servo.class, "bkSpFlipper_rtSv");
         VtLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -68,11 +73,9 @@ public class AutoArm {
         hzFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hzFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
-        intakeMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        intakeMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         basketBack();
 
-        inArmTrans();
+        //inArmTrans();
         speClaw.setPosition(0.37);
         HzArmSet(5);
     }
@@ -100,7 +103,7 @@ public class AutoArm {
     }
 
     public void dropSpe() {//放下样本松手
-        int k = 600;    //向下移动多少
+        int k = 560;    //向下移动多少
         if(VtLeft.getCurrentPosition() > 800) {
             VtArmSet(VtLeft.getCurrentPosition() - k);
             sleep(500);
@@ -134,26 +137,6 @@ public class AutoArm {
     }
 
 
-    public void intakeMupdate() {
-        // rev 是吐出来
-        // getIntake 是正着吸
-        if (reverseIntake) {
-            intakeMotor.setPower(0.7);//滚吸反转功率
-        } else if (getIntake) {
-            intakeMotor.setPower(-1);//滚吸功率
-        } else {
-            intakeMotor.setPower(0);
-        }
-    }
-
-    public void inArmTrans() {//收回arm并反转
-        // 滚吸收回来
-        // getIntake false 不再吸了
-        inArmLeft.setPosition(0.1);//左arm位置
-        inArmRight.setPosition(1);//右arm位置
-        getIntake = false;
-    }
-
     public void frontArmBack() {//收回arm并反转
         // 快捷键收回横着的滑轨
         HzArmSet(5);
@@ -182,7 +165,7 @@ public class AutoArm {
             HzArmSet(200);
             // set 到 200 避免冲突
         }
-        VtArmSet(40);//夹取样本位置
+        VtArmSet(20);//夹取样本位置
 
     }
 

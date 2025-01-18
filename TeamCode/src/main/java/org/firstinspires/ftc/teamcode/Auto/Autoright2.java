@@ -13,24 +13,24 @@ import org.firstinspires.ftc.teamcode.ext.roadrunner.trajectorysequence.Trajecto
 @Config
 //@Autonomous
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp
-public class Autoright extends LinearOpMode {
+public class Autoright2 extends LinearOpMode {
 
     public Pose2d startPos = new Pose2d(0, 0, 0);
     public Pose2d highBarPos = new Pose2d(-25.983, -4.42, 0);
 
     public Pose2d TurnPos = new Pose2d(-12.686, 24.763, 0);
-    public Pose2d g1Pos = new Pose2d(-3.766, 35.233, Math.toRadians(180));
-    public Pose2d g2Pos = new Pose2d(-4.55, 45.3348, Math.toRadians(180));//需要调整
+    public Pose2d g1Pos = new Pose2d(-46.7043, 24.6059, 0);
+    public Pose2d g2Pos = new Pose2d(-46.9978, 30.3348, 0);//需要调整
 
-    public Pose2d g3Pos = new Pose2d(-9.92, 43.139, Math.toRadians(140));//需要调整
+    public Pose2d g3Pos = new Pose2d(-46.9978, 35.2948, 0);//需要调整
 
 
-    public Pose2d speIntakePos = new Pose2d(-10, 38, 2.8415);//需要调整
+    public Pose2d speIntakePos = new Pose2d(-10, 40, 2.8415);//需要调整
     public Pose2d speIntakePos3 = new Pose2d(12, 0, 0);//需要调整
     public Pose2d speIntakePos2 = new Pose2d(12, 0, 0);//需要调整
     public Pose2d speIntakePos4 = new Pose2d(12, 0, 0);//需要调整
-    public Pose2d highBarPos1 = new Pose2d(38.852, 55.178, Math.toRadians(185));//需要调整
-    public Pose2d highBarPos2 = new Pose2d(38.152, 50.178, Math.toRadians(185));//需要调整
+    public Pose2d highBarPos1 = new Pose2d(38.852, 57.178, Math.toRadians(185));//需要调整
+    public Pose2d highBarPos2 = new Pose2d(38.152, 55.178, Math.toRadians(185));//需要调整
     public Pose2d highBarPos3 = new Pose2d(38.552, 50.178, Math.toRadians(185));//需要调整
 
     @Override
@@ -54,12 +54,22 @@ public class Autoright extends LinearOpMode {
                 })
 
 
+                .lineToLinearHeading(TurnPos)//准备吸取第一个地上的
                 .lineToLinearHeading(g1Pos)//准备吸取第一个地上的
-                .waitSeconds(1)
-                .lineToLinearHeading(g2Pos)//准备吸取第一个地上的
-                .waitSeconds(1)
-                .lineToLinearHeading(g3Pos)//准备吸取第一个地上的
-                .waitSeconds(1)
+                .strafeLeft(8.5)
+                .forward(44)
+                //.lineToLinearHeading(TurnPos)//准备吸取第一个地上的
+                .back(44)
+                .strafeLeft(11)
+                .turn(-Math.toRadians(5))
+                .forward(44)
+                //.lineToLinearHeading(TurnPos)//准备吸取第一个地上的
+//                .back(45)
+//                .turn(-Math.toRadians(6))
+//                .strafeLeft(12)
+//
+//                .forward(45)
+
 
                 .lineToLinearHeading(speIntakePos)//夹样本位置
                 .back(23)
@@ -187,8 +197,8 @@ public class Autoright extends LinearOpMode {
         robot.chassis.drive.followTrajectorySequence(FinalAuto1);
         robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));
         robot.chassis.drive.followTrajectorySequence(FinalAuto2);
-        robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));
-        robot.chassis.drive.followTrajectorySequence(FinalAuto3);
+        //robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));
+        //robot.chassis.drive.followTrajectorySequence(FinalAuto3);
         robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));
         robot.chassis.drive.followTrajectorySequence(FinalAuto4);
 

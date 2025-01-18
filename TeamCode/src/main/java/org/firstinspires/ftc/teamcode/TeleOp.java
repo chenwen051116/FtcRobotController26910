@@ -40,10 +40,11 @@ public class TeleOp extends LinearOpMode {
 
 
             robot.arm.HzArmVel(-gamepad2.left_stick_y);
-            robot.arm.intakeMupdate();
+            //robot.arm.intakeMupdate();
             telemetry.addData("position1:", robot.arm.VtLeft.getCurrentPosition());
             telemetry.addData("position2:", robot.arm.VtRight.getCurrentPosition());
             telemetry.update();
+            robot.arm.inTurn(gamepad2.left_stick_x);
             if (gamepad2.dpad_down) {
                 //robot.arm.frontIntake();
                 robot.arm.frontArmBack();
@@ -52,7 +53,9 @@ public class TeleOp extends LinearOpMode {
             //gamepad2 arm control
             //front intake control
             if (gamepad2.y) {
-                robot.arm.frontIntake();
+                //robot.arm.frontIntake();
+                robot.arm.frontIntakeDown();
+
             }
             if (gamepad2.a) {
                 robot.arm.inArmTrans();
@@ -71,13 +74,13 @@ public class TeleOp extends LinearOpMode {
                 robot.arm.basketBack();
 
             //force reverse intake motor
-            robot.arm.reverseIntake = gamepad2.dpad_up;
+            //robot.arm.reverseIntake = gamepad2.dpad_up;
 
             //quick horizontal slide back
 //            if (gamepad2.dpad_down)
 //                robot.arm.frontArmBack();
             //robot.arm.frontIntake();
-            robot.arm.getIntake = gamepad2.dpad_down || gamepad2.y;
+            //robot.arm.getIntake = gamepad2.dpad_down || gamepad2.y;
             //all position of vertical arm
             if (gamepad2.left_bumper && -gamepad2.right_stick_y > 0.8)
                 robot.arm.highBasket();
