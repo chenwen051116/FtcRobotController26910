@@ -52,7 +52,7 @@ public class AutoArm {
         inAngleRight.setPosition(0.25);
         inClaw.setPosition(0.4);
         speClaw.setPosition(0.15);
-        HzArmSet(1);
+        HzArmSet(5);
         inTurn(0);
     }
 
