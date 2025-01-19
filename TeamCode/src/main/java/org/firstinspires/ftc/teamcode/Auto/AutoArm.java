@@ -22,9 +22,6 @@ public class AutoArm {
     public boolean backPos = true;
 
     public void autoInit(HardwareMap hwm) {
-    }
-
-    public void teleInit(HardwareMap hwm) {
         VtLeft = hwm.get(DcMotorEx.class, "vtSlider_lfMt");
         VtRight = hwm.get(DcMotorEx.class, "vtSlider_rtMt");
         hzFront = hwm.get(DcMotorEx.class, "hzSlider_mt");
@@ -38,21 +35,25 @@ public class AutoArm {
         outArmLeft = hwm.get(Servo.class, "bkSpFlipper_lfSv");
         outArmRight = hwm.get(Servo.class, "bkSpFlipper_rtSv");
         VtLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        //VtLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        VtLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         VtLeft.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         VtRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        //VtRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        VtRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         VtRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         hzFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        //hzFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hzFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hzFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
         basketBack();
 
         inArmTrans();
-        speClaw.setPosition(0.37);
-        HzArmSet(5);
+        speClaw.setPosition(0.15);
+        HzArmSet(1);
         inTurn(0);
+    }
+
+    public void teleInit(HardwareMap hwm) {
+
     }
 
     public void VtArmSet(int pos) {

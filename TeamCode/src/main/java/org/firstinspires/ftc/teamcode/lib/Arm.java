@@ -118,11 +118,11 @@ public class Arm {
         // 把两个 servo 放下去
         // 把滚吸过放下去
         if(!backPos) {
-            inClaw.setPosition(0.3);
+            inClaw.setPosition(0.4);
             inArmLeft.setPosition(0.85);//左arm位置
             inArmRight.setPosition(0.28);//右arm位置
-            inAngleLeft.setPosition(0.32);
-            inAngleRight.setPosition(0.85);
+            inAngleLeft.setPosition(0.37);
+            inAngleRight.setPosition(0.8);
             sleep(500);
             inClaw.setPosition(0.7);
             sleep(500);
@@ -150,7 +150,9 @@ public class Arm {
             inAngleLeft.setPosition(0.92);
             inAngleRight.setPosition(0.25);
             sleep(500);
-            inClaw.setPosition(0.2);
+            inClaw.setPosition(0.4);
+            inArmLeft.setPosition(0.5);//左arm位置
+            inArmRight.setPosition(0.63);//右arm位置
             backPos = true;
         }
     }
