@@ -5,6 +5,10 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.lib.schedule.Scheduler;
+
+import java.util.concurrent.Callable;
+
 public class Arm {
     public DcMotorEx VtLeft = null;
     public DcMotorEx VtRight = null;
@@ -20,6 +24,7 @@ public class Arm {
     public Servo outArmRight = null;
     public int frontArmPos = 0;
     public boolean backPos = true;
+    public Scheduler scheduler;
 
     public void autoInit(HardwareMap hwm) {
     }
@@ -81,10 +86,16 @@ public class Arm {
         int k = 500;    //向下移动多少
         if(VtLeft.getCurrentPosition() > 800) {
             VtArmSet(VtLeft.getCurrentPosition() - k);
-            sleep(500);
+            scheduler.addTaskAfter(500, new Runnable() {
+                @Override
+                public void run() {
+                    speClaw.setPosition(0.37);//松手舵机位置
+                }
+            });
+        } else {
+            speClaw.setPosition(0.37);//松手舵机位置
         }
 
-        speClaw.setPosition(0.37);//松手舵机位置
 
     }
 
@@ -123,16 +134,39 @@ public class Arm {
             inArmRight.setPosition(0.28);//右arm位置
             inAngleLeft.setPosition(0.32);
             inAngleRight.setPosition(0.85);
-            sleep(500);
-            inClaw.setPosition(0.7);
-            sleep(500);
-        }
+            scheduler.addTaskAfter(500, new Runnable() {
+                @Override
+                public void run() {
+                    inClaw.setPosition(0.7);
+                }
+            });
+            scheduler.addTaskAfter(1000, new Runnable() {
+                @Override
+                public void run() {
+                    inArmLeft.setPosition(0.65);//左arm位置
+                    inArmRight.setPosition(0.48);//右arm位置
+                    inAngleLeft.setPosition(0.47);
+                    inAngleRight.setPosition(0.7);
+                }
+            });
+            scheduler.addTaskAfter(1500, new Runnable() {
+                @Override
+                public void run() {
+                    backPos = false;
+                }
+            });
+        } else {
             inArmLeft.setPosition(0.65);//左arm位置
             inArmRight.setPosition(0.48);//右arm位置
             inAngleLeft.setPosition(0.47);
             inAngleRight.setPosition(0.7);
-        sleep(500);
-        backPos = false;
+            scheduler.addTaskAfter(500, new Runnable() {
+                @Override
+                public void run() {
+                    backPos = false;
+                }
+            });
+        }
     }
 
     public void inTurn(double num){
@@ -149,9 +183,13 @@ public class Arm {
             inArmRight.setPosition(0.83);//右arm位置
             inAngleLeft.setPosition(0.92);
             inAngleRight.setPosition(0.25);
-            sleep(500);
-            inClaw.setPosition(0.2);
-            backPos = true;
+            scheduler.addTaskAfter(500, new Runnable() {
+                @Override
+                public void run() {
+                    inClaw.setPosition(0.2);
+                    backPos = true;
+                }
+            });
         }
     }
 
@@ -230,11 +268,7 @@ public class Arm {
         outArmRight.setPosition(0.5 - d);//右arm位置
     }
 
-    private void sleep(long milliseconds) {
-        try {
-            Thread.sleep(milliseconds);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+    public void setScheduler(Scheduler scheduler) {
+        this.scheduler = scheduler;
     }
 }
