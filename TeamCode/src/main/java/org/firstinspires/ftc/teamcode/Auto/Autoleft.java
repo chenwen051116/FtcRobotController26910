@@ -31,11 +31,12 @@ public class Autoleft extends LinearOpMode {
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
         AutoRobot robot = new AutoRobot(hardwareMap);
         TrajectorySequence FinalAuto1 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
-
-                .lineToLinearHeading(highBarPos)//走到杆前面
-                .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.highBar();//把arm伸上去
                 })
+                .waitSeconds(0.5)
+                .lineToLinearHeading(highBarPos)//走到杆前面
+
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.dropSpe();//挂上并松手
                 })

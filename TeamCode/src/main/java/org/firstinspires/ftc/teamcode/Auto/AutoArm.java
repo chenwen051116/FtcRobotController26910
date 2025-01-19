@@ -46,7 +46,11 @@ public class AutoArm {
 
         basketBack();
 
-        inArmTrans();
+        inArmLeft.setPosition(0.5);//左arm位置
+        inArmRight.setPosition(0.63);//右arm位置
+        inAngleLeft.setPosition(0.92);
+        inAngleRight.setPosition(0.25);
+        inClaw.setPosition(0.4);
         speClaw.setPosition(0.15);
         HzArmSet(1);
         inTurn(0);
@@ -105,11 +109,11 @@ public class AutoArm {
 
 
     public void frontIntake() {//放下前面arm开始吸
-        inClaw.setPosition(0.3);
+        inClaw.setPosition(0.4);
         inArmLeft.setPosition(0.85);//左arm位置
         inArmRight.setPosition(0.28);//右arm位置
-        inAngleLeft.setPosition(0.32);
-        inAngleRight.setPosition(0.85);
+        inAngleLeft.setPosition(0.37);
+        inAngleRight.setPosition(0.8);
         sleep(500);
         inClaw.setPosition(0.7);
         sleep(500);
@@ -141,7 +145,9 @@ public class AutoArm {
             inAngleLeft.setPosition(0.92);
             inAngleRight.setPosition(0.25);
             sleep(500);
-            inClaw.setPosition(0.2);
+            inClaw.setPosition(0.4);
+            inArmLeft.setPosition(0.5);//左arm位置
+            inArmRight.setPosition(0.63);//右arm位置
             backPos = true;
 
     }
