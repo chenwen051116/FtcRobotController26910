@@ -8,6 +8,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.lib.Robot;
+import org.firstinspires.ftc.teamcode.lib.schedule.Scheduler;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp
 public class TeleOp extends LinearOpMode {
@@ -15,11 +16,15 @@ public class TeleOp extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        Robot robot = new Robot(hardwareMap);
+        Scheduler scheduler = new Scheduler();
+        Robot robot = new Robot(hardwareMap, scheduler);
         robot.Teleinit(hardwareMap);
 
         waitForStart();
         while (opModeIsActive()) {
+            // check and execute all scheduled task at the beginning of each loop
+            scheduler.elapse();
+
             //gamepad1 base and front arm controll
             if (gamepad1.left_bumper|| gamepad1.right_bumper) {
                 robot.chassis.lowSpeed();

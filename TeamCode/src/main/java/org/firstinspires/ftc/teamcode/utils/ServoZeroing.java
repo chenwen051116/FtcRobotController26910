@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.lib.Robot;
+import org.firstinspires.ftc.teamcode.lib.schedule.Scheduler;
 
 @Autonomous
 public class ServoZeroing extends LinearOpMode {
@@ -11,7 +12,8 @@ public class ServoZeroing extends LinearOpMode {
 
     @Override
     public void runOpMode(){
-        Robot robot = new Robot(hardwareMap);
+        Scheduler scheduler = new Scheduler();
+        Robot robot = new Robot(hardwareMap, scheduler);
         robot.Teleinit(hardwareMap);
         waitForStart();
         while (opModeIsActive()){

@@ -4,6 +4,8 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.lib.schedule.Scheduler;
+
 
 public class Robot {
     public ElapsedTime timer = new ElapsedTime();
@@ -13,9 +15,10 @@ public class Robot {
     HardwareMap hardwareMap;
 
     //public Visual v = new Visual();
-    public Robot(HardwareMap mp) {
+    public Robot(HardwareMap mp, Scheduler scheduler) {
         this.hardwareMap = mp;
         chassis = new Chassis(hardwareMap);
+        this.arm.setScheduler(scheduler);
     }
 
     public void Autoinit(HardwareMap hwm) {
