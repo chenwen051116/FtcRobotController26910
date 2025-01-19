@@ -44,37 +44,26 @@ public class Autoleft extends LinearOpMode {
                     robot.arm.VtBack();//把arm收回来
                 })
 
-
-
                 .lineToLinearHeading(g1Pos)//准备吸取第一个地上的
                 .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
-                    robot.arm.frontIntake();//放下滚吸
+                    robot.arm.HzArmSet(100);
                 })
-                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
-                    robot.arm.getIntake=true;
-                    robot.arm.intakeMupdate();//开启滚吸
-                    robot.arm.HzArmSet(1500);//往前申滑轨
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
+                    robot.arm.frontIntakeDown();
                 })
-                .waitSeconds(1)//操作时间
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.getIntake=false;
-                    robot.arm.intakeMupdate();
-                    robot.arm.HzArmSet(0);
-                    robot.arm.inArmTrans();
-
-                })
-                .waitSeconds(0.5)
-                .lineToLinearHeading(highBarPos1)//夹样本位置
-                .UNSTABLE_addTemporalMarkerOffset(-1.5, () -> {
-                    robot.arm.getIntake=false;
-                    robot.arm.reverseIntake=true;
-                    robot.arm.intakeMupdate();//停止滚吸
-                })
-                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
-                    robot.arm.getIntake=false;
-                    robot.arm.reverseIntake=false;
-                    robot.arm.intakeMupdate();//停止滚吸
                     robot.arm.frontIntake();
+                })
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.inArmTrans();
+                })
+                .waitSeconds(0.5)//操作时间
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.HzArmSet(100);
+                })
+                .lineToLinearHeading(highBarPos1)//夹样本位置
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
+                    robot.arm.frontIntakeDown();
                     robot.arm.highBasket();
                 })
                 .waitSeconds(1)
@@ -83,9 +72,6 @@ public class Autoleft extends LinearOpMode {
                 })
                 .waitSeconds(1)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.getIntake=false;
-                    robot.arm.reverseIntake=false;
-                    robot.arm.intakeMupdate();//停止滚吸
                     robot.arm.basketBack();
                     robot.arm.VtBack();
                 })
@@ -94,32 +80,26 @@ public class Autoleft extends LinearOpMode {
 
         TrajectorySequence FinalAuto2 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
 
-                .lineToLinearHeading(g2Pos)//准备吸取第2个地上的
-                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
-                    robot.arm.getIntake=true;
-                    robot.arm.intakeMupdate();//开启滚吸
-                    robot.arm.HzArmSet(1400);//往前申滑轨
+                .lineToLinearHeading(g2Pos)//准备吸取第一个地上的
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
+                    robot.arm.HzArmSet(100);
                 })
-                .waitSeconds(0.8)//操作时间
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
+                    robot.arm.frontIntakeDown();
+                })
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.getIntake=false;
-                    robot.arm.intakeMupdate();
-                    robot.arm.HzArmSet(0);
-                    robot.arm.inArmTrans();
-
-                })
-                .waitSeconds(0.5)
-                .lineToLinearHeading(highBarPos2)//夹样本位置
-                .UNSTABLE_addTemporalMarkerOffset(-1.5, () -> {
-                    robot.arm.getIntake=false;
-                    robot.arm.reverseIntake=true;
-                    robot.arm.intakeMupdate();//停止滚吸
-                })
-                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
-                    robot.arm.getIntake=false;
-                    robot.arm.reverseIntake=false;
-                    robot.arm.intakeMupdate();//停止滚吸
                     robot.arm.frontIntake();
+                })
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.inArmTrans();
+                })
+                .waitSeconds(0.5)//操作时间
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.HzArmSet(100);
+                })
+                .lineToLinearHeading(highBarPos2)//夹样本位置
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
+                    robot.arm.frontIntakeDown();
                     robot.arm.highBasket();
                 })
                 .waitSeconds(1)
@@ -128,42 +108,32 @@ public class Autoleft extends LinearOpMode {
                 })
                 .waitSeconds(1)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.getIntake=false;
-                    robot.arm.reverseIntake=false;
-                    robot.arm.intakeMupdate();//停止滚吸
                     robot.arm.basketBack();
                     robot.arm.VtBack();
                 })
                 //.waitSeconds(2)
                 .build();
         TrajectorySequence FinalAuto3 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
-
-                .lineToLinearHeading(g3Pos)//准备吸取第2个地上的
+                .lineToLinearHeading(g1Pos)//准备吸取第一个地上的
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
+                    robot.arm.HzArmSet(100);
+                })
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
+                    robot.arm.frontIntakeDown();
+                })
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.getIntake=true;
-                    robot.arm.intakeMupdate();//开启滚吸
-                    robot.arm.HzArmSet(800);//往前申滑轨
-                })
-                .waitSeconds(1.3)//操作时间
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.getIntake=false;
-                    robot.arm.intakeMupdate();
-                    robot.arm.HzArmSet(0);
-                    robot.arm.inArmTrans();
-
-                })
-                .waitSeconds(0.5)
-                .lineToLinearHeading(highBarPos3)//夹样本位置
-                .UNSTABLE_addTemporalMarkerOffset(-1.5, () -> {
-                    robot.arm.getIntake=false;
-                    robot.arm.reverseIntake=true;
-                    robot.arm.intakeMupdate();//停止滚吸
-                })
-                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
-                    robot.arm.getIntake=false;
-                    robot.arm.reverseIntake=false;
-                    robot.arm.intakeMupdate();//停止滚吸
                     robot.arm.frontIntake();
+                })
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.inArmTrans();
+                })
+                .waitSeconds(0.5)//操作时间
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.HzArmSet(100);
+                })
+                .lineToLinearHeading(highBarPos1)//夹样本位置
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
+                    robot.arm.frontIntakeDown();
                     robot.arm.highBasket();
                 })
                 .waitSeconds(1)
@@ -172,13 +142,10 @@ public class Autoleft extends LinearOpMode {
                 })
                 .waitSeconds(1)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.getIntake=false;
-                    robot.arm.reverseIntake=false;
-                    robot.arm.intakeMupdate();//停止滚吸
                     robot.arm.basketBack();
                     robot.arm.VtBack();
                 })
-                .waitSeconds(2)
+                //.waitSeconds(2)
                 .build();
 
 
@@ -189,9 +156,9 @@ public class Autoleft extends LinearOpMode {
         //while (!isStopRequested() && opModeIsActive()){
         robot.chassis.drive.followTrajectorySequence(FinalAuto1);
         robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));
-        robot.chassis.drive.followTrajectorySequence(FinalAuto2);
-        robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));
-        robot.chassis.drive.followTrajectorySequence(FinalAuto3);
+        //robot.chassis.drive.followTrajectorySequence(FinalAuto2);
+        //robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));
+        //robot.chassis.drive.followTrajectorySequence(FinalAuto3);
 
 
     }
