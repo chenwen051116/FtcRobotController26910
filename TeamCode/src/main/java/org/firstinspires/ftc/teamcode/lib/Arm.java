@@ -7,8 +7,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.lib.schedule.Scheduler;
 
-import java.util.concurrent.Callable;
-
 public class Arm {
     public DcMotorEx VtLeft = null;
     public DcMotorEx VtRight = null;
