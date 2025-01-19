@@ -145,8 +145,8 @@ public class Arm {
         // getIntake false 不再吸了
         HzArmSet(5);
         if(-hzFront.getCurrentPosition()<10) {
-            inArmLeft.setPosition(0.5);//左arm位置
-            inArmRight.setPosition(0.73);//右arm位置
+            inArmLeft.setPosition(0.3);//左arm位置
+            inArmRight.setPosition(0.83);//右arm位置
             inAngleLeft.setPosition(0.92);
             inAngleRight.setPosition(0.25);
             sleep(500);
