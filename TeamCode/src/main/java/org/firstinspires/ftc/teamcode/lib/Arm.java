@@ -68,6 +68,11 @@ public class Arm {
 
     }
 
+    public void TurnSet(double pos){
+        inAngleLeft.setPosition(0.9-pos);
+        inAngleRight.setPosition(0+pos);
+    }
+
     public void HzArmSet(int pos) {
         hzFront.setPower(0.7);
         frontArmPos = pos;
@@ -130,8 +135,7 @@ public class Arm {
             inClaw.setPosition(0.4);
             inArmLeft.setPosition(0.85);//左arm位置
             inArmRight.setPosition(0.28);//右arm位置
-            inAngleLeft.setPosition(0.37);
-            inAngleRight.setPosition(0.8);
+            TurnSet(0.9);
             scheduler.addTaskAfter(500, new Runnable() {
                 @Override
                 public void run() {
@@ -143,8 +147,7 @@ public class Arm {
                 public void run() {
                     inArmLeft.setPosition(0.65);//左arm位置
                     inArmRight.setPosition(0.48);//右arm位置
-                    inAngleLeft.setPosition(0.47);
-                    inAngleRight.setPosition(0.7);
+                    TurnSet(0.6);
                 }
             });
             scheduler.addTaskAfter(1500, new Runnable() {
@@ -156,8 +159,7 @@ public class Arm {
         } else {
             inArmLeft.setPosition(0.65);//左arm位置
             inArmRight.setPosition(0.48);//右arm位置
-            inAngleLeft.setPosition(0.47);
-            inAngleRight.setPosition(0.7);
+            TurnSet(0.6);
             scheduler.addTaskAfter(500, new Runnable() {
                 @Override
                 public void run() {
@@ -179,8 +181,7 @@ public class Arm {
         if(-hzFront.getCurrentPosition()<10) {
             inArmLeft.setPosition(0.3);//左arm位置
             inArmRight.setPosition(0.83);//右arm位置
-            inAngleLeft.setPosition(0.92);
-            inAngleRight.setPosition(0.25);
+            TurnSet(0.1);
             scheduler.addTaskAfter(500, new Runnable() {
                 @Override
                 public void run() {
@@ -244,28 +245,29 @@ public class Arm {
     }
 
     public void basketOut() {//倒到框里
-        double d = 0.61 - 0.2767;
-        outArmLeft.setPosition(0.61 - d);//左arm位置
-        outArmRight.setPosition(0.5 + d);//右arm位置
+        double d= 0.37;
+        outArmLeft.setPosition(0.61 + d);//左arm位置
+        outArmRight.setPosition(0.5 - d);//右arm位置
+
     }
 
     public void finalClimb() {//倒到框里
-        double d = 0.40;
-        outArmLeft.setPosition(0.61 - d);//左arm位置
-        outArmRight.setPosition(0.5 + d);//右arm位置
+        double d= 0.3;
+        outArmLeft.setPosition(0.61 + d);//左arm位置
+        outArmRight.setPosition(0.5 - d);//右arm位置
         speClaw.setPosition(0.6);//松手舵机位置
         VtArmSet(2300);
         HzArmSet(200);
 
     }
     public void basketBack() {//框里收回来
-        double d= 0.89 - 0.61;
+        double d = 0.4133;
+        outArmLeft.setPosition(0.61 - d);//左arm位置
+        outArmRight.setPosition(0.5 + d);//右arm位置
         if(frontArmPos < 200 && VtLeft.getCurrentPosition() < 200) {
             // 如果竖着的杆太低了，横着的杆又收的抬回来了。
             HzArmSet(200);
         }
-        outArmLeft.setPosition(0.61 + d);//左arm位置
-        outArmRight.setPosition(0.5 - d);//右arm位置
     }
 
     public void setScheduler(Scheduler scheduler) {

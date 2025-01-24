@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -11,20 +12,20 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.ext.roadrunner.trajectorysequence.TrajectorySequence;
 
 @Config
-@Autonomous
-//@com.qualcomm.robotcore.eventloop.opmode.TeleOp
+//@Autonomous
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp
 public class Autoleft extends LinearOpMode {
 
     public Pose2d startPos = new Pose2d(0, 0, 0);
     public Pose2d highBarPos = new Pose2d(-29.7918, 3.8298, 0);////改
-    public Pose2d g1Pos = new Pose2d(-11.705, -32.517, Math.toRadians(178));
-    public Pose2d g2Pos = new Pose2d(39.298, 5.125, Math.toRadians(122.795));//需要调整
-    public Pose2d g3Pos = new Pose2d(35.05,23.511, Math.toRadians(151.99));
-    //public Pose2d g3Pos = new Pose2d(-17.7793, 30.1948, 1.9523);//需要调整
+    public Pose2d g1Pos = new Pose2d(-11.705, -38.017, Math.toRadians(178));
+    public Pose2d g2Pos = new Pose2d(-11.705, -45.517, Math.toRadians(180));//需要调整
+    public Pose2d g3Pos = new Pose2d(20.55,-9.15, Math.toRadians(80));
+    //public Pose2d g3Pos = new Pose217.7793, 30.1948, 1.9523);//需要调整
 
-    public Pose2d highBarPos1 = new Pose2d(-3.5 , -45.9428 , Math.toRadians(132.259));//需要调整
-    public Pose2d highBarPos2 = new Pose2d(0.2 , 1.5 , -0.1);//需要调整
-    public Pose2d highBarPos3 = new Pose2d(-0.3 , 0 , 0);//需要调整
+    public Pose2d highBarPos1 = new Pose2d(0.5 , -45.5428 , Math.toRadians(132.259));//需要调整
+    public Pose2d highBarPos2 = new Pose2d(-11.73 , 2.51 , Math.toRadians(307));//需要调整
+    public Pose2d highBarPos3 = new Pose2d(-9.93 , 2.5 , Math.toRadians(307));//需要调整
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -47,9 +48,9 @@ public class Autoleft extends LinearOpMode {
 
                 .lineToLinearHeading(g1Pos)//准备吸取第一个地上的
                 .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
-                    robot.arm.HzArmSet(500);
+                    robot.arm.HzArmSet(450);
                 })
-                .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     robot.arm.frontIntakeDown();
                 })
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
@@ -60,6 +61,7 @@ public class Autoleft extends LinearOpMode {
                 })
                 .waitSeconds(0.5)//操作时间
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+
                     robot.arm.HzArmSet(100);
                 })
                 .lineToLinearHeading(highBarPos1)//夹样本位置
@@ -81,20 +83,20 @@ public class Autoleft extends LinearOpMode {
                     robot.arm.VtBack();
 
                 })
-
-
-                //.waitSeconds(2)
-                .build();
-
-        TrajectorySequence FinalAuto2 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
-
-                .lineToLinearHeading(g2Pos)//准备吸取第一个地上的
+                .splineTo(new Vector2d(g2Pos.getX(), g2Pos.getY()),g2Pos.getHeading())
+                //.splineTo(g2Pos)//准备吸取第一个地上的
                 .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
-                    robot.arm.HzArmSet(100);
+                    robot.arm.HzArmSet(480);
                 })
                 .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
                     robot.arm.frontIntakeDown();
                 })
+                .waitSeconds(1)
+                .build();
+
+        TrajectorySequence FinalAuto2 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
+
+
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.frontIntake();
                 })
@@ -120,11 +122,9 @@ public class Autoleft extends LinearOpMode {
                     robot.arm.VtBack();
                 })
                 //.waitSeconds(2)
-                .build();
-        TrajectorySequence FinalAuto3 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
-                .lineToLinearHeading(g1Pos)//准备吸取第一个地上的
+                .splineTo(new Vector2d(g3Pos.getX(), g3Pos.getY()),g3Pos.getHeading())
                 .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
-                    robot.arm.HzArmSet(100);
+                    robot.arm.HzArmSet(470);
                 })
                 .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
                     robot.arm.frontIntakeDown();
@@ -139,7 +139,7 @@ public class Autoleft extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.HzArmSet(100);
                 })
-                .lineToLinearHeading(highBarPos1)//夹样本位置
+                .lineToLinearHeading(highBarPos3)//夹样本位置
                 .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
                     robot.arm.frontIntakeDown();
                     robot.arm.highBasket();
@@ -152,9 +152,12 @@ public class Autoleft extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.basketBack();
                     robot.arm.VtBack();
+                    robot.arm.HzArmSet(0);
                 })
-                //.waitSeconds(2)
+                .waitSeconds(5)
+                .back(1)
                 .build();
+
 
 
 
@@ -164,9 +167,7 @@ public class Autoleft extends LinearOpMode {
         //while (!isStopRequested() && opModeIsActive()){
         robot.chassis.drive.followTrajectorySequence(FinalAuto1);
         robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));
-        //robot.chassis.drive.followTrajectorySequence(FinalAuto2);
-        //robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));
-        //robot.chassis.drive.followTrajectorySequence(FinalAuto3);
+        robot.chassis.drive.followTrajectorySequence(FinalAuto2);
 
 
     }
