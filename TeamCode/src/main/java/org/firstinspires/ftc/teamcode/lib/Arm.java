@@ -59,13 +59,12 @@ public class Arm {
     }
 
     public void VtArmSet(int pos) {
+        VtLeft.setPower(0.5);
+        VtRight.setPower(0.5);
         VtLeft.setTargetPosition(pos);
-        VtLeft.setPower(1);
         VtLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        VtRight.setPower(1);
-        VtRight.setTargetPosition(-pos);
+        VtRight.setTargetPosition(pos);
         VtRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
     }
 
     public void TurnSet(double pos){
@@ -202,9 +201,7 @@ public class Arm {
     }
 
 
-    public void highBasket() {
-        VtArmSet(2755);//高框arm位置
-    }
+    public void highBasket() { VtArmSet(2755);}
 
     public void lowBasket() {
         VtArmSet(1242);//低框arm位置
@@ -272,5 +269,13 @@ public class Arm {
 
     public void setScheduler(Scheduler scheduler) {
         this.scheduler = scheduler;
+    }
+
+    private void sleep(long ms){
+        try{
+            Thread.sleep(ms);
+        } catch (InterruptedException e){
+            Thread.currentThread().interrupt();
+        }
     }
 }

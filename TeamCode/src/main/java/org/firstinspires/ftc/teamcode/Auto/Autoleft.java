@@ -15,17 +15,26 @@ import org.firstinspires.ftc.teamcode.ext.roadrunner.trajectorysequence.Trajecto
 //@Autonomous
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp
 public class Autoleft extends LinearOpMode {
+    public static double g1x = -11.705;
+    public static double g1y = -38.017;
+    public static double g1ang = 3.1415;
+    public static double g2x = -11.705;
+    public static double g2y = -45.517;
+    public static double g2ang = 180;
+    public static double g3x = 20.55;
+    public static double g3y = -9.15;
+    public static double g3ang = 80;
 
     public Pose2d startPos = new Pose2d(0, 0, 0);
     public Pose2d highBarPos = new Pose2d(-29.7918, 3.8298, 0);////改
-    public Pose2d g1Pos = new Pose2d(-11.705, -38.017, Math.toRadians(178));
-    public Pose2d g2Pos = new Pose2d(-11.705, -45.517, Math.toRadians(180));//需要调整
-    public Pose2d g3Pos = new Pose2d(20.55,-9.15, Math.toRadians(80));
-    //public Pose2d g3Pos = new Pose217.7793, 30.1948, 1.9523);//需要调整
+    public Pose2d g1Pos = new Pose2d(g1x, g1y, g1ang);
+    public Pose2d g2Pos = new Pose2d(g2x, g2y, Math.toRadians(g2ang));//需要调整
+    public Pose2d g3Pos = new Pose2d(g3x, g3y, Math.toRadians(g3ang));
+    //    //public Pose2d g3Pos = new Pose217.7793, 30.1948, 1.9523);//需要调整
 
-    public Pose2d highBarPos1 = new Pose2d(0.5 , -45.5428 , Math.toRadians(132.259));//需要调整
-    public Pose2d highBarPos2 = new Pose2d(-11.73 , 2.51 , Math.toRadians(307));//需要调整
-    public Pose2d highBarPos3 = new Pose2d(-9.93 , 2.5 , Math.toRadians(307));//需要调整
+    public Pose2d highBarPos1 = new Pose2d(0.5, -45.5428, Math.toRadians(132.259));//需要调整
+    public Pose2d highBarPos2 = new Pose2d(-11.73, 2.51, Math.toRadians(307));//需要调整
+    public Pose2d highBarPos3 = new Pose2d(-9.93, 2.5, Math.toRadians(307));//需要调整
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -83,7 +92,7 @@ public class Autoleft extends LinearOpMode {
                     robot.arm.VtBack();
 
                 })
-                .splineTo(new Vector2d(g2Pos.getX(), g2Pos.getY()),g2Pos.getHeading())
+                .splineTo(new Vector2d(g2Pos.getX(), g2Pos.getY()), g2Pos.getHeading())
                 //.splineTo(g2Pos)//准备吸取第一个地上的
                 .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
                     robot.arm.HzArmSet(480);
@@ -122,7 +131,7 @@ public class Autoleft extends LinearOpMode {
                     robot.arm.VtBack();
                 })
                 //.waitSeconds(2)
-                .splineTo(new Vector2d(g3Pos.getX(), g3Pos.getY()),g3Pos.getHeading())
+                .splineTo(new Vector2d(g3Pos.getX(), g3Pos.getY()), g3Pos.getHeading())
                 .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
                     robot.arm.HzArmSet(470);
                 })
@@ -159,14 +168,12 @@ public class Autoleft extends LinearOpMode {
                 .build();
 
 
-
-
         robot.Autoinit(hardwareMap);
         waitForStart();
         robot.chassis.drive.setPoseEstimate(startPos);
         //while (!isStopRequested() && opModeIsActive()){
         robot.chassis.drive.followTrajectorySequence(FinalAuto1);
-        robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));
+        robot.chassis.drive.setPoseEstimate(new Pose2d(0, 0, 0));
         robot.chassis.drive.followTrajectorySequence(FinalAuto2);
 
 

@@ -62,10 +62,10 @@ public class AutoArm {
 
     public void VtArmSet(int pos) {
         VtLeft.setTargetPosition(pos);
-        VtLeft.setPower(1);
+        VtLeft.setPower(0.7);
         VtLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        VtRight.setPower(1);
-        VtRight.setTargetPosition(-pos);
+        VtRight.setPower(0.7);
+        VtRight.setTargetPosition(pos);
         VtRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
     }
@@ -163,7 +163,7 @@ public class AutoArm {
 
 
     public void highBasket() {
-        VtArmSet(2755);//高框arm位置
+        VtArmSet(2700);//高框arm位置
     }
 
     public void lowBasket() {
@@ -205,9 +205,9 @@ public class AutoArm {
     }
 
     public void basketOut() {//倒到框里
-        double d = 0.61 - 0.2767;
-        outArmLeft.setPosition(0.61 - d);//左arm位置
-        outArmRight.setPosition(0.5 + d);//右arm位置
+        double d= 0.37;
+        outArmLeft.setPosition(0.61 + d);//左arm位置
+        outArmRight.setPosition(0.5 - d);//右arm位置
     }
 
     public void finalClimb() {//倒到框里
@@ -220,13 +220,13 @@ public class AutoArm {
 
     }
     public void basketBack() {//框里收回来
-        double d= 0.89 - 0.61;
         if(frontArmPos < 200 && VtLeft.getCurrentPosition() < 200) {
             // 如果竖着的杆太低了，横着的杆又收的抬回来了。
             HzArmSet(200);
         }
-        outArmLeft.setPosition(0.61 + d);//左arm位置
-        outArmRight.setPosition(0.5 - d);//右arm位置
+        double d = 0.4133;
+        outArmLeft.setPosition(0.61 - d);//左arm位置
+        outArmRight.setPosition(0.5 + d);//右arm位置
     }
 
     private void sleep(long milliseconds) {
