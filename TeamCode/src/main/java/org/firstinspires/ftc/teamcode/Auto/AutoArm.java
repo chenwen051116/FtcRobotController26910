@@ -65,7 +65,7 @@ public class AutoArm {
         VtLeft.setPower(0.7);
         VtLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         VtRight.setPower(0.7);
-        VtRight.setTargetPosition(pos);
+        VtRight.setTargetPosition(-pos);
         VtRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
     }
@@ -112,7 +112,7 @@ public class AutoArm {
     }
 
     public void frontIntake() {//放下前面arm开始吸
-        inClaw.setPosition(0.4);
+        inClaw.setPosition(0.3);
         inArmLeft.setPosition(0.85);//左arm位置
         inArmRight.setPosition(0.28);//右arm位置
         TurnSet(0.9);
@@ -163,7 +163,7 @@ public class AutoArm {
 
 
     public void highBasket() {
-        VtArmSet(2700);//高框arm位置
+        VtArmSet(2000);//高框arm位置
     }
 
     public void lowBasket() {

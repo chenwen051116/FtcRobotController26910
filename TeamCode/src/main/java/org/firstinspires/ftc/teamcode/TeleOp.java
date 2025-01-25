@@ -48,13 +48,15 @@ public class TeleOp extends LinearOpMode {
             //robot.arm.intakeMupdate();
             telemetry.addData("position1:", robot.arm.VtLeft.getCurrentPosition());
             telemetry.addData("position2:", robot.arm.VtRight.getCurrentPosition());
+            telemetry.addData("position1:", robot.arm.VtLeft.getPower());
+            telemetry.addData("position2:", robot.arm.VtRight.getPower());
             telemetry.update();
             robot.arm.inTurn(gamepad2.left_stick_x);
             if (gamepad2.dpad_down) {
                 //robot.arm.frontIntake();
                 robot.arm.frontArmBack();
             }
-            if(gamepad2.dpad_up){
+            if(gamepad2.dpad_up && (-gamepad2.right_stick_y>0.5)){
                 robot.arm.finalClimb();
             }
 

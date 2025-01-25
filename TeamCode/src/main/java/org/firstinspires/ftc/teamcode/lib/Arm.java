@@ -49,21 +49,26 @@ public class Arm {
         hzFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         //hzFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hzFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-
+        inClaw.setPosition(0.4);
+        inArmLeft.setPosition(0.5);//左arm位置
+        inArmRight.setPosition(0.63);//右arm位置
+        backPos = true;
+        TurnSet(0.1);
         basketBack();
 
-        inArmTrans();
+
+
         speClaw.setPosition(0.37);
         HzArmSet(5);
         inTurn(0);
     }
 
     public void VtArmSet(int pos) {
-        VtLeft.setPower(0.5);
-        VtRight.setPower(0.5);
+        VtLeft.setPower(0.8);
+        VtRight.setPower(0.8);
         VtLeft.setTargetPosition(pos);
         VtLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        VtRight.setTargetPosition(pos);
+        VtRight.setTargetPosition(-pos);
         VtRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
@@ -77,6 +82,7 @@ public class Arm {
         frontArmPos = pos;
         hzFront.setTargetPosition(-frontArmPos);
         hzFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
     }
 
     public void closeClaw() {//夹样本
@@ -105,8 +111,8 @@ public class Arm {
     public void HzArmVel(double power) {
         // 控制目标点
         frontArmPos += 10 * power;
-        if (frontArmPos > 1450) {
-            HzArmSet(1450);
+        if (frontArmPos > 1250) {
+            HzArmSet(1250);
         } else if (frontArmPos < 0) {
             HzArmSet(0);
         } else {
@@ -201,7 +207,7 @@ public class Arm {
     }
 
 
-    public void highBasket() { VtArmSet(2755);}
+    public void highBasket() { VtArmSet(2000);}
 
     public void lowBasket() {
         VtArmSet(1242);//低框arm位置
@@ -253,7 +259,7 @@ public class Arm {
         outArmLeft.setPosition(0.61 + d);//左arm位置
         outArmRight.setPosition(0.5 - d);//右arm位置
         speClaw.setPosition(0.6);//松手舵机位置
-        VtArmSet(2300);
+        VtArmSet(1300);
         HzArmSet(200);
 
     }
