@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.lib;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.qualcomm.hardware.dfrobot.HuskyLens;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
@@ -15,6 +17,10 @@ public class Visual {
     private IMU imu;
 
     public void teleInit(HardwareMap hwm) {
+        HL = hwm.get(HuskyLens.class, "HL");
+        HuskyLens.Block[] myHuskyLensBlocks = HL.blocks();
+        HL.selectAlgorithm(HuskyLens.Algorithm.COLOR_RECOGNITION);
+
         imu = hwm.get(IMU.class, "imu");
         limelight = hwm.get(Limelight3A.class, "lm");
         limelight.setPollRateHz(100);
@@ -81,5 +87,25 @@ public class Visual {
     public void llstop() {
         limelight.stop();
     }
+
+
+    private HuskyLens HL;
+    private HuskyLens.Block myHuskyLensBlock;
+    private VisionUtils Vu;
+    private HuskyLens.Block[] myHuskyLensBlocks = null;
+    public double hlGetangle(int id) {
+        myHuskyLensBlocks = HL.blocks();
+        for (HuskyLens.Block myHuskyLensBlock_item : myHuskyLensBlocks) {
+            myHuskyLensBlock = myHuskyLensBlock_item;
+            if(myHuskyLensBlock.id == id){
+
+            }
+            //telemetry.addData("Block", "id=" + myHuskyLensBlock.id + " size: " + myHuskyLensBlock.width + "x" + myHuskyLensBlock.height + " position: " + myHuskyLensBlock.x + "," + myHuskyLensBlock.y);
+        }
+    }
+
+
+
+
 
 }

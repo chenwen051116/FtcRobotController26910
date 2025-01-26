@@ -51,6 +51,7 @@ public class Test extends LinearOpMode {
                         myHuskyLensBlock = myHuskyLensBlock_item;
                         telemetry.addData("Block", "id=" + myHuskyLensBlock.id + " size: " + myHuskyLensBlock.width + "x" + myHuskyLensBlock.height + " position: " + myHuskyLensBlock.x + "," + myHuskyLensBlock.y);
                     }
+
                     telemetry.update();
                 }
             }
