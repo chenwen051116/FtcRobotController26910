@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode.lib;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+
 public class VisionUtils {
     public static final int FRAME_WIDTH = 319;   // Maximum x coordinate
     public static final int FRAME_HEIGHT = 239;  // Maximum y coordinate
     public static final double BLOCK_WIDTH = 103;
     public static final double BLOCK_HEIGHT = 198;  // Make sure that block height is larger than width
     public static final double BLOCK_DIAGONAL_SQ = BLOCK_WIDTH * BLOCK_WIDTH + BLOCK_HEIGHT * BLOCK_HEIGHT;
+    public static final double BLOCK_DIAGONAL = Math.sqrt(BLOCK_DIAGONAL_SQ);
     public static final double BLOCK_DIAGONAL_ANGLE = Math.atan(BLOCK_WIDTH / BLOCK_HEIGHT);
 
     /**
@@ -26,18 +29,20 @@ public class VisionUtils {
         return BLOCK_DIAGONAL_ANGLE + Math.atan(Math.sqrt(BLOCK_DIAGONAL_SQ - frameWidth * frameWidth) / frameWidth);
     }
 
-    enum BlockStatus {
-        UnableToCalculate,
-        Horizontal,
-        Vertical,
-    }
-
+    public static Pose2d ERROR_VALUE = new Pose2d(Double.NaN, Double.NaN, Double.NaN);
     public static double EDGE_THRESHOLD = 2;  // The threshold for the frame to be considered "on the edge". Unit: # of pixels
 
     /**
      * Get the current status of the block given the parameters of the frame.
+     * @return A Pose2d structure giving the block center's X and Y position, and the block's angle
+     * (0°=horizontal, 90°=vertical).
+     * If the return value is (NaN, NaN, NaN), that means the program fails to find the parameters
+     * of the block
      */
-    public static BlockStatus getStatus(double width, double height, double centerX, double centerY) {
+    public static Pose2d getStatus(double width, double height, double centerX, double centerY) {
+        if(width < BLOCK_WIDTH || height < BLOCK_WIDTH) {
+            return ERROR_VALUE;
+        }
         double w_2 = width / 2;
         double h_2 = height / 2;
         double x1 = centerX - w_2;
@@ -52,14 +57,27 @@ public class VisionUtils {
         int cnt = (leftEdge?1:0) + (rightEdge?1:0) + (upEdge?1:0) + (downEdge?1:0);
 
         double PI_4 = Math.PI / 4;  // 45 degree
+        double PI_2 = Math.PI / 2;  // 90 degree
         if(cnt >= 2) {
             // if the frame has more than 2 sides on the edge
-            return BlockStatus.UnableToCalculate;
+            return ERROR_VALUE;
         }
         if (leftEdge || rightEdge) {
-            return (calcAngle(height) >= PI_4) ? BlockStatus.Horizontal : BlockStatus.Vertical;
+            double angle = calcAngle(height);
+            if(Double.isNaN(angle)) {
+                return ERROR_VALUE;
+            }
+            double length = 0.5 * BLOCK_DIAGONAL * Math.sin(angle + BLOCK_DIAGONAL_ANGLE);
+            double blockCenterX = leftEdge ? (centerX + width / 2 - length) : (centerX - width / 2 + length);
+            return new Pose2d(blockCenterX, centerY, PI_2 - angle);
         } else {
-            return (calcAngle(width) >= PI_4) ? BlockStatus.Vertical : BlockStatus.Horizontal;
+            double angle = calcAngle(width);
+            if(Double.isNaN(angle)) {
+                return ERROR_VALUE;
+            }
+            double length = 0.5 * BLOCK_DIAGONAL * Math.sin(angle + BLOCK_DIAGONAL_ANGLE);
+            double blockCenterY = upEdge ? (centerY + width / 2 - length) : (centerY - width / 2 + length);
+            return new Pose2d(centerX, blockCenterY, angle);
         }
     }
 }
