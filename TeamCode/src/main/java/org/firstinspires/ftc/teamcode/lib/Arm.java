@@ -73,8 +73,8 @@ public class Arm {
     }
 
     public void TurnSet(double pos){
-        inAngleLeft.setPosition(0.9-pos);
-        inAngleRight.setPosition(0+pos);
+        inAngleLeft.setPosition(pos);
+       // inAngleRight.setPosition(0+pos);
     }
 
     public void HzArmSet(int pos) {
@@ -137,25 +137,31 @@ public class Arm {
         // 把两个 servo 放下去
         // 把滚吸过放下去
         if(!backPos) {
-            inClaw.setPosition(0.4);
-            inArmLeft.setPosition(0.85);//左arm位置
-            inArmRight.setPosition(0.28);//右arm位置
-            TurnSet(0.9);
-            scheduler.addTaskAfter(500, new Runnable() {
+            TurnSet(0.1);
+            scheduler.addTaskAfter(300, new Runnable() {
+                @Override
+                public void run() {
+                    inClaw.setPosition(0.4);
+                    inArmLeft.setPosition(0.85);//左arm位置
+                    inArmRight.setPosition(0.32);//右arm位置
+                }
+            });
+
+            scheduler.addTaskAfter(800, new Runnable() {
                 @Override
                 public void run() {
                     inClaw.setPosition(0.7);
                 }
             });
-            scheduler.addTaskAfter(1000, new Runnable() {
+            scheduler.addTaskAfter(1300, new Runnable() {
                 @Override
                 public void run() {
                     inArmLeft.setPosition(0.65);//左arm位置
-                    inArmRight.setPosition(0.48);//右arm位置
-                    TurnSet(0.6);
+                    inArmRight.setPosition(0.52);//右arm位置
+                    TurnSet(0.32);
                 }
             });
-            scheduler.addTaskAfter(1500, new Runnable() {
+            scheduler.addTaskAfter(1800, new Runnable() {
                 @Override
                 public void run() {
                     backPos = false;
@@ -163,8 +169,8 @@ public class Arm {
             });
         } else {
             inArmLeft.setPosition(0.65);//左arm位置
-            inArmRight.setPosition(0.48);//右arm位置
-            TurnSet(0.6);
+            inArmRight.setPosition(0.52);//右arm位置
+            TurnSet(0.32);
             scheduler.addTaskAfter(500, new Runnable() {
                 @Override
                 public void run() {
@@ -184,15 +190,15 @@ public class Arm {
         // getIntake false 不再吸了
         HzArmSet(5);
         if(-hzFront.getCurrentPosition()<10) {
-            inArmLeft.setPosition(0.3);//左arm位置
-            inArmRight.setPosition(0.83);//右arm位置
-            TurnSet(0.1);
+            inArmLeft.setPosition(0.35);//左arm位置
+            inArmRight.setPosition(0.82);//右arm位置
+            TurnSet(0.8);
             scheduler.addTaskAfter(500, new Runnable() {
                 @Override
                 public void run() {
                     inClaw.setPosition(0.4);
                     inArmLeft.setPosition(0.5);//左arm位置
-                    inArmRight.setPosition(0.63);//右arm位置
+                    inArmRight.setPosition(0.67);//右arm位置
                     backPos = true;
                 }
             });

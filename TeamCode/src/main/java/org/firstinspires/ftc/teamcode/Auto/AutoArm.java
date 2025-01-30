@@ -107,15 +107,15 @@ public class AutoArm {
 
     }
     public void TurnSet(double pos){
-        inAngleLeft.setPosition(0.9-pos);
-        inAngleRight.setPosition(0+pos);
+        inAngleLeft.setPosition(pos);
+        //inAngleRight.setPosition(0+pos);
     }
 
     public void frontIntake() {//放下前面arm开始吸
         inClaw.setPosition(0.3);
         inArmLeft.setPosition(0.85);//左arm位置
         inArmRight.setPosition(0.28);//右arm位置
-        TurnSet(0.9);
+        TurnSet(0.1);
         sleep(500);
         inClaw.setPosition(0.7);
         sleep(500);
@@ -129,7 +129,7 @@ public class AutoArm {
 
         inArmLeft.setPosition(0.65);//左arm位置
         inArmRight.setPosition(0.48);//右arm位置
-        TurnSet(0.6);
+        TurnSet(0.4);
         //sleep(500);
     }
 
@@ -144,7 +144,7 @@ public class AutoArm {
         HzArmSet(5);
         inArmLeft.setPosition(0.3);//左arm位置
         inArmRight.setPosition(0.83);//右arm位置
-        TurnSet(0.1);
+        TurnSet(0.8);
             sleep(500);
             inClaw.setPosition(0.4);
             sleep(500);

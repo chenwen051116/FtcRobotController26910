@@ -46,12 +46,19 @@ public class TeleOp extends LinearOpMode {
 
             robot.arm.HzArmVel(-gamepad2.left_stick_y);
             //robot.arm.intakeMupdate();
-            telemetry.addData("position1:", robot.arm.VtLeft.getCurrentPosition());
-            telemetry.addData("position2:", robot.arm.VtRight.getCurrentPosition());
-            telemetry.addData("position1:", robot.arm.VtLeft.getPower());
-            telemetry.addData("position2:", robot.arm.VtRight.getPower());
+//            telemetry.addData("position1:", robot.arm.VtLeft.getCurrentPosition());
+//            telemetry.addData("position2:", robot.arm.VtRight.getCurrentPosition());
+//            telemetry.addData("position1:", robot.arm.VtLeft.getPower());
+//            telemetry.addData("position2:", robot.arm.VtRight.getPower());
+            telemetry.addData("HLangle", robot.v.hlGetangle(robot.v.getBlock(1)));
+            //telemetry.addData("Block", "id=" + robot.v.getBlock(1).id + " size: " + robot.v.getBlock(1).width + "x" + robot.v.getBlock(1).height + " position: " + robot.v.getBlock(1).x + "," + robot.v.getBlock(1).y);
             telemetry.update();
-            robot.arm.inTurn(gamepad2.left_stick_x);
+            if(gamepad2.left_trigger>0.5) {
+                robot.arm.inTurn(gamepad2.left_stick_x);
+            }
+            if(gamepad2.right_trigger>0.5){
+                robot.arm.inTurn(robot.v.autoFocus(1));
+            }
             if (gamepad2.dpad_down) {
                 //robot.arm.frontIntake();
                 robot.arm.frontArmBack();

@@ -93,17 +93,35 @@ public class Visual {
     private HuskyLens.Block myHuskyLensBlock;
     private VisionUtils Vu;
     private HuskyLens.Block[] myHuskyLensBlocks = null;
-    public double hlGetangle(int id) {
+    public double hlGetangle(HuskyLens.Block block) {
+        if(block != null) {
+            return Vu.getStatus(block.width, block.height, block.x, block.y).getHeading();
+        }
+        else{
+            return 3.14;
+        }
+    }
+
+    public HuskyLens.Block getBlock(int id){
         myHuskyLensBlocks = HL.blocks();
         for (HuskyLens.Block myHuskyLensBlock_item : myHuskyLensBlocks) {
             myHuskyLensBlock = myHuskyLensBlock_item;
             if(myHuskyLensBlock.id == id){
-
+                return myHuskyLensBlock;
             }
             //telemetry.addData("Block", "id=" + myHuskyLensBlock.id + " size: " + myHuskyLensBlock.width + "x" + myHuskyLensBlock.height + " position: " + myHuskyLensBlock.x + "," + myHuskyLensBlock.y);
         }
+        return null;
     }
 
+    public double autoFocus(int id){
+        if(hlGetangle(getBlock(id))<(3.14/4)){
+            return 0.5;
+        }
+        else{
+            return 0;
+        }
+    }
 
 
 

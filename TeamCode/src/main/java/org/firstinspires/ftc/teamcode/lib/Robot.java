@@ -11,6 +11,7 @@ public class Robot {
     public ElapsedTime timer = new ElapsedTime();
     public Arm arm = new Arm();
     public Chassis chassis;
+    public Visual v = new Visual();
     //public boolean SecondDriver = false;
     HardwareMap hardwareMap;
 
@@ -32,6 +33,7 @@ public class Robot {
         chassis.TeleInit(hwm);
         arm.teleInit(hwm);
         timer.reset();
+        v.teleInit(hwm);
         //v.apt();
     }
 
