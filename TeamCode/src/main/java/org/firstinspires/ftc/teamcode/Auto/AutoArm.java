@@ -46,10 +46,8 @@ public class AutoArm {
 
         basketBack();
 
-        inArmLeft.setPosition(0.5);//左arm位置
-        inArmRight.setPosition(0.63);//右arm位置
-        inAngleLeft.setPosition(0.92);
-        inAngleRight.setPosition(0.25);
+        ArmSet(0);
+        TurnSet(0.85);
         inClaw.setPosition(0.4);
         speClaw.setPosition(0.15);
         HzArmSet(5);
@@ -108,14 +106,18 @@ public class AutoArm {
     }
     public void TurnSet(double pos){
         inAngleLeft.setPosition(pos);
-        //inAngleRight.setPosition(0+pos);
+        inAngleRight.setPosition(0+pos);
+    }
+
+    public void ArmSet(double pos){
+        inArmLeft.setPosition(0.5+pos);
+        inArmRight.setPosition(0.65-pos);
     }
 
     public void frontIntake() {//放下前面arm开始吸
         inClaw.setPosition(0.3);
-        inArmLeft.setPosition(0.85);//左arm位置
-        inArmRight.setPosition(0.28);//右arm位置
-        TurnSet(0.1);
+        ArmSet(0.35);
+        TurnSet(0);
         sleep(500);
         inClaw.setPosition(0.7);
         sleep(500);
@@ -127,8 +129,7 @@ public class AutoArm {
         // 把滚吸过放下去
 
 
-        inArmLeft.setPosition(0.65);//左arm位置
-        inArmRight.setPosition(0.48);//右arm位置
+        ArmSet(0.15);
         TurnSet(0.4);
         //sleep(500);
     }
@@ -142,14 +143,12 @@ public class AutoArm {
         // 滚吸收回来
         // getIntake false 不再吸了
         HzArmSet(5);
-        inArmLeft.setPosition(0.3);//左arm位置
-        inArmRight.setPosition(0.83);//右arm位置
-        TurnSet(0.8);
+        ArmSet(-0.15);
+        TurnSet(0.85);
             sleep(500);
             inClaw.setPosition(0.4);
             sleep(500);
-            inArmLeft.setPosition(0.5);//左arm位置
-            inArmRight.setPosition(0.63);//右arm位置
+            ArmSet(0);
             backPos = true;
 
     }

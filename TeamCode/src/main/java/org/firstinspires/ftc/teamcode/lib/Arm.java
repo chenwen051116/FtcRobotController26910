@@ -51,7 +51,7 @@ public class Arm {
         hzFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         inClaw.setPosition(0.4);
         inArmLeft.setPosition(0.5);//左arm位置
-        inArmRight.setPosition(0.63);//右arm位置
+        inArmRight.setPosition(0.65);//右arm位置
         backPos = true;
         TurnSet(0.1);
         basketBack();
@@ -74,7 +74,12 @@ public class Arm {
 
     public void TurnSet(double pos){
         inAngleLeft.setPosition(pos);
-       // inAngleRight.setPosition(0+pos);
+       inAngleRight.setPosition(0+pos);
+    }
+
+    public void ArmSet(double pos){
+        inArmLeft.setPosition(0.5+pos);
+        inArmRight.setPosition(0.65-pos);
     }
 
     public void HzArmSet(int pos) {
@@ -122,28 +127,17 @@ public class Arm {
     }
 
 
-    public void frontIntake() {//放下前面arm开始吸
-        // 把两个 servo 放下去
-        // 把滚吸过放下去
-        inArmLeft.setPosition(0.8157);//左arm位置
-        inArmRight.setPosition(0.2843);//右arm位置
-        inAngleLeft.setPosition(0.25);
-        inAngleRight.setPosition(0.9);
-        inClaw.setPosition(0);
-        //gathering = true;
-    }
 
     public void frontIntakeDown() {//放下前面arm开始吸
         // 把两个 servo 放下去
         // 把滚吸过放下去
         if(!backPos) {
-            TurnSet(0.1);
+            TurnSet(0);
             scheduler.addTaskAfter(300, new Runnable() {
                 @Override
                 public void run() {
                     inClaw.setPosition(0.4);
-                    inArmLeft.setPosition(0.85);//左arm位置
-                    inArmRight.setPosition(0.32);//右arm位置
+                    ArmSet(0.33);
                 }
             });
 
@@ -156,8 +150,7 @@ public class Arm {
             scheduler.addTaskAfter(1300, new Runnable() {
                 @Override
                 public void run() {
-                    inArmLeft.setPosition(0.65);//左arm位置
-                    inArmRight.setPosition(0.52);//右arm位置
+                    ArmSet(0.15);
                     TurnSet(0.32);
                 }
             });
@@ -168,8 +161,7 @@ public class Arm {
                 }
             });
         } else {
-            inArmLeft.setPosition(0.65);//左arm位置
-            inArmRight.setPosition(0.52);//右arm位置
+            ArmSet(0.15);
             TurnSet(0.32);
             scheduler.addTaskAfter(500, new Runnable() {
                 @Override
@@ -190,15 +182,13 @@ public class Arm {
         // getIntake false 不再吸了
         HzArmSet(5);
         if(-hzFront.getCurrentPosition()<10) {
-            inArmLeft.setPosition(0.35);//左arm位置
-            inArmRight.setPosition(0.82);//右arm位置
-            TurnSet(0.8);
-            scheduler.addTaskAfter(500, new Runnable() {
+            ArmSet(-0.15);
+            TurnSet(0.85);
+            scheduler.addTaskAfter(800, new Runnable() {
                 @Override
                 public void run() {
                     inClaw.setPosition(0.4);
-                    inArmLeft.setPosition(0.5);//左arm位置
-                    inArmRight.setPosition(0.67);//右arm位置
+                    ArmSet(0);
                     backPos = true;
                 }
             });
