@@ -69,7 +69,7 @@ public class AutoArm {
     }
 
     public void HzArmSet(int pos) {
-        hzFront.setPower(0.7);
+        hzFront.setPower(0.6);
         frontArmPos = pos;
         hzFront.setTargetPosition(-frontArmPos);
         hzFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -145,7 +145,7 @@ public class AutoArm {
         HzArmSet(5);
         ArmSet(-0.15);
         TurnSet(0.85);
-            sleep(500);
+            sleep(800);
             inClaw.setPosition(0.4);
             sleep(500);
             ArmSet(0);

@@ -83,7 +83,7 @@ public class Arm {
     }
 
     public void HzArmSet(int pos) {
-        hzFront.setPower(0.7);
+        hzFront.setPower(0.8);
         frontArmPos = pos;
         hzFront.setTargetPosition(-frontArmPos);
         hzFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);

@@ -18,22 +18,22 @@ public class Autoright extends LinearOpMode {
     public static double g1y = 37.59;
     public static double g1ang = 180;
     public static double g2x = -7.13;
-    public static double g2y = 48.205;
+    public static double g2y = 49.705;
     public static double g2ang = 180;
     public static double spein1x = -7.13;
     public static double spein1y = 34.705;
     public static double spein1ang = 180;
-    public static int arml1 = 700;
-    public static int arml = 660;
+    public static int arml1 = 590;
+    public static int arml = 550;
     public static double backl = 19;
 
-    public static double spein2x = 15;
+    public static double spein2x = 16;
     public static double spein2y = 0;
     public static double spein2ang = 0;
     public static double b1x = 45.05;
     public static double b1y = 40.29;
     public static double b1ang = 180;
-    public static double b2x = 47.05;
+    public static double b2x = 46.5;
     public static double b2y = 40.29;
     public static double b2ang = 180;
 //    public static double g3x = 20.55;
