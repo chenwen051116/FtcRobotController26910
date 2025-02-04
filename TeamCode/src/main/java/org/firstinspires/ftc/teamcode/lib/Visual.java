@@ -104,6 +104,7 @@ public class Visual {
     }
 
     public HuskyLens.Block getBlock(int id){
+        HL.selectAlgorithm(HuskyLens.Algorithm.COLOR_RECOGNITION);
         myHuskyLensBlocks = HL.blocks();
         for (HuskyLens.Block myHuskyLensBlock_item : myHuskyLensBlocks) {
             myHuskyLensBlock = myHuskyLensBlock_item;
@@ -115,11 +116,11 @@ public class Visual {
         return null;
     }
 
-    public HuskyLens.Arrow getA(){
-        myHuskyLensAs = HL.arrows();
-
-        return myHuskyLensAs[0];
-    }
+//    public HuskyLens.Arrow getA(){
+//        myHuskyLensAs = HL.arrows();
+//
+//        return myHuskyLensAs[0];
+//    }
 
     public double autoFocus(int id){
         if(hlGetangle(getBlock(id))<(3.14/4)){
