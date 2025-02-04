@@ -58,7 +58,7 @@ public class TeleOp extends LinearOpMode {
                 robot.arm.inTurn(gamepad2.left_stick_x);
             }
             if(gamepad2.right_trigger>0.5){
-                robot.arm.inTurn(robot.v.autoFocus());
+                robot.arm.inTurn(robot.v.autoFocus(1));
             }
             if (gamepad2.dpad_down) {
                 //robot.arm.frontIntake();

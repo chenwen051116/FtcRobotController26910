@@ -77,12 +77,9 @@ public class Chassis {
         trajectoryse = drive.trajectoryBuilder(lastpos)
                 .lineToLinearHeading(endPos)
                 .build();
-        scheduler.addTaskAfter(500, new Runnable() {
-            @Override
-            public void run() {
+        sleep(100);
                 drive.followTrajectory(trajectoryse);
-            }
-        });
+
 
     }
 
@@ -142,6 +139,13 @@ public class Chassis {
     }
     public void setScheduler(Scheduler scheduler) {
         this.scheduler = scheduler;
+    }
+    private void sleep(long ms){
+        try{
+            Thread.sleep(ms);
+        } catch (InterruptedException e){
+            Thread.currentThread().interrupt();
+        }
     }
 }
 
