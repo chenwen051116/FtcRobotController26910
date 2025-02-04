@@ -20,6 +20,8 @@ public class TeleOp extends LinearOpMode {
         Robot robot = new Robot(hardwareMap, scheduler);
         robot.Teleinit(hardwareMap);
 
+        double intake_rotate = 0.0;
+
         waitForStart();
         while (opModeIsActive()) {
             // check and execute all scheduled task at the beginning of each loop
@@ -45,6 +47,7 @@ public class TeleOp extends LinearOpMode {
             telemetry.addData("x:", robot.chassis.lastpos.getX());
             telemetry.addData("Y:", robot.chassis.lastpos.getY());
             telemetry.addData("A:", robot.chassis.lastpos.getHeading());
+
             robot.arm.HzArmVel(-gamepad2.left_stick_y);
             //robot.arm.intakeMupdate();
 //            telemetry.addData("position1:", robot.arm.VtLeft.getCurrentPosition());
@@ -55,11 +58,16 @@ public class TeleOp extends LinearOpMode {
             //telemetry.addData("Block", "id=" + robot.v.getBlock(1).id + " size: " + robot.v.getBlock(1).width + "x" + robot.v.getBlock(1).height + " position: " + robot.v.getBlock(1).x + "," + robot.v.getBlock(1).y);
             telemetry.update();
             if(gamepad2.left_trigger>0.5) {
+                intake_rotate = gamepad2.left_stick_x;
                 robot.arm.inTurn(gamepad2.left_stick_x);
             }
             if(gamepad2.right_trigger>0.5){
-                robot.arm.inTurn(robot.v.autoFocus(1));
+                intake_rotate = robot.v.autoFocus(1);
+                robot.arm.inTurn(intake_rotate);
             }
+
+            telemetry.addData("Intake_Rotate:", intake_rotate);
+
             if (gamepad2.dpad_down) {
                 //robot.arm.frontIntake();
                 robot.arm.frontArmBack();
