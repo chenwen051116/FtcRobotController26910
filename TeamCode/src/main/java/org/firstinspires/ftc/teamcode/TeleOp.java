@@ -36,11 +36,15 @@ public class TeleOp extends LinearOpMode {
             rx = gamepad1.right_stick_x;
             robot.chassis.teleDrive(x, y, rx);
             if (gamepad1.y) {
-                //robot.chassis.turnTeleMode();
+                robot.chassis.goOrigin();
             }
             if (gamepad1.a) {
-                //robot.chassis.goOrigin();
+                robot.chassis.goOriginPath();
             }
+            if(gamepad1.dpad_up){
+                robot.chassis.setOrigin();
+            }
+            robot.chassis.cancelAuto();
 
 
 

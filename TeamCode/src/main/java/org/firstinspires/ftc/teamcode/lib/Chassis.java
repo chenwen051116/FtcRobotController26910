@@ -18,6 +18,8 @@ public class Chassis {
     HardwareMap hardwareMap;
     SampleMecanumDrive drive;
 
+    TrajectorySequence trajectoryse;
+
     public Chassis(HardwareMap mp) {
         this.hardwareMap = mp;
         this.drive = new SampleMecanumDrive(mp);
@@ -64,14 +66,26 @@ public class Chassis {
     }
 
 
-    public void goOrigin() {
+    public void setOrigin() {
+        drive.setPoseEstimate(new Pose2d(0,0,0));
+    }
+    public void goOriginPath() {
         lastpos = drive.getPoseEstimate();
-        TrajectorySequence trajectoryse = drive.trajectorySequenceBuilder(lastpos)
+        trajectoryse = drive.trajectorySequenceBuilder(lastpos)
                 .lineToLinearHeading(endPos)
                 .build();
+    }
 
-        drive.followTrajectorySequence(trajectoryse);
+    public void goOrigin(){
         turnAutoMode();
+        drive.followTrajectorySequence(trajectoryse);
+
+    }
+
+    public void cancelAuto(){
+        if(!drive.isBusy()){
+            isAuto = false;
+        }
     }
 
     public void turnAutoMode() {
