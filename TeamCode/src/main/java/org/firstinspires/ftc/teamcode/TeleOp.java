@@ -36,11 +36,15 @@ public class TeleOp extends LinearOpMode {
             rx = gamepad1.right_stick_x;
             robot.chassis.teleDrive(x, y, rx);
             if (gamepad1.y) {
-                //robot.chassis.turnTeleMode();
+                robot.chassis.goOrigin();
             }
             if (gamepad1.a) {
-                //robot.chassis.goOrigin();
+                robot.chassis.goOriginPath();
             }
+            if(gamepad1.dpad_up){
+                robot.chassis.setOrigin();
+            }
+            robot.chassis.cancelAuto();
 
 
 
@@ -50,14 +54,14 @@ public class TeleOp extends LinearOpMode {
 //            telemetry.addData("position2:", robot.arm.VtRight.getCurrentPosition());
 //            telemetry.addData("position1:", robot.arm.VtLeft.getPower());
 //            telemetry.addData("position2:", robot.arm.VtRight.getPower());
-            telemetry.addData("HLangle", robot.v.hlGetangle(robot.v.getBlock(1)));
+            //telemetry.addData("HLangle", robot.v.hlGetangle(robot.v.getBlock(1)));
             //telemetry.addData("Block", "id=" + robot.v.getBlock(1).id + " size: " + robot.v.getBlock(1).width + "x" + robot.v.getBlock(1).height + " position: " + robot.v.getBlock(1).x + "," + robot.v.getBlock(1).y);
             telemetry.update();
             if(gamepad2.left_trigger>0.5) {
                 robot.arm.inTurn(gamepad2.left_stick_x);
             }
             if(gamepad2.right_trigger>0.5){
-                robot.arm.inTurn(robot.v.autoFocus(1));
+                robot.arm.inTurn(robot.v.autoFocus());
             }
             if (gamepad2.dpad_down) {
                 //robot.arm.frontIntake();

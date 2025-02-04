@@ -28,12 +28,13 @@ public class Testhus extends LinearOpMode {
     public void runOpMode() {
         ElapsedTime myElapsedTime;
 
-        HuskyLens.Block myHuskyLensBlock;
+        HuskyLens.Arrow myHuskyLensBlock;
 
         HL = hardwareMap.get(HuskyLens.class, "HL");
-        HuskyLens.Block[] myHuskyLensBlocks = HL.blocks();
+        HuskyLens.Arrow[] myHuskyLensBlocks;
         // Put initialization blocks here.
-        telemetry.addData(">>", HL.knock() ? "Touch start to continue" : "Problem communicating with HuskyLens");
+
+       // telemetry.addData(">>", HL.? "Touch start to continue" : "Problem communicating with HuskyLens");
         HL.selectAlgorithm(HuskyLens.Algorithm.LINE_TRACKING);
         telemetry.update();
         myElapsedTime = new ElapsedTime();
@@ -45,11 +46,11 @@ public class Testhus extends LinearOpMode {
                 // Put loop blocks here.
                 if (myElapsedTime.seconds() >= 1) {
                     myElapsedTime.reset();
-                    myHuskyLensBlocks = HL.blocks();
+                    myHuskyLensBlocks = HL.arrows();
                     telemetry.addData("Block count", JavaUtil.listLength(myHuskyLensBlocks));
-                    for (HuskyLens.Block myHuskyLensBlock_item : myHuskyLensBlocks) {
+                    for (HuskyLens.Arrow myHuskyLensBlock_item : myHuskyLensBlocks) {
                         myHuskyLensBlock = myHuskyLensBlock_item;
-                        telemetry.addData("Block", " size: " + myHuskyLensBlock.width+ "x" + myHuskyLensBlock.height + " position: " + myHuskyLensBlock.x + "," + myHuskyLensBlock.y);
+                        telemetry.addData("Block", " size: " + myHuskyLensBlock.x_target+ "x" + myHuskyLensBlock.y_target + " position: " + myHuskyLensBlock.x_origin + "," + myHuskyLensBlock.y_origin);
                     }
 
                     telemetry.update();

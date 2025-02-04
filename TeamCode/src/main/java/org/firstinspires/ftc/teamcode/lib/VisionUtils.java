@@ -80,4 +80,27 @@ public class VisionUtils {
             return new Pose2d(centerX, blockCenterY, angle);
         }
     }
+
+    /**
+     * Get the value to set to the servo given an arrow on the screen, telling the block's direction.
+     * @param x1 first x coordinate of the arrow.
+     * @param y1 first y coordinate of the arrow.
+     * @param x2 second x coordinate of the arrow.
+     * @param y2 second y coordinate of the arrow.
+     * @return A number between 0 and 1. 0 is pointing to the left, 0.5 is pointing straight up/down,
+     *         and 1 is pointing to the right.
+     */
+    public static double getServoValFromArrow(double x1, double y1, double x2, double y2) {
+        double length = Math.hypot(x2 - x1, y2 - y1);
+        double angle = Math.atan((y2 - y1) / (x2 - x1));
+        if(length < BLOCK_WIDTH) {
+            angle += Math.PI / 2;
+        }
+        if(angle < 0) {
+            angle += Math.PI;
+        } else if(angle > Math.PI) {
+            angle -= Math.PI;
+        }
+        return (Math.PI - angle) / Math.PI;
+    }
 }
