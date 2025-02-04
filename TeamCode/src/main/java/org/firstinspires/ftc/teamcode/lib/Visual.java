@@ -91,6 +91,7 @@ public class Visual {
 
     private HuskyLens HL;
     private HuskyLens.Block myHuskyLensBlock;
+    private HuskyLens.Arrow[] myHuskyLensAs;
     private VisionUtils Vu;
     private HuskyLens.Block[] myHuskyLensBlocks = null;
     public double hlGetangle(HuskyLens.Block block) {
@@ -114,13 +115,23 @@ public class Visual {
         return null;
     }
 
-    public double autoFocus(int id){
-        if(hlGetangle(getBlock(id))<(3.14/4)){
-            return 0.5;
-        }
-        else{
-            return 0;
-        }
+    public HuskyLens.Arrow getA(){
+        myHuskyLensAs = HL.arrows();
+
+        return myHuskyLensAs[0];
+    }
+
+//    public double autoFocus(int id){
+//        if(hlGetangle(getBlock(id))<(3.14/4)){
+//            return 0.5;
+//        }
+//        else{
+//            return 0;
+//        }
+//    }
+
+    public double autoFocus(){
+        return Vu.getServoValFromArrow(getA().x_origin,getA().y_origin,getA().x_target,getA().y_target);
     }
 
 
