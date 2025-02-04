@@ -39,15 +39,12 @@ public class TeleOp extends LinearOpMode {
                 robot.chassis.goOrigin();
             }
             if (gamepad1.a) {
-                robot.chassis.goOriginPath();
-            }
-            if(gamepad1.dpad_up){
                 robot.chassis.setOrigin();
             }
             robot.chassis.cancelAuto();
-
-
-
+            telemetry.addData("x:", robot.chassis.lastpos.getX());
+            telemetry.addData("Y:", robot.chassis.lastpos.getY());
+            telemetry.addData("A:", robot.chassis.lastpos.getHeading());
             robot.arm.HzArmVel(-gamepad2.left_stick_y);
             //robot.arm.intakeMupdate();
 //            telemetry.addData("position1:", robot.arm.VtLeft.getCurrentPosition());
