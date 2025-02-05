@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.lib;
+package org.firstinspires.ftc.teamcode.lib.vision;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.hardware.dfrobot.HuskyLens;
@@ -106,22 +106,26 @@ public class Visual {
     }
 
     public HuskyLens.Block getBlock(int id){
-        myHuskyLensBlocks = HL.blocks();
-        telemetry.addData("Block count", JavaUtil.listLength(myHuskyLensBlocks));
-        for (HuskyLens.Block block : myHuskyLensBlocks) {
-            myHuskyLensBlock = block;
-            double ang = 114;
-            ang = VisionUtils.getStatus(block.width, block.height, block.x, block.y).getHeading();
-            if (Double.isNaN(ang)){
-                ang = 514;
-            }
-            telemetry.addData("Block", "id=" + myHuskyLensBlock.id + " size: " + myHuskyLensBlock.width + "x" + myHuskyLensBlock.height + " position: " + myHuskyLensBlock.x + "," + myHuskyLensBlock.y + " , angle: " + ang);
-            telemetry.update();
-            if(myHuskyLensBlock.id == id){
-                return myHuskyLensBlock;
-            }
-        }
-        telemetry.update();
+//        // HuskyLens implementation
+//        myHuskyLensBlocks = HL.blocks();
+//        telemetry.addData("Block count", JavaUtil.listLength(myHuskyLensBlocks));
+//        for (HuskyLens.Block block : myHuskyLensBlocks) {
+//            myHuskyLensBlock = block;
+//            double ang = 114;
+//            ang = VisionUtils.getStatus(block.width, block.height, block.x, block.y).getHeading();
+//            if (Double.isNaN(ang)){
+//                ang = 514;
+//            }
+//            telemetry.addData("Block", "id=" + myHuskyLensBlock.id + " size: " + myHuskyLensBlock.width + "x" + myHuskyLensBlock.height + " position: " + myHuskyLensBlock.x + "," + myHuskyLensBlock.y + " , angle: " + ang);
+//            telemetry.update();
+//            if(myHuskyLensBlock.id == id){
+//                return myHuskyLensBlock;
+//            }
+//        }
+//        telemetry.update();
+        // LimeLight implementation
+        LLResult result = limelight.getLatestResult();
+        // TODO
         return null;
     }
 
