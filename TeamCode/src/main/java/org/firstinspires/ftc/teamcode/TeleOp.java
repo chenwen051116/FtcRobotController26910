@@ -4,7 +4,6 @@ import static org.firstinspires.ftc.teamcode.lib.ConfigsNConst.rx;
 import static org.firstinspires.ftc.teamcode.lib.ConfigsNConst.x;
 import static org.firstinspires.ftc.teamcode.lib.ConfigsNConst.y;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.lib.Robot;
@@ -18,7 +17,9 @@ public class TeleOp extends LinearOpMode {
     public void runOpMode() {
         Scheduler scheduler = new Scheduler();
         Robot robot = new Robot(hardwareMap, scheduler);
-        robot.Teleinit(hardwareMap);
+        robot.Teleinit(hardwareMap, telemetry);
+
+        double intake_rotate = 0.0;
 
         waitForStart();
         while (opModeIsActive()) {
@@ -26,7 +27,7 @@ public class TeleOp extends LinearOpMode {
             scheduler.elapse();
 
             //gamepad1 base and front arm controll
-            if (gamepad1.left_bumper|| gamepad1.right_bumper) {
+            if (gamepad1.left_bumper || gamepad1.right_bumper) {
                 robot.chassis.lowSpeed();
             } else {
                 robot.chassis.normalSpeed();
@@ -36,13 +37,15 @@ public class TeleOp extends LinearOpMode {
             rx = gamepad1.right_stick_x;
             robot.chassis.teleDrive(x, y, rx);
             if (gamepad1.y) {
-                //robot.chassis.turnTeleMode();
+                robot.chassis.goOrigin();
             }
             if (gamepad1.a) {
-                //robot.chassis.goOrigin();
+                robot.chassis.setOrigin();
             }
-
-
+            robot.chassis.cancelAuto();
+//            telemetry.addData("x:", robot.chassis.lastpos.getX());
+//            telemetry.addData("Y:", robot.chassis.lastpos.getY());
+//            telemetry.addData("A:", robot.chassis.lastpos.getHeading());
 
             robot.arm.HzArmVel(-gamepad2.left_stick_y);
             //robot.arm.intakeMupdate();
@@ -50,20 +53,28 @@ public class TeleOp extends LinearOpMode {
 //            telemetry.addData("position2:", robot.arm.VtRight.getCurrentPosition());
 //            telemetry.addData("position1:", robot.arm.VtLeft.getPower());
 //            telemetry.addData("position2:", robot.arm.VtRight.getPower());
-            telemetry.addData("HLangle", robot.v.hlGetangle(robot.v.getBlock(1)));
+            //telemetry.addData("HLangle", robot.v.hlGetangle(robot.v.getBlock(1)));
             //telemetry.addData("Block", "id=" + robot.v.getBlock(1).id + " size: " + robot.v.getBlock(1).width + "x" + robot.v.getBlock(1).height + " position: " + robot.v.getBlock(1).x + "," + robot.v.getBlock(1).y);
-            telemetry.update();
-            if(gamepad2.left_trigger>0.5) {
+
+            if (gamepad2.left_trigger > 0.5) {
+                intake_rotate = gamepad2.left_stick_x;
                 robot.arm.inTurn(gamepad2.left_stick_x);
             }
-            if(gamepad2.right_trigger>0.5){
-                robot.arm.inTurn(robot.v.autoFocus(1));
+            if (gamepad2.right_trigger > 0.5) {
+                telemetry.addData("controller", "right trigger pressed");
+                telemetry.update();
+                intake_rotate = robot.v.autoFocus();
+                robot.arm.inTurn(intake_rotate);
             }
+
+//            telemetry.addData("Rect_detected: ", robot.v.hlGetAngle(robot.v.getBlockNear()));
+//            telemetry.addData("Actual angle: ", intake_rotate);
+
             if (gamepad2.dpad_down) {
                 //robot.arm.frontIntake();
                 robot.arm.frontArmBack();
             }
-            if(gamepad2.dpad_up && (-gamepad2.right_stick_y>0.5)){
+            if (gamepad2.dpad_up && (-gamepad2.right_stick_y > 0.5)) {
                 robot.arm.finalClimb();
             }
 
@@ -107,10 +118,12 @@ public class TeleOp extends LinearOpMode {
                 robot.arm.VtBack();
             else if (gamepad2.right_bumper && -gamepad2.right_stick_y > -0.2 && -gamepad2.right_stick_y < 0.2)
                 robot.arm.takeSpePos();
-            else if (gamepad2.right_bumper && -gamepad2.right_stick_y  > 0.8)
+            else if (gamepad2.right_bumper && -gamepad2.right_stick_y > 0.8)
                 robot.arm.highBar();
-            else if (gamepad2.right_bumper && -gamepad2.right_stick_y  < -0.8)
+            else if (gamepad2.right_bumper && -gamepad2.right_stick_y < -0.8)
                 robot.arm.lowBar();
+
+//            telemetry.update();
         }
     }
 }

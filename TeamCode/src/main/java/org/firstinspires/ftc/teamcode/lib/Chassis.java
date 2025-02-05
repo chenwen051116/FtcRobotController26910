@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.ext.roadrunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.ext.roadrunner.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.lib.schedule.Scheduler;
 
 public class Chassis {
     public double kp = 1;
@@ -17,6 +18,8 @@ public class Chassis {
     public Pose2d endPos = new Pose2d(0, 0, Math.toRadians(0));
     HardwareMap hardwareMap;
     SampleMecanumDrive drive;
+    public Scheduler scheduler;
+    Trajectory trajectoryse;
 
     public Chassis(HardwareMap mp) {
         this.hardwareMap = mp;
@@ -28,6 +31,7 @@ public class Chassis {
     }
 
     public void TeleInit(HardwareMap hwm) {
+        lastpos = drive.getPoseEstimate();
         hardwareMap = hwm;
         this.drive.setPoseEstimate(endPos);
     }
@@ -64,15 +68,29 @@ public class Chassis {
     }
 
 
-    public void goOrigin() {
-        lastpos = drive.getPoseEstimate();
-        TrajectorySequence trajectoryse = drive.trajectorySequenceBuilder(lastpos)
+    public void setOrigin() {
+        drive.setPoseEstimate(new Pose2d(0,0,0));
+    }
+
+    public void goOrigin(){
+        turnAutoMode();
+        trajectoryse = drive.trajectoryBuilder(lastpos)
                 .lineToLinearHeading(endPos)
                 .build();
+        sleep(100);
+                drive.followTrajectory(trajectoryse);
 
-        drive.followTrajectorySequence(trajectoryse);
-        turnAutoMode();
+
     }
+
+    public void cancelAuto(){
+        drive.update();
+        lastpos = drive.getPoseEstimate();
+        if(!drive.isBusy()){
+            isAuto = false;
+        }
+    }
+
 
     public void turnAutoMode() {
         isAuto = true;
@@ -119,7 +137,16 @@ public class Chassis {
     public double returnHeading() {
         return Math.toDegrees(drive.getPoseEstimate().getHeading());
     }
-
+    public void setScheduler(Scheduler scheduler) {
+        this.scheduler = scheduler;
+    }
+    private void sleep(long ms){
+        try{
+            Thread.sleep(ms);
+        } catch (InterruptedException e){
+            Thread.currentThread().interrupt();
+        }
+    }
 }
 
 

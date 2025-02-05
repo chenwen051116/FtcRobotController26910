@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.lib;
+package org.firstinspires.ftc.teamcode.lib.vision;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 
 public class VisionUtils {
-    public static final int FRAME_WIDTH = 319;   // Maximum x coordinate
-    public static final int FRAME_HEIGHT = 239;  // Maximum y coordinate
+    public static final int FRAME_WIDTH = 167;   // Maximum x coordinate
+    public static final int FRAME_HEIGHT = 69;  // Maximum y coordinate
     public static final double BLOCK_WIDTH = 83;
     public static final double BLOCK_HEIGHT = 186;  // Make sure that block height is larger than width
     public static final double BLOCK_DIAGONAL_SQ = BLOCK_WIDTH * BLOCK_WIDTH + BLOCK_HEIGHT * BLOCK_HEIGHT;
@@ -40,9 +40,9 @@ public class VisionUtils {
      * of the block
      */
     public static Pose2d getStatus(double width, double height, double centerX, double centerY) {
-        if(width < BLOCK_WIDTH+10 || height < BLOCK_WIDTH+10) {
-            return ERROR_VALUE;
-        }
+//        if(width < BLOCK_WIDTH*.8 || height < BLOCK_WIDTH*.8) {
+//            return ERROR_VALUE;
+//        }
         double w_2 = width / 2;
         double h_2 = height / 2;
         double x1 = centerX - w_2;
@@ -79,5 +79,28 @@ public class VisionUtils {
             double blockCenterY = upEdge ? (centerY + width / 2 - length) : (centerY - width / 2 + length);
             return new Pose2d(centerX, blockCenterY, angle);
         }
+    }
+
+    /**
+     * Get the value to set to the servo given an arrow on the screen, telling the block's direction.
+     * @param x1 first x coordinate of the arrow.
+     * @param y1 first y coordinate of the arrow.
+     * @param x2 second x coordinate of the arrow.
+     * @param y2 second y coordinate of the arrow.
+     * @return A number between 0 and 1. 0 is pointing to the left, 0.5 is pointing straight up/down,
+     *         and 1 is pointing to the right.
+     */
+    public static double getServoValFromArrow(double x1, double y1, double x2, double y2) {
+        double length = Math.hypot(x2 - x1, y2 - y1);
+        double angle = Math.atan((y2 - y1) / (x2 - x1));
+        if(length < BLOCK_WIDTH) {
+            angle += Math.PI / 2;
+        }
+        if(angle < 0) {
+            angle += Math.PI;
+        } else if(angle > Math.PI) {
+            angle -= Math.PI;
+        }
+        return (Math.PI - angle) / Math.PI;
     }
 }

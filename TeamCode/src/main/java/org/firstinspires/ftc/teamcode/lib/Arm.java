@@ -83,7 +83,7 @@ public class Arm {
     }
 
     public void HzArmSet(int pos) {
-        hzFront.setPower(0.7);
+        hzFront.setPower(0.8);
         frontArmPos = pos;
         hzFront.setTargetPosition(-frontArmPos);
         hzFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -181,7 +181,7 @@ public class Arm {
         // 滚吸收回来
         // getIntake false 不再吸了
         HzArmSet(5);
-        if(-hzFront.getCurrentPosition()<10) {
+        if(-hzFront.getCurrentPosition()<20) {
             ArmSet(-0.15);
             TurnSet(0.85);
             scheduler.addTaskAfter(800, new Runnable() {

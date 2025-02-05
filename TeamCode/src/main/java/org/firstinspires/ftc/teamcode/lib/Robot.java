@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.lib;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.lib.schedule.Scheduler;
+import org.firstinspires.ftc.teamcode.lib.vision.Visual;
 
 
 public class Robot {
@@ -14,6 +15,7 @@ public class Robot {
     public Visual v = new Visual();
     //public boolean SecondDriver = false;
     HardwareMap hardwareMap;
+    private Telemetry telemetry;
 
     //public Visual v = new Visual();
     public Robot(HardwareMap mp, Scheduler scheduler) {
@@ -29,11 +31,12 @@ public class Robot {
 
     }
 
-    public void Teleinit(HardwareMap hwm) {
+    public void Teleinit(HardwareMap hwm, Telemetry telemetry) {
         chassis.TeleInit(hwm);
         arm.teleInit(hwm);
         timer.reset();
-        v.teleInit(hwm);
+        this.telemetry = telemetry;
+        v.teleInit(hwm, telemetry);
         //v.apt();
     }
 
