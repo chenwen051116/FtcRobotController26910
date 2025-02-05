@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.lib;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 
 public class VisionUtils {
-    public static final int FRAME_WIDTH = 319;   // Maximum x coordinate
-    public static final int FRAME_HEIGHT = 239;  // Maximum y coordinate
+    public static final int FRAME_WIDTH = 167;   // Maximum x coordinate
+    public static final int FRAME_HEIGHT = 69;  // Maximum y coordinate
     public static final double BLOCK_WIDTH = 83;
     public static final double BLOCK_HEIGHT = 186;  // Make sure that block height is larger than width
     public static final double BLOCK_DIAGONAL_SQ = BLOCK_WIDTH * BLOCK_WIDTH + BLOCK_HEIGHT * BLOCK_HEIGHT;
@@ -40,9 +40,9 @@ public class VisionUtils {
      * of the block
      */
     public static Pose2d getStatus(double width, double height, double centerX, double centerY) {
-        if(width < BLOCK_WIDTH+10 || height < BLOCK_WIDTH+10) {
-            return ERROR_VALUE;
-        }
+//        if(width < BLOCK_WIDTH*.8 || height < BLOCK_WIDTH*.8) {
+//            return ERROR_VALUE;
+//        }
         double w_2 = width / 2;
         double h_2 = height / 2;
         double x1 = centerX - w_2;

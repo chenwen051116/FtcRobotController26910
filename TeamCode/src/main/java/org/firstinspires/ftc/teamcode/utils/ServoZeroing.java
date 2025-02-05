@@ -14,7 +14,7 @@ public class ServoZeroing extends LinearOpMode {
     public void runOpMode(){
         Scheduler scheduler = new Scheduler();
         Robot robot = new Robot(hardwareMap, scheduler);
-        robot.Teleinit(hardwareMap);
+        robot.Teleinit(hardwareMap, telemetry);
         waitForStart();
         while (opModeIsActive()){
             robot.arm.speClaw.setPosition(0);
