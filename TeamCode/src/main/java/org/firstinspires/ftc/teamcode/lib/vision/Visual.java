@@ -12,6 +12,11 @@ import org.firstinspires.ftc.robotcore.external.JavaUtil;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
+import java.nio.ByteBuffer;
+
+import kotlinx.serialization.json.Json;
+import kotlinx.serialization.json.JsonKt;
+
 
 public class Visual {
     private Limelight3A limelight;
@@ -105,7 +110,20 @@ public class Visual {
         }
     }
 
-    public HuskyLens.Block getBlock(int id){
+    private String convertDoubleArrayToString(double[] array) {
+        ByteBuffer buffer = ByteBuffer.allocate(array.length * Double.BYTES);
+        for(double d : array) {
+            buffer.putDouble(d);
+        }
+        byte[] byteArray = buffer.array();
+        char[] string = new char[byteArray.length];
+        for(int i = 0; i < string.length; i++) {
+            string[i] = (char) byteArray[i];
+        }
+        return new String(string);
+    }
+
+    public BlockData getBlock(int id){
 //        // HuskyLens implementation
 //        myHuskyLensBlocks = HL.blocks();
 //        telemetry.addData("Block count", JavaUtil.listLength(myHuskyLensBlocks));
@@ -124,9 +142,13 @@ public class Visual {
 //        }
 //        telemetry.update();
         // LimeLight implementation
-        LLResult result = limelight.getLatestResult();
-        // TODO
-        return null;
+        try {
+            double[] result = limelight.getLatestResult().getPythonOutput();
+            String message = convertDoubleArrayToString(result);
+            return BlockData.Companion.deserialize(message);
+        } catch(Exception e) {
+            return null;
+        }
     }
 
     public HuskyLens.Block getBlockNear(){
@@ -147,7 +169,7 @@ public class Visual {
 //    }
 
     public double autoFocus(){
-        if(hlGetAngle(getBlock(1)) < (3.14/4)){
+        if(getBlock(1).getAngle() < (3.14/4)){
             return 0.5;
         }
         else{
