@@ -17,9 +17,9 @@ public class Chassis {
 
     public Pose2d endPos = new Pose2d(0, 0, Math.toRadians(0));
     HardwareMap hardwareMap;
-    SampleMecanumDrive drive;
+    public SampleMecanumDrive drive;
     public Scheduler scheduler;
-    Trajectory trajectoryse;
+    public Trajectory trajectoryse;
 
     public Chassis(HardwareMap mp) {
         this.hardwareMap = mp;
