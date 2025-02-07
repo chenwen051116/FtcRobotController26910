@@ -15,9 +15,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-import kotlinx.serialization.json.Json;
-import kotlinx.serialization.json.JsonKt;
-
 
 public class Visual {
     private Limelight3A limelight;
@@ -113,20 +110,6 @@ public class Visual {
         }
     }
 
-    private String convertDoubleArrayToString(double[] array) {
-        ByteBuffer buffer = ByteBuffer.allocate(array.length * Double.BYTES);
-        buffer.order(ByteOrder.LITTLE_ENDIAN);
-        for(double d : array) {
-            buffer.putDouble(d);
-        }
-        byte[] byteArray = buffer.array();
-        char[] string = new char[byteArray.length];
-        for(int i = 0; i < string.length; i++) {
-            string[i] = (char) byteArray[i];
-        }
-        return new String(string);
-    }
-
     public BlockData getBlock(int id){
 //        // HuskyLens implementation
 //        myHuskyLensBlocks = HL.blocks();
@@ -148,17 +131,18 @@ public class Visual {
         // LimeLight implementation
         LLResult resultTmp = limelight.getLatestResult();
         double[] result = resultTmp.getPythonOutput();
+        ByteBuffer buffer = ByteBuffer.allocate(result.length * Double.BYTES);
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
         for(double d : result) {
-            telemetry.addData("System", d);
+            buffer.putDouble(d);
         }
-        telemetry.update();
-//        String message = convertDoubleArrayToString(result);
-//        BlockData block = BlockData.Companion.deserialize(message)[0]; // TODO: check the color of block
-//        if(block != null) {
-//            telemetry.addData("Block", "color=" + block.getColor().getName() + " size: " + block.getSize()[0] + "x" + block.getSize()[1] + " position: " + block.getCenter()[0] + "," + block.getCenter()[1] + " , angle: " + block.getAngle());
-//            telemetry.update();
-//        }
-//        return block;
+        BlockData[] blocks = new BlockData[8];
+        for(int i = 0; i < blocks.length; i++) {
+            blocks[i] = new BlockData(buffer);
+            if(blocks[i].color == id) {
+                return blocks[i];
+            }
+        }
         return null;
     }
 

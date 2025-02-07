@@ -4,6 +4,10 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public class BlockData {
+    public static final int COLOR_YELLOW = 0;
+    public static final int COLOR_RED = 1;
+    public static final int COLOR_BLUE = 2;
+
     short centerX;
     short centerY;
     short width;
