@@ -17,7 +17,7 @@ public class TeleOp extends LinearOpMode {
     public void runOpMode() {
         Scheduler scheduler = new Scheduler();
         Robot robot = new Robot(hardwareMap, scheduler);
-        robot.Teleinit(hardwareMap, telemetry);
+        robot.teleInit(hardwareMap, telemetry);
 
         double intake_rotate = 0.0;
 

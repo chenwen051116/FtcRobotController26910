@@ -98,7 +98,6 @@ public class Visual {
 
 
     private HuskyLens HL;
-    private HuskyLens.Block myHuskyLensBlock;
    // private HuskyLens.Arrow[] myHuskyLensAs;
     private HuskyLens.Block[] myHuskyLensBlocks = null;
     public double hlGetAngle(HuskyLens.Block block) {
@@ -106,11 +105,11 @@ public class Visual {
             return VisionUtils.getStatus(block.width, block.height, block.x, block.y).getHeading();
         }
         else{
-            return 3.14;
+            return Math.PI;
         }
     }
 
-    public BlockData getBlock(int id){
+    public BlockData getBlock(int color){
 //        // HuskyLens implementation
 //        myHuskyLensBlocks = HL.blocks();
 //        telemetry.addData("Block count", JavaUtil.listLength(myHuskyLensBlocks));
@@ -139,22 +138,11 @@ public class Visual {
         BlockData[] blocks = new BlockData[8];
         for(int i = 0; i < blocks.length; i++) {
             blocks[i] = new BlockData(buffer);
-            if(blocks[i].color == id) {
+            if((blocks[i].color & color) != 0) {
                 return blocks[i];
             }
         }
         return null;
-    }
-
-    public HuskyLens.Block getBlockNear(){
-        myHuskyLensBlocks = HL.blocks();
-        for (HuskyLens.Block myHuskyLensBlock_item : myHuskyLensBlocks) {
-            myHuskyLensBlock = myHuskyLensBlock_item;
-
-                return myHuskyLensBlock;
-            //telemetry.addData("Block", "id=" + myHuskyLensBlock.id + " size: " + myHuskyLensBlock.width + "x" + myHuskyLensBlock.height + " position: " + myHuskyLensBlock.x + "," + myHuskyLensBlock.y);
-        }
-        return null; //telemetry.addData("Block", "id=" + myHuskyLensBlock.id + " size: " + myHuskyLensBlock.width + "x" + myHuskyLensBlock.height + " position: " + myHuskyLensBlock.x + "," + myHuskyLensBlock.y);
     }
 
 //    public HuskyLens.Arrow getA(){
@@ -164,8 +152,8 @@ public class Visual {
 //    }
 
     public double autoFocus(){
-        BlockData block = getBlock(1);
-        if(block != null && block.getAngle() < (3.14/4)){
+        BlockData block = getBlock(BlockData.COLOR_YELLOW | BlockData.COLOR_RED | BlockData.COLOR_BLUE);
+        if(block != null && block.getAngle() < (Math.PI/4)){
             return 0.5;
         }
         else{

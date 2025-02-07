@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 
 @TeleOp(name = "Testencoder")
-public class Testencoder extends LinearOpMode {
+public class TestEncoder extends LinearOpMode {
     private DcMotor m2;
 
 

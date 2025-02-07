@@ -24,14 +24,14 @@ public class Robot {
         this.arm.setScheduler(scheduler);
     }
 
-    public void Autoinit(HardwareMap hwm) {
+    public void autoInit(HardwareMap hwm) {
         arm.autoInit(hwm);
         timer.reset();
         chassis.AutoInit(hwm);
 
     }
 
-    public void Teleinit(HardwareMap hwm, Telemetry telemetry) {
+    public void teleInit(HardwareMap hwm, Telemetry telemetry) {
         chassis.TeleInit(hwm);
         arm.teleInit(hwm);
         timer.reset();
