@@ -142,13 +142,19 @@ public class Visual {
 //        }
 //        telemetry.update();
         // LimeLight implementation
-        try {
-            double[] result = limelight.getLatestResult().getPythonOutput();
-            String message = convertDoubleArrayToString(result);
-            return BlockData.Companion.deserialize(message)[0];
-        } catch(Exception e) {
-            return null;
+        telemetry.addData("Debug", "1145141919810");
+        telemetry.update();
+        LLResult resultTmp = limelight.getLatestResult();
+        double[] result = resultTmp.getPythonOutput();
+        telemetry.addData("System", "Number of blocks detected: " + result.length);
+        telemetry.update();
+        String message = convertDoubleArrayToString(result);
+        BlockData block = BlockData.Companion.deserialize(message)[0]; // TODO: check the color of block
+        if(block != null) {
+            telemetry.addData("Block", "color=" + block.getColor().getName() + " size: " + block.getSize()[0] + "x" + block.getSize()[1] + " position: " + block.getCenter()[0] + "," + block.getCenter()[1] + " , angle: " + block.getAngle());
+            telemetry.update();
         }
+        return block;
     }
 
     public HuskyLens.Block getBlockNear(){
@@ -169,7 +175,8 @@ public class Visual {
 //    }
 
     public double autoFocus(){
-        if(getBlock(1).getAngle() < (3.14/4)){
+        BlockData block = getBlock(1);
+        if(block != null && block.getAngle() < (3.14/4)){
             return 0.5;
         }
         else{
