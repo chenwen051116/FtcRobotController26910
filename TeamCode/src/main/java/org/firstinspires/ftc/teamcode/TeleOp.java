@@ -64,7 +64,7 @@ public class TeleOp extends LinearOpMode {
                 telemetry.addData("controller", "right trigger pressed");
                 telemetry.update();
                 intake_rotate = robot.v.autoFocus();
-                robot.arm.inTurn(intake_rotate);
+//                robot.arm.inTurn(intake_rotate);
             }
 
 //            telemetry.addData("Rect_detected: ", robot.v.hlGetAngle(robot.v.getBlockNear()));

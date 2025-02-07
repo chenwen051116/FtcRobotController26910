@@ -141,7 +141,7 @@ public class Arm {
                 }
             });
 
-            scheduler.addTaskAfter(800, new Runnable() {
+            scheduler.addTaskAfter(500, new Runnable() {
                 @Override
                 public void run() {
                     inClaw.setPosition(0.7);
@@ -203,7 +203,7 @@ public class Arm {
     }
 
 
-    public void highBasket() { VtArmSet(2000);}
+    public void highBasket() { VtArmSet(2800);}
 
     public void lowBasket() {
         VtArmSet(1242);//低框arm位置

@@ -162,7 +162,7 @@ public class AutoArm {
 
 
     public void highBasket() {
-        VtArmSet(2000);//高框arm位置
+        VtArmSet(2800);//高框arm位置
     }
 
     public void lowBasket() {

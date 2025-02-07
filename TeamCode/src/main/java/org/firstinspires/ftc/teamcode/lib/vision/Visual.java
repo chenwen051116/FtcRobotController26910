@@ -13,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 import kotlinx.serialization.json.Json;
 import kotlinx.serialization.json.JsonKt;
@@ -32,6 +33,8 @@ public class Visual {
         imu = hwm.get(IMU.class, "imu");
         limelight = hwm.get(Limelight3A.class, "lm");
         limelight.setPollRateHz(100);
+        limelight.pipelineSwitch(0);
+        limelight.start();
         imu.initialize(
                 new IMU.Parameters(
                         new RevHubOrientationOnRobot(
@@ -112,6 +115,7 @@ public class Visual {
 
     private String convertDoubleArrayToString(double[] array) {
         ByteBuffer buffer = ByteBuffer.allocate(array.length * Double.BYTES);
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
         for(double d : array) {
             buffer.putDouble(d);
         }
@@ -142,19 +146,20 @@ public class Visual {
 //        }
 //        telemetry.update();
         // LimeLight implementation
-        telemetry.addData("Debug", "1145141919810");
-        telemetry.update();
         LLResult resultTmp = limelight.getLatestResult();
         double[] result = resultTmp.getPythonOutput();
-        telemetry.addData("System", "Number of blocks detected: " + result.length);
-        telemetry.update();
-        String message = convertDoubleArrayToString(result);
-        BlockData block = BlockData.Companion.deserialize(message)[0]; // TODO: check the color of block
-        if(block != null) {
-            telemetry.addData("Block", "color=" + block.getColor().getName() + " size: " + block.getSize()[0] + "x" + block.getSize()[1] + " position: " + block.getCenter()[0] + "," + block.getCenter()[1] + " , angle: " + block.getAngle());
-            telemetry.update();
+        for(double d : result) {
+            telemetry.addData("System", d);
         }
-        return block;
+        telemetry.update();
+//        String message = convertDoubleArrayToString(result);
+//        BlockData block = BlockData.Companion.deserialize(message)[0]; // TODO: check the color of block
+//        if(block != null) {
+//            telemetry.addData("Block", "color=" + block.getColor().getName() + " size: " + block.getSize()[0] + "x" + block.getSize()[1] + " position: " + block.getCenter()[0] + "," + block.getCenter()[1] + " , angle: " + block.getAngle());
+//            telemetry.update();
+//        }
+//        return block;
+        return null;
     }
 
     public HuskyLens.Block getBlockNear(){
