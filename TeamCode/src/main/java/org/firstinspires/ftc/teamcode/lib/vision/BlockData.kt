@@ -15,7 +15,7 @@ data class BlockData(
     val contour: Array<Float>,
 ) {
     companion object {
-        fun deserialize(str: String): BlockData {
+        fun deserialize(str: String): Array<BlockData> {
             return Json.decodeFromString(str)
         }
     }

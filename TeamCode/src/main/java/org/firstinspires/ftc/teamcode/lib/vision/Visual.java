@@ -145,7 +145,7 @@ public class Visual {
         try {
             double[] result = limelight.getLatestResult().getPythonOutput();
             String message = convertDoubleArrayToString(result);
-            return BlockData.Companion.deserialize(message);
+            return BlockData.Companion.deserialize(message)[0];
         } catch(Exception e) {
             return null;
         }
