@@ -7,7 +7,6 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.ext.roadrunner.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.ext.roadrunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.lib.schedule.Scheduler;
 
 public class Chassis {
@@ -122,16 +121,16 @@ public class Chassis {
         drive.setMotorPowers(0, 0, 0, 0);
     }
 
-    public void posvisual(Pose2d pos) {
+    public void posVisual(Pose2d pos) {
         if (pos.getHeading() != 0) {
-            Pose2d curpos = drive.getPoseEstimate();
-            drive.setPoseEstimate(new Pose2d(pos.getX(), pos.getY(), curpos.getHeading()));
+            Pose2d curPos = drive.getPoseEstimate();
+            drive.setPoseEstimate(new Pose2d(pos.getX(), pos.getY(), curPos.getHeading()));
         }
     }
 
     public void correctHeading(double heading) {
-        Pose2d curpos = drive.getPoseEstimate();
-        drive.setPoseEstimate(new Pose2d(curpos.getX(), curpos.getY(), Math.toRadians(heading)));
+        Pose2d curPos = drive.getPoseEstimate();
+        drive.setPoseEstimate(new Pose2d(curPos.getX(), curPos.getY(), Math.toRadians(heading)));
     }
 
     public double returnHeading() {

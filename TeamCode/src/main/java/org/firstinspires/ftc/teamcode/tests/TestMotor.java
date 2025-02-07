@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.ext.roadrunner.util.PIDController;
 
 
 @TeleOp(name = "Testmotor")
-public class Testmotor extends LinearOpMode {
+public class TestMotor extends LinearOpMode {
     PIDController control = new PIDController(0.05, 0.0, 0.1);
     private DcMotor m1;
 

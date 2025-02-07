@@ -15,7 +15,6 @@
 apply from: '../build.common.gradle'
 apply from: '../build.dependencies.gradle'
 apply plugin: 'org.jetbrains.kotlin.android'
-apply plugin: 'kotlinx-serialization'
 
 android {
     namespace = 'org.firstinspires.ftc.teamcode'
@@ -40,5 +39,4 @@ dependencies {
     // the following is optional if you want vision
     implementation 'org.ftclib.ftclib:vision:2.1.0'
     implementation 'androidx.core:core-ktx:1.15.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0'
 }

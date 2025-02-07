@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 
 @TeleOp(name = "Testhus")
-public class Testhus extends LinearOpMode {
+public class TestHusky extends LinearOpMode {
 
     private HuskyLens HL;
 

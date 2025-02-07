@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
 @TeleOp(name = "Testllcolor")
-public class Testllcolor extends LinearOpMode {
+public class TestLlColor extends LinearOpMode {
 
     private Limelight3A limelight;
     private IMU imu;
