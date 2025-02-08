@@ -130,14 +130,9 @@ public class Visual {
         // LimeLight implementation
         LLResult resultTmp = limelight.getLatestResult();
         double[] result = resultTmp.getPythonOutput();
-        ByteBuffer buffer = ByteBuffer.allocate(result.length * Double.BYTES);
-        buffer.order(ByteOrder.LITTLE_ENDIAN);
-        for(double d : result) {
-            buffer.putDouble(d);
-        }
-        BlockData[] blocks = new BlockData[8];
+        BlockData[] blocks = new BlockData[5];
         for(int i = 0; i < blocks.length; i++) {
-            blocks[i] = new BlockData(buffer);
+            blocks[i] = new BlockData(result, 2 + i * 6);
             if((blocks[i].color & color) != 0) {
                 return blocks[i];
             }
