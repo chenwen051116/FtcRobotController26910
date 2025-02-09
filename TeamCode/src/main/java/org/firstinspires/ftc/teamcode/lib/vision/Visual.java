@@ -115,7 +115,7 @@ public class Visual {
                 new IMU.Parameters(
                         new RevHubOrientationOnRobot(
                                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
+                                RevHubOrientationOnRobot.UsbFacingDirection.RIGHT
                         )
                 )
         );
