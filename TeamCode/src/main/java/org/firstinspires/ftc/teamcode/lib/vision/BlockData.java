@@ -8,24 +8,23 @@ public class BlockData {
     public static final int COLOR_RED = 2;
     public static final int COLOR_BLUE = 4;
 
-    short centerX;
-    short centerY;
-    short width;
-    short height;
-    float angle;
+    double centerX;
+    double centerY;
+    double width;
+    double height;
+    double angle;
     int color;
 
-    public float getAngle() {
+    public double getAngle() {
         return angle;
     }
 
-    public BlockData(ByteBuffer buffer) {
-        buffer.order(ByteOrder.LITTLE_ENDIAN);
-        this.centerX = buffer.getShort();
-        this.centerY = buffer.getShort();
-        this.width = buffer.getShort();
-        this.height = buffer.getShort();
-        this.angle = buffer.getFloat();
-        this.color = buffer.getInt();
+    public BlockData(double[] array, int startIndex) {
+        this.centerX = array[startIndex];
+        this.centerY = array[startIndex + 1];
+        this.width = array[startIndex + 2];
+        this.height = array[startIndex + 3];
+        this.angle = array[startIndex + 4];
+        this.color = (int) array[startIndex + 5];
     }
 }
