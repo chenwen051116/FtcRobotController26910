@@ -208,6 +208,7 @@ public class Visual {
 //        telemetry.update();
         // LimeLight implementation
         limelight.pipelineSwitch(0);
+        limelight.uploadPython(snapScript, 0);
         LLResult resultTmp = limelight.getLatestResult();
         telemetry.addData("the result is valid or not ", resultTmp.isValid());
         LLStatus status = limelight.getStatus();
