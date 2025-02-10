@@ -210,26 +210,26 @@ public class Visual {
         limelight.pipelineSwitch(0);
         limelight.uploadPython(snapScript, 0);
         LLResult resultTmp = limelight.getLatestResult();
-        telemetry.addData("the result is valid or not ", resultTmp.isValid());
+        //telemetry.addData("the result is valid or not ", resultTmp.isValid());
         LLStatus status = limelight.getStatus();
-        telemetry.addData("ll status", status.toString());
+        //telemetry.addData("ll status", status.toString());
         double[] result = resultTmp.getPythonOutput();
-        telemetry.addData("raw python output", "");
-        for (double dbl : result){
-            telemetry.addData("", dbl);
-        }
+        //telemetry.addData("raw python output", "");
+        //for (double dbl : result){
+            //telemetry.addData("", dbl);
+        //}
 
         BlockData[] blocks = new BlockData[5];
         for(int i = 0; i < blocks.length; i++) {
             blocks[i] = new BlockData(result, 2 + i * 6);
-            telemetry.addData("Block", "x=" + blocks[i].centerX + "; y=" + blocks[i].centerY + "; w=" + blocks[i].width + "; h=" + blocks[i].height + "; angle=" + blocks[i].angle + "; color=" + blocks[i].color);
+            //telemetry.addData("Block", "x=" + blocks[i].centerX + "; y=" + blocks[i].centerY + "; w=" + blocks[i].width + "; h=" + blocks[i].height + "; angle=" + blocks[i].angle + "; color=" + blocks[i].color);
             if((blocks[i].color & color) != 0) {
-                telemetry.addData("Block", "Block detected at x=" + blocks[i].centerX + ", y=" + blocks[i].centerY);
-                telemetry.update();
+                //telemetry.addData("Block", "Block detected at x=" + blocks[i].centerX + ", y=" + blocks[i].centerY);
+                //telemetry.update();
                 return blocks[i];
             }
         }
-        telemetry.update();
+        //telemetry.update();
         return null;
     }
 
@@ -239,14 +239,35 @@ public class Visual {
 //        return myHuskyLensAs[0];
 //    }
 
-    public double autoFocus(){
-        BlockData block = getBlock(BlockData.COLOR_YELLOW | BlockData.COLOR_RED | BlockData.COLOR_BLUE);
-        if(block != null && block.getAngle() < (Math.PI/4)){
-            return 0.5;
+
+    public double blueGetangle(){
+        BlockData block = getBlock(BlockData.COLOR_BLUE);
+        if(block != null){
+            return block.getAngle();
         }
-        else{
-            return 0;
+        block = getBlock(BlockData.COLOR_YELLOW);
+        if(block != null){
+            return block.getAngle();
         }
+        return 0;
+
+    }
+
+    public double autoFocus(double angle){
+        return (angle-90)/180.0;
+    }
+
+    public double redGetangle(){
+        BlockData block = getBlock(BlockData.COLOR_RED);
+        if(block != null){
+            return block.getAngle();
+        }
+        block = getBlock(BlockData.COLOR_YELLOW);
+        if(block != null){
+            return block.getAngle();
+        }
+        return 90;
+
     }
 
 //    public double autoFocus(){
