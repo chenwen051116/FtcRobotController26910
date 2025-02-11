@@ -182,7 +182,7 @@ public class Arm {
         // getIntake false 不再吸了
         HzArmSet(5);
         if(-hzFront.getCurrentPosition()<20) {
-            ArmSet(-0.15);
+            ArmSet(-0.1);
             TurnSet(0.85);
             scheduler.addTaskAfter(800, new Runnable() {
                 @Override
