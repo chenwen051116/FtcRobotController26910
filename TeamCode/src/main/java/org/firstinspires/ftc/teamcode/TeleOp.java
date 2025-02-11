@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.lib.Robot;
 import org.firstinspires.ftc.teamcode.lib.schedule.Scheduler;
-import org.firstinspires.ftc.teamcode.lib.vision.BlockData;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp
 public class TeleOp extends LinearOpMode {
@@ -62,9 +61,9 @@ public class TeleOp extends LinearOpMode {
                 robot.arm.inTurn(gamepad2.left_stick_x);
             }
             if (gamepad2.right_trigger > 0.5) {
-                telemetry.addData("controller", robot.v.redGetangle());
+                telemetry.addData("controller", robot.v.getBlkAngAsRed());
                 telemetry.update();
-                intake_rotate = robot.v.autoFocus(robot.v.redGetangle());
+                intake_rotate = robot.v.getClawAngFromBlkAng(robot.v.getBlkAngAsRed());
                 robot.arm.inTurn(intake_rotate);
             }
 
