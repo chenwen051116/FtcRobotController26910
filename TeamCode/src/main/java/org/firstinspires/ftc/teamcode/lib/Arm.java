@@ -64,8 +64,8 @@ public class Arm {
     }
 
     public void VtArmSet(int pos) {
-        VtLeft.setPower(0.8);
-        VtRight.setPower(0.8);
+        VtLeft.setPower(1);
+        VtRight.setPower(1);
         VtLeft.setTargetPosition(pos);
         VtLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         VtRight.setTargetPosition(-pos);
@@ -141,17 +141,18 @@ public class Arm {
                 }
             });
 
-            scheduler.addTaskAfter(500, new Runnable() {
+            scheduler.addTaskAfter(800, new Runnable() {
                 @Override
                 public void run() {
-                    inClaw.setPosition(0.7);
+                    inClaw.setPosition(0.75);
                 }
             });
-            scheduler.addTaskAfter(1300, new Runnable() {
+            scheduler.addTaskAfter(1200, new Runnable() {
                 @Override
                 public void run() {
                     ArmSet(0.15);
                     TurnSet(0.32);
+
                 }
             });
             scheduler.addTaskAfter(1800, new Runnable() {
@@ -184,6 +185,14 @@ public class Arm {
         if(-hzFront.getCurrentPosition()<20) {
             ArmSet(-0.1);
             TurnSet(0.85);
+            //inTurn (0.5);
+            if(inAngleTurn.getPosition()>0.8){
+                inTurn(0.5);
+            }
+            else{
+                inTurn(-0.5);
+            }
+
             scheduler.addTaskAfter(800, new Runnable() {
                 @Override
                 public void run() {
@@ -260,7 +269,7 @@ public class Arm {
 
     }
     public void basketBack() {//框里收回来
-        double d = 0.4133;
+        double d = 0.4233;
         outArmLeft.setPosition(0.61 - d);//左arm位置
         outArmRight.setPosition(0.5 + d);//右arm位置
         if(frontArmPos < 200 && VtLeft.getCurrentPosition() < 200) {
