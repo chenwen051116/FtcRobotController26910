@@ -15,26 +15,26 @@ import org.firstinspires.ftc.teamcode.ext.roadrunner.trajectorysequence.Trajecto
 //@com.qualcomm.robotcore.eventloop.opmode.TeleOp
 public class Autoright extends LinearOpMode {
     public static double g1x = -6.53;
-    public static double g1y = 37.59;
+    public static double g1y = 39.20;
     public static double g1ang = 180;
     public static double g2x = -7.13;
-    public static double g2y = 49.705;
+    public static double g2y = 50.005;
     public static double g2ang = 180;
     public static double spein1x = -7.13;
     public static double spein1y = 34.705;
     public static double spein1ang = 180;
-    public static int arml1 = 590;
-    public static int arml = 550;
-    public static double backl = 19;
+    public static int arml1 = 440;
+    public static int arml = 380;
+    public static double backl = 19.5;
 
     public static double spein2x = 16;
     public static double spein2y = 0;
     public static double spein2ang = 0;
-    public static double b1x = 45.05;
+    public static double b1x = 44.05;
     public static double b1y = 40.29;
     public static double b1ang = 180;
-    public static double b2x = 46.5;
-    public static double b2y = 40.29;
+    public static double b2x = 45.5;
+    public static double b2y = 38.29;
     public static double b2ang = 180;
 //    public static double g3x = 20.55;
 //    public static double g3y = -9.15;
@@ -66,6 +66,7 @@ public class Autoright extends LinearOpMode {
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.highBar();//把arm伸上去
+                    robot.arm.speClaw.setPosition(0.15);
                 })
                 .waitSeconds(0.5)
                 .lineToLinearHeading(highBarPos)//走到杆前面
@@ -142,6 +143,8 @@ public class Autoright extends LinearOpMode {
                     robot.arm.HzArmSet(5);//收回前滑轨
                     robot.arm.dropSpe();//打开夹子
                     robot.arm.takeSpePos();//夹样本高度
+                    robot.arm.dropSpe();//打开夹子
+                    robot.arm.dropSpe();//打开夹子
                 })
                 .lineToLinearHeading(speIntakePos)//夹样本位置
                 .back(backl)
@@ -167,6 +170,7 @@ public class Autoright extends LinearOpMode {
                 .waitSeconds(0.2)//操作等待时间
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.takeSpePos();//把arm收回来
+
                 })
 
                 .lineToLinearHeading(speIntakePos2)//夹样本位置
@@ -194,6 +198,7 @@ public class Autoright extends LinearOpMode {
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.takeSpePos();//把arm收回来
+
                 })
                 .forward(10)
                 .build();

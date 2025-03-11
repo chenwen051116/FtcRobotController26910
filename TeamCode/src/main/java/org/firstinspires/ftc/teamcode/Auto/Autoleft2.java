@@ -13,18 +13,18 @@ import org.firstinspires.ftc.teamcode.ext.roadrunner.trajectorysequence.Trajecto
 @Config
 @Autonomous
 //@com.qualcomm.robotcore.eventloop.opmode.TeleOp
-public class Autoleft extends LinearOpMode {
+public class Autoleft2 extends LinearOpMode {
     public static double g1x = -9.03;
-    public static double g1y = -37.09;
+    public static double g1y = -36.3;
     public static double g1ang = 180;
     public static double g2x = -8.73;
-    public static double g2y = -46.505;
+    public static double g2y = -46.005;
     public static double g2ang = 180;
     public static double g3x = -34;
     public static double g3y = -36;
     public static double g3ang = 270;
     public static int arml1 = 730;
-    public static int arml2 = 720;
+    public static int arml2 = 700;
     public static int arml3 = 0;
 
     public static double b1x = 0.76;
@@ -62,18 +62,23 @@ public class Autoleft extends LinearOpMode {
         TrajectorySequence FinalAuto1 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.highBar();//把arm伸上去
+                    robot.arm.highBasket();//把arm伸上去
                     robot.arm.speClaw.setPosition(0.15);
                 })
-                .waitSeconds(0.5)
-                .lineToLinearHeading(highBarPos)//走到杆前面
+                .lineToLinearHeading(highBarPos1)//走到杆前面
 
-                .UNSTABLE_addTemporalMarkerOffset(-0.3, () -> {
-                    robot.arm.dropSpe();//挂上并松手
-                })
-                .waitSeconds(0.2)//操作等待时间
+
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.VtBack();//把arm收回来
+                    robot.arm.basketOut();
+                })
+                .waitSeconds(1)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.basketBack();
+                    robot.arm.frontIntakeDown();
+                })
+                .waitSeconds(0.5)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.VtBack();
                 })
 
 

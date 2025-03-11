@@ -49,7 +49,7 @@ public class AutoArm {
         ArmSet(0);
         TurnSet(0.85);
         inClaw.setPosition(0.4);
-        speClaw.setPosition(0.15);
+
         HzArmSet(5);
         inTurn(0);
     }
@@ -59,17 +59,22 @@ public class AutoArm {
     }
 
     public void VtArmSet(int pos) {
+        if(pos < 100) {
+            VtLeft.setPower(0.5);
+            VtRight.setPower(0.5);
+        }
+        else{
+            VtLeft.setPower(1);
+            VtRight.setPower(1);
+        }
         VtLeft.setTargetPosition(pos);
-        VtLeft.setPower(0.7);
         VtLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        VtRight.setPower(0.7);
         VtRight.setTargetPosition(-pos);
         VtRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
     }
 
     public void HzArmSet(int pos) {
-        hzFront.setPower(0.6);
+        hzFront.setPower(0.8);
         frontArmPos = pos;
         hzFront.setTargetPosition(-frontArmPos);
         hzFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -145,10 +150,12 @@ public class AutoArm {
         HzArmSet(5);
         ArmSet(-0.15);
         TurnSet(0.85);
+        inTurn(0.5);
             sleep(800);
             inClaw.setPosition(0.4);
             sleep(500);
             ArmSet(0);
+            inTurn(0);
             backPos = true;
 
     }
@@ -170,7 +177,7 @@ public class AutoArm {
     }
 
     public void highBar() {
-        VtArmSet(1500);//高杆arm位置
+        VtArmSet(1470);//高杆arm位置
     }
 
     public void lowBar() {
@@ -183,7 +190,7 @@ public class AutoArm {
             HzArmSet(200);
             // set 到 200 避免冲突
         }
-        VtArmSet(147);//夹取样本位置
+        VtArmSet(20);//夹取样本位置
 
     }
 

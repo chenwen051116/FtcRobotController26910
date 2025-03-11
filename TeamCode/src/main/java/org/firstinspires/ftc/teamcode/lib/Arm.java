@@ -63,9 +63,16 @@ public class Arm {
         inTurn(0);
     }
 
+
     public void VtArmSet(int pos) {
-        VtLeft.setPower(1);
-        VtRight.setPower(1);
+        if(pos < 100) {
+            VtLeft.setPower(0.5);
+            VtRight.setPower(0.5);
+        }
+        else{
+            VtLeft.setPower(1);
+            VtRight.setPower(1);
+        }
         VtLeft.setTargetPosition(pos);
         VtLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         VtRight.setTargetPosition(-pos);
@@ -118,6 +125,19 @@ public class Arm {
         frontArmPos += 10 * power;
         if (frontArmPos > 1250) {
             HzArmSet(1250);
+        } else if (frontArmPos < 0) {
+            HzArmSet(0);
+        } else {
+            HzArmSet(frontArmPos);
+        }
+
+    }
+
+    public void HzArmVellim(double power) {
+        // 控制目标点
+        frontArmPos += 10 * power;
+        if (frontArmPos > 1050) {
+            HzArmSet(1050);
         } else if (frontArmPos < 0) {
             HzArmSet(0);
         } else {
@@ -183,7 +203,7 @@ public class Arm {
         // getIntake false 不再吸了
         HzArmSet(5);
         if(-hzFront.getCurrentPosition()<20) {
-            ArmSet(-0.1);
+            ArmSet(-0.2);
             TurnSet(0.85);
             //inTurn (0.5);
             if(inAngleTurn.getPosition()>0.8){
@@ -219,7 +239,7 @@ public class Arm {
     }
 
     public void highBar() {
-        VtArmSet(1500);//高杆arm位置
+        VtArmSet(1450);//高杆arm位置
     }
 
     public void lowBar() {

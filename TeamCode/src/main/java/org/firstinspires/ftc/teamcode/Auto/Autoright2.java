@@ -14,23 +14,48 @@ import org.firstinspires.ftc.teamcode.ext.roadrunner.trajectorysequence.Trajecto
 //@Autonomous
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp
 public class Autoright2 extends LinearOpMode {
+    public static double g1x = -6.53;
+    public static double g1y = 38.59;
+    public static double g1ang = 180;
+    public static double g2x = -7.13;
+    public static double g2y = 49.705;
+    public static double g2ang = 180;
+    public static double spein1x = -7.13;
+    public static double spein1y = 34.705;
+    public static double spein1ang = 180;
+    public static int arml1 = 440;
+    public static int arml = 350;
+    public static double backl = 19;
+
+    public static double spein2x = 16;
+    public static double spein2y = 0;
+    public static double spein2ang = 0;
+    public static double b1x = 45.05;
+    public static double b1y = 40.29;
+    public static double b1ang = 180;
+    public static double b2x = 46.5;
+    public static double b2y = 40.29;
+    public static double b2ang = 180;
+//    public static double g3x = 20.55;
+//    public static double g3y = -9.15;
+//    public static double g3ang = 80;
 
     public Pose2d startPos = new Pose2d(0, 0, 0);
-    public Pose2d highBarPos = new Pose2d(-25.983, -4.42, 0);
+    public Pose2d highBarPos = new Pose2d(-29.7918, -10.8298, 0);
 
     public Pose2d TurnPos = new Pose2d(-12.686, 24.763, 0);
-    public Pose2d g1Pos = new Pose2d(-46.7043, 24.6059, 0);
-    public Pose2d g2Pos = new Pose2d(-46.9978, 30.3348, 0);//需要调整
+    public Pose2d g1Pos = new Pose2d(g1x, g1y, Math.toRadians(g1ang));
+    public Pose2d g2Pos = new Pose2d(g2x, g2y, Math.toRadians(g2ang));//需要调整
 
-    public Pose2d g3Pos = new Pose2d(-46.9978, 35.2948, 0);//需要调整
+    public Pose2d g3Pos = new Pose2d(-9.92, 43.139, Math.toRadians(140));//需要调整
 
 
-    public Pose2d speIntakePos = new Pose2d(-10, 40, 2.8415);//需要调整
+    public Pose2d speIntakePos =  new Pose2d(spein1x, spein1y, Math.toRadians(spein1ang));//需要调整
     public Pose2d speIntakePos3 = new Pose2d(12, 0, 0);//需要调整
-    public Pose2d speIntakePos2 = new Pose2d(12, 0, 0);//需要调整
+    public Pose2d speIntakePos2 = new Pose2d(spein2x, spein2y, Math.toRadians(spein2ang));
     public Pose2d speIntakePos4 = new Pose2d(12, 0, 0);//需要调整
-    public Pose2d highBarPos1 = new Pose2d(38.852, 57.178, Math.toRadians(185));//需要调整
-    public Pose2d highBarPos2 = new Pose2d(38.152, 55.178, Math.toRadians(185));//需要调整
+    public Pose2d highBarPos1 = new Pose2d(b1x, b1y, Math.toRadians(b1ang));//需要调整
+    public Pose2d highBarPos2 = new Pose2d(b2x, b2y, Math.toRadians(b2ang));//需要调整
     public Pose2d highBarPos3 = new Pose2d(38.552, 50.178, Math.toRadians(185));//需要调整
 
     @Override
@@ -41,6 +66,7 @@ public class Autoright2 extends LinearOpMode {
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.highBar();//把arm伸上去
+                    robot.arm.speClaw.setPosition(0.15);
                 })
                 .waitSeconds(0.5)
                 .lineToLinearHeading(highBarPos)//走到杆前面
@@ -54,30 +80,44 @@ public class Autoright2 extends LinearOpMode {
                 })
 
 
-                .lineToLinearHeading(TurnPos)//准备吸取第一个地上的
                 .lineToLinearHeading(g1Pos)//准备吸取第一个地上的
-                .strafeLeft(8.5)
-                .forward(44)
-                //.lineToLinearHeading(TurnPos)//准备吸取第一个地上的
-                .back(44)
-                .strafeLeft(11)
-                .turn(-Math.toRadians(5))
-                .forward(44)
-                //.lineToLinearHeading(TurnPos)//准备吸取第一个地上的
-//                .back(45)
-//                .turn(-Math.toRadians(6))
-//                .strafeLeft(12)
-//
-//                .forward(45)
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
+                    robot.arm.HzArmSet(arml1);
+                })
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
+                    robot.arm.frontIntakeDown();
+                })
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.frontIntake();
 
+                })
+                .waitSeconds(1)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.frontArmBack();
 
-                .lineToLinearHeading(speIntakePos)//夹样本位置
-                .back(23)
-                .UNSTABLE_addTemporalMarkerOffset(-1.8, () -> {
-                    robot.arm.HzArmSet(100);//收回前滑轨
+                })
+                .waitSeconds(1)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.inArmTrans();
+                })
+                .waitSeconds(1.5)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.basketOut();
+                })
+                .waitSeconds(1)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.basketBack();
+                    robot.arm.frontIntakeDown();
+                })
+                //.waitSeconds(0.5)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.HzArmSet(5);//收回前滑轨
                     robot.arm.dropSpe();//打开夹子
                     robot.arm.takeSpePos();//夹样本高度
                 })
+                .lineToLinearHeading(speIntakePos)//夹样本位置
+                .back(backl)
+
                 .waitSeconds(0.5)
                 .build();
 
@@ -123,13 +163,18 @@ public class Autoright2 extends LinearOpMode {
                     robot.arm.dropSpe();//挂上并松手
                 })
                 .waitSeconds(0.2)//操作等待时间
+
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.takeSpePos();//把arm收回来
                 })
+                .forward(10)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.VtBack();//把arm收回来
 
-                .lineToLinearHeading(speIntakePos3)//夹样本位置
-                .back(22.5)
-                //.waitSeconds(0.5)
+                    robot.arm.HzArmSet(0);
+                })
+                .lineToLinearHeading(speIntakePos2)
+                .back(20)
                 .build();
 
         TrajectorySequence FinalAuto4 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
@@ -159,6 +204,8 @@ public class Autoright2 extends LinearOpMode {
 
                     robot.arm.HzArmSet(0);
                 })
+                .lineToLinearHeading(speIntakePos2)
+                .back(20)
                 .build();
 
 
@@ -197,10 +244,10 @@ public class Autoright2 extends LinearOpMode {
         robot.chassis.drive.followTrajectorySequence(FinalAuto1);
         robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));
         robot.chassis.drive.followTrajectorySequence(FinalAuto2);
-        //robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));
-        //robot.chassis.drive.followTrajectorySequence(FinalAuto3);
         robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));
-        robot.chassis.drive.followTrajectorySequence(FinalAuto4);
+        robot.chassis.drive.followTrajectorySequence(FinalAuto3);
+//        robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));
+//        robot.chassis.drive.followTrajectorySequence(FinalAuto4);
 
     }
 
