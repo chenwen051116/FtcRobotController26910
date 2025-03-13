@@ -89,7 +89,7 @@ public class AutoArm {
         int k = 500;    //向下移动多少
         if(VtLeft.getCurrentPosition() > 800) {
             VtArmSet(VtLeft.getCurrentPosition() - k);
-            sleep(500);
+            sleep(300);
         }
 
         speClaw.setPosition(0.37);//松手舵机位置
@@ -121,11 +121,11 @@ public class AutoArm {
 
     public void frontIntake() {//放下前面arm开始吸
         inClaw.setPosition(0.3);
-        ArmSet(0.35);
+        ArmSet(0.32);
         TurnSet(0);
-        sleep(500);
+        sleep(300);
         inClaw.setPosition(0.7);
-        sleep(500);
+        sleep(200);
         frontIntakeDown();
     }
 
@@ -151,9 +151,9 @@ public class AutoArm {
         ArmSet(-0.15);
         TurnSet(0.85);
         inTurn(0.5);
-            sleep(800);
+            sleep(600);
             inClaw.setPosition(0.4);
-            sleep(500);
+            sleep(200);
             ArmSet(0);
             inTurn(0);
             backPos = true;

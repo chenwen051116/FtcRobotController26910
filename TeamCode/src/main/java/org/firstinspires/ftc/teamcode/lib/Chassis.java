@@ -38,6 +38,9 @@ public class Chassis {
     public void lowSpeed() {
         kp = 0.3;
     }
+    public void lowlowSpeed() {
+        kp = 0.1;
+    }
 
     public void normalSpeed() {
         kp = 1;
@@ -98,14 +101,14 @@ public class Chassis {
     public void turnTeleMode() {
         isAuto = false;
         lastpos = drive.getPoseEstimate();
-        if (drive.isBusy()) {
-
-            lastpos = drive.getPoseEstimate();
-            Trajectory trajectory = drive.trajectoryBuilder(lastpos)
-                    .lineToLinearHeading(lastpos)
-                    .build();
-            drive.followTrajectory(trajectory);
-        }
+//        if (drive.isBusy()) {
+//
+//            lastpos = drive.getPoseEstimate();
+//            Trajectory trajectory = drive.trajectoryBuilder(lastpos)
+//                    .lineToLinearHeading(lastpos)
+//                    .build();
+//            drive.followTrajectory(trajectory);
+//        }
     }
 
     public void autoUpdate() {

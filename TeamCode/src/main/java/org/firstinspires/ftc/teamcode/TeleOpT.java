@@ -27,9 +27,13 @@ public class TeleOpT extends LinearOpMode {
             scheduler.elapse();
 
             //gamepad1 base and front arm controll
-            if (gamepad1.left_bumper || gamepad1.right_bumper) {
+            if (gamepad1.left_bumper) {
                 robot.chassis.lowSpeed();
-            } else {
+            }
+            else if(gamepad1.right_bumper){
+                robot.chassis.lowlowSpeed();
+            }
+            else {
                 robot.chassis.normalSpeed();
             }
             x = gamepad1.left_stick_x;
@@ -42,12 +46,18 @@ public class TeleOpT extends LinearOpMode {
             if (gamepad1.a) {
                 robot.chassis.setOrigin();
             }
+            if(gamepad1.x){
+                robot.barAuto();
+            }
+            if(gamepad1.b){
+                robot.barbackAuto();
+            }
             robot.chassis.cancelAuto();
 //            telemetry.addData("x:", robot.chassis.lastpos.getX());
 //            telemetry.addData("Y:", robot.chassis.lastpos.getY());
 //            telemetry.addData("A:", robot.chassis.lastpos.getHeading());
 
-            robot.arm.HzArmVellim(-gamepad2.left_stick_y);
+            robot.arm.HzArmVel(-gamepad2.left_stick_y);
             //robot.arm.intakeMupdate();
             //telemetry.addData("imuheading", robot.chassis.drive.getimuExternalHeading());
 //            telemetry.addData("position2:", robot.arm.VtRight.getCurrentPosition());
@@ -60,12 +70,12 @@ public class TeleOpT extends LinearOpMode {
                 intake_rotate = gamepad2.left_stick_x;
                 robot.arm.inTurn(gamepad2.left_stick_x);
             }
-            if (gamepad2.right_trigger > 0.5) {
-                telemetry.addData("controller", robot.v.getBlkAngAsRed());
-                telemetry.update();
-                intake_rotate = robot.v.getClawAngFromBlkAng(robot.v.getBlkAngAsRed());
-                robot.arm.inTurn(intake_rotate);
-            }
+//            if (gamepad2.right_trigger > 0.5) {
+//                telemetry.addData("controller", robot.v.getBlkAngAsRed());
+//                telemetry.update();
+//                intake_rotate = robot.v.getClawAngFromBlkAng(robot.v.getBlkAngAsRed());
+//                robot.arm.inTurn(intake_rotate);
+//            }
 
 //            telemetry.addData("Rect_detected: ", robot.v.hlGetAngle(robot.v.getBlockNear()));
 //            telemetry.addData("Actual angle: ", intake_rotate);
@@ -82,7 +92,12 @@ public class TeleOpT extends LinearOpMode {
             //front intake control
             if (gamepad2.y) {
                 //robot.arm.frontIntake();
-                robot.arm.frontIntakeDown();
+                if(gamepad2.right_trigger>0.5){
+                    robot.arm.frontIntakeDownSlow();
+                }
+                else {
+                    robot.arm.frontIntakeDownquick();
+                }
 
             }
             if (gamepad2.a) {

@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.lib;
 
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.ext.roadrunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.lib.schedule.Scheduler;
 
 public class Arm {
@@ -23,6 +25,8 @@ public class Arm {
     public int frontArmPos = 0;
     public boolean backPos = true;
     public Scheduler scheduler;
+
+
 
     public void autoInit(HardwareMap hwm) {
     }
@@ -61,6 +65,8 @@ public class Arm {
         speClaw.setPosition(0.37);
         HzArmSet(5);
         inTurn(0);
+
+
     }
 
 
@@ -106,7 +112,7 @@ public class Arm {
         int k = 500;    //向下移动多少
         if(VtLeft.getCurrentPosition() > 800) {
             VtArmSet(VtLeft.getCurrentPosition() - k);
-            scheduler.addTaskAfter(500, new Runnable() {
+            scheduler.addTaskAfter(300, new Runnable() {
                 @Override
                 public void run() {
                     speClaw.setPosition(0.37);//松手舵机位置
@@ -146,6 +152,47 @@ public class Arm {
 
     }
 
+    public void frontIntakeDownquick() {//放下前面arm开始吸
+        // 把两个 servo 放下去
+        // 把滚吸过放下去
+        if(!backPos) {
+            TurnSet(0);
+            inClaw.setPosition(0.4);
+                    inClaw.setPosition(0.4);
+                    ArmSet(0.31);
+
+            scheduler.addTaskAfter(200, new Runnable() {
+                @Override
+                public void run() {
+                    inClaw.setPosition(0.75);
+                }
+            });
+            scheduler.addTaskAfter(500, new Runnable() {
+                @Override
+                public void run() {
+                    ArmSet(0.25);
+                    TurnSet(0);
+
+                }
+            });
+            scheduler.addTaskAfter(1000, new Runnable() {
+                @Override
+                public void run() {
+                    backPos = false;
+                }
+            });
+        } else {
+            ArmSet(0.25);
+            TurnSet(0);
+            scheduler.addTaskAfter(300, new Runnable() {
+                @Override
+                public void run() {
+                    backPos = false;
+                }
+            });
+        }
+    }
+
 
 
     public void frontIntakeDown() {//放下前面arm开始吸
@@ -153,21 +200,22 @@ public class Arm {
         // 把滚吸过放下去
         if(!backPos) {
             TurnSet(0);
-            scheduler.addTaskAfter(300, new Runnable() {
+            inClaw.setPosition(0.4);
+            scheduler.addTaskAfter(100, new Runnable() {
                 @Override
                 public void run() {
                     inClaw.setPosition(0.4);
-                    ArmSet(0.33);
+                    ArmSet(0.31);
                 }
             });
 
-            scheduler.addTaskAfter(800, new Runnable() {
+            scheduler.addTaskAfter(400, new Runnable() {
                 @Override
                 public void run() {
                     inClaw.setPosition(0.75);
                 }
             });
-            scheduler.addTaskAfter(1200, new Runnable() {
+            scheduler.addTaskAfter(600, new Runnable() {
                 @Override
                 public void run() {
                     ArmSet(0.15);
@@ -175,7 +223,7 @@ public class Arm {
 
                 }
             });
-            scheduler.addTaskAfter(1800, new Runnable() {
+            scheduler.addTaskAfter(1000, new Runnable() {
                 @Override
                 public void run() {
                     backPos = false;
@@ -184,7 +232,53 @@ public class Arm {
         } else {
             ArmSet(0.15);
             TurnSet(0.32);
-            scheduler.addTaskAfter(500, new Runnable() {
+            scheduler.addTaskAfter(300, new Runnable() {
+                @Override
+                public void run() {
+                    backPos = false;
+                }
+            });
+        }
+    }
+
+    public void frontIntakeDownSlow() {//放下前面arm开始吸
+        // 把两个 servo 放下去
+        // 把滚吸过放下去
+        if(!backPos) {
+            TurnSet(0);
+            inClaw.setPosition(0.4);
+            scheduler.addTaskAfter(300, new Runnable() {
+                @Override
+                public void run() {
+                    inClaw.setPosition(0.4);
+                    ArmSet(0.31);
+                }
+            });
+
+            scheduler.addTaskAfter(600, new Runnable() {
+                @Override
+                public void run() {
+                    inClaw.setPosition(0.75);
+                }
+            });
+            scheduler.addTaskAfter(1000, new Runnable() {
+                @Override
+                public void run() {
+                    ArmSet(0.15);
+                    TurnSet(0.32);
+
+                }
+            });
+            scheduler.addTaskAfter(1400, new Runnable() {
+                @Override
+                public void run() {
+                    backPos = false;
+                }
+            });
+        } else {
+            ArmSet(0.15);
+            TurnSet(0.32);
+            scheduler.addTaskAfter(300, new Runnable() {
                 @Override
                 public void run() {
                     backPos = false;
@@ -213,7 +307,7 @@ public class Arm {
                 inTurn(-0.5);
             }
 
-            scheduler.addTaskAfter(800, new Runnable() {
+            scheduler.addTaskAfter(600, new Runnable() {
                 @Override
                 public void run() {
                     inClaw.setPosition(0.4);
@@ -284,8 +378,8 @@ public class Arm {
         outArmLeft.setPosition(0.61 + d);//左arm位置
         outArmRight.setPosition(0.5 - d);//右arm位置
         speClaw.setPosition(0.6);//松手舵机位置
-        VtArmSet(1300);
-        HzArmSet(200);
+        highBasket();
+        HzArmSet(0);
 
     }
     public void basketBack() {//框里收回来
