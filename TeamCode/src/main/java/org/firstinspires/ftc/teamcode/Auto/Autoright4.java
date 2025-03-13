@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.ext.roadrunner.trajectorysequence.Trajecto
 @Config
 @Autonomous
 //@com.qualcomm.robotcore.eventloop.opmode.TeleOp
-public class Autoright extends LinearOpMode {
+public class Autoright4 extends LinearOpMode {
     public static double g1x = -6.53;
     public static double g1y = 39.20;
     public static double g1ang = 180;
@@ -30,12 +30,20 @@ public class Autoright extends LinearOpMode {
     public static double spein2x = 16;
     public static double spein2y = 0;
     public static double spein2ang = 0;
+
+    public static double spein3x = 16;
+    public static double spein3y = 0;
+    public static double spein3ang = 0;
     public static double b1x = 44.05;
     public static double b1y = 40.29;
     public static double b1ang = 180;
     public static double b2x = 45.5;
     public static double b2y = 38.29;
     public static double b2ang = 180;
+
+    public static double b3x = 45.5;
+    public static double b3y = 38.29;
+    public static double b3ang = 180;
 //    public static double g3x = 20.55;
 //    public static double g3y = -9.15;
 //    public static double g3ang = 80;
@@ -51,12 +59,12 @@ public class Autoright extends LinearOpMode {
 
 
     public Pose2d speIntakePos =  new Pose2d(spein1x, spein1y, Math.toRadians(spein1ang));//需要调整
-    public Pose2d speIntakePos3 = new Pose2d(12, 0, 0);//需要调整
+    public Pose2d speIntakePos3 = new Pose2d(spein3x, spein3y, Math.toRadians(spein3ang));//需要调整
     public Pose2d speIntakePos2 = new Pose2d(spein2x, spein2y, Math.toRadians(spein2ang));
     public Pose2d speIntakePos4 = new Pose2d(12, 0, 0);//需要调整
     public Pose2d highBarPos1 = new Pose2d(b1x, b1y, Math.toRadians(b1ang));//需要调整
     public Pose2d highBarPos2 = new Pose2d(b2x, b2y, Math.toRadians(b2ang));//需要调整
-    public Pose2d highBarPos3 = new Pose2d(38.552, 50.178, Math.toRadians(185));//需要调整
+    public Pose2d highBarPos3 = new Pose2d(b3x, b3y, Math.toRadians(b3ang));//需要调整
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -167,7 +175,7 @@ public class Autoright extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(-0.3, () -> {
                     robot.arm.dropSpe();//挂上并松手
                 })
-                .waitSeconds(0.2)//操作等待时间
+                //.waitSeconds(0.2)//操作等待时间
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.takeSpePos();//把arm收回来
 
@@ -194,7 +202,33 @@ public class Autoright extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(-0.3, () -> {
                     robot.arm.dropSpe();//挂上并松手
                 })
-                .waitSeconds(0.2)//操作等待时间
+                //.waitSeconds(0.2)//操作等待时间
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.takeSpePos();//把arm收回来
+
+                })
+
+                .lineToLinearHeading(speIntakePos3)//夹样本位置
+                .back(20)
+                //.waitSeconds(0.5)
+                .build();
+
+        TrajectorySequence FinalAuto4 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
+
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.closeClaw();//关夹子
+
+                })
+                .waitSeconds(0.8)
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
+                    robot.arm.highBar();//把arm伸上去
+                })
+                .lineToLinearHeading(highBarPos3)//放的位置
+
+                .UNSTABLE_addTemporalMarkerOffset(-0.3, () -> {
+                    robot.arm.dropSpe();//挂上并松手
+                })
+                //.waitSeconds(0.2)//操作等待时间
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.takeSpePos();//把arm收回来
@@ -203,34 +237,7 @@ public class Autoright extends LinearOpMode {
                 .forward(10)
                 .build();
 
-        TrajectorySequence FinalAuto4 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.closeClaw();//关夹子
-                })
-                .waitSeconds(0.8)
-                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> {
-                    robot.arm.highBar();//把arm伸上去
-                })
-                .lineToLinearHeading(highBarPos3)//放的位置
-                .UNSTABLE_addTemporalMarkerOffset(-0.3, () -> {
-                    robot.arm.dropSpe();//挂上并松手
-                    robot.arm.frontIntake();
-                })
-                .waitSeconds(0.2)//操作等待时间
-                //.UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                //    robot.arm.takeSpePos();//把arm收回来
-                //})
-
-                //.lineToLinearHeading(speIntakePos2)//夹样本位置
-                //.waitSeconds(0.5)
-                .forward(2)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.VtBack();//把arm收回来
-
-                    robot.arm.HzArmSet(0);
-                })
-                .build();
 
 
 
@@ -267,7 +274,7 @@ public class Autoright extends LinearOpMode {
         //while (!isStopRequested() && opModeIsActive()){
         robot.chassis.drive.followTrajectorySequence(FinalAuto1);
         robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));
-       robot.chassis.drive.followTrajectorySequence(FinalAuto2);
+        robot.chassis.drive.followTrajectorySequence(FinalAuto2);
         robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));
         robot.chassis.drive.followTrajectorySequence(FinalAuto3);
 //        robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));

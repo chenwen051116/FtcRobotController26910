@@ -159,8 +159,13 @@ public class Arm {
             TurnSet(0);
             inClaw.setPosition(0.4);
                     inClaw.setPosition(0.4);
-                    ArmSet(0.31);
 
+            scheduler.addTaskAfter(100, new Runnable() {
+                @Override
+                public void run() {
+                    ArmSet(0.31);
+                }
+            });
             scheduler.addTaskAfter(200, new Runnable() {
                 @Override
                 public void run() {
@@ -170,7 +175,7 @@ public class Arm {
             scheduler.addTaskAfter(500, new Runnable() {
                 @Override
                 public void run() {
-                    ArmSet(0.25);
+                    ArmSet(0.20);
                     TurnSet(0);
 
                 }
@@ -182,7 +187,7 @@ public class Arm {
                 }
             });
         } else {
-            ArmSet(0.25);
+            ArmSet(0.2);
             TurnSet(0);
             scheduler.addTaskAfter(300, new Runnable() {
                 @Override
