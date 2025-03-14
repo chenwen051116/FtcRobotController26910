@@ -72,8 +72,8 @@ public class Arm {
 
     public void VtArmSet(int pos) {
         if(pos < 100) {
-            VtLeft.setPower(0.5);
-            VtRight.setPower(0.5);
+            VtLeft.setPower(0.7);
+            VtRight.setPower(0.7);
         }
         else{
             VtLeft.setPower(1);
@@ -175,7 +175,7 @@ public class Arm {
             scheduler.addTaskAfter(500, new Runnable() {
                 @Override
                 public void run() {
-                    ArmSet(0.20);
+                    ArmSet(0.19);
                     TurnSet(0);
 
                 }
@@ -187,7 +187,7 @@ public class Arm {
                 }
             });
         } else {
-            ArmSet(0.2);
+            ArmSet(0.19);
             TurnSet(0);
             scheduler.addTaskAfter(300, new Runnable() {
                 @Override
@@ -301,9 +301,9 @@ public class Arm {
         // 滚吸收回来
         // getIntake false 不再吸了
         HzArmSet(5);
-        if(-hzFront.getCurrentPosition()<20) {
+        if(-hzFront.getCurrentPosition()<5) {
             ArmSet(-0.2);
-            TurnSet(0.85);
+            TurnSet(0.9);
             //inTurn (0.5);
             if(inAngleTurn.getPosition()>0.8){
                 inTurn(0.5);
@@ -312,12 +312,21 @@ public class Arm {
                 inTurn(-0.5);
             }
 
-            scheduler.addTaskAfter(600, new Runnable() {
+
+
+           scheduler.addTaskAfter(500, new Runnable() {
                 @Override
                 public void run() {
                     inClaw.setPosition(0.4);
-                    ArmSet(0);
-                    backPos = true;
+                    //backPos = true;
+                }
+            });
+            scheduler.addTaskAfter(800, new Runnable() {
+                @Override
+                public void run() {
+                    ArmSet(0.19);
+                    TurnSet(0);
+                    //backPos = true;
                 }
             });
         }

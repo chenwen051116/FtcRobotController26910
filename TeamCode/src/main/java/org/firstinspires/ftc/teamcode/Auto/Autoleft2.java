@@ -93,16 +93,16 @@ public class Autoleft2 extends LinearOpMode {
                     robot.arm.frontIntake();
 
                 })
-                .waitSeconds(1)
+                .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.frontArmBack();
 
                 })
-                .waitSeconds(1)
+                .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.inArmTrans();
                 })
-                .waitSeconds(1.5)
+                .waitSeconds(0.5)
                 .lineToLinearHeading(highBarPos1)
                 //准备吸取第一个地上的
 
@@ -132,15 +132,15 @@ public class Autoleft2 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.frontIntake();
                 })
-                .waitSeconds(1)
+                .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.frontArmBack();
                 })
-                .waitSeconds(1)
+                .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.inArmTrans();
                 })
-                .waitSeconds(1.5)
+                .waitSeconds(0.5)
                 .lineToLinearHeading(highBarPos2)
 
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
@@ -170,18 +170,18 @@ public class Autoleft2 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.frontIntake();
                 })
-                .waitSeconds(1)
+                .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.frontArmBack();
                     robot.arm.inTurn(0.5);
                 })
-                .waitSeconds(1)
+                .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
 
                     robot.arm.inArmTrans();
 
                 })
-                .waitSeconds(1.5)
+                .waitSeconds(0.5)
                 .lineToLinearHeading(highBarPos3)
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
                     robot.arm.highBasket();
