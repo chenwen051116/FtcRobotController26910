@@ -55,6 +55,8 @@ public class Autoleft2 extends LinearOpMode {
     public Pose2d highBarPos2 = new Pose2d(b2x, b2y, Math.toRadians(b2ang));//需要调整
     public Pose2d highBarPos3 = new Pose2d(b3x, b3y, Math.toRadians(b3ang));//需要调整
 
+    public Pose2d highBarPos4 = new Pose2d(63.189, -1.11, 2.226);//需要调整
+
     @Override
     public void runOpMode() throws InterruptedException {
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -102,7 +104,7 @@ public class Autoleft2 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.inArmTrans();
                 })
-                .waitSeconds(0.5)
+                .waitSeconds(1.5)
                 .lineToLinearHeading(highBarPos1)
                 //准备吸取第一个地上的
 
@@ -140,7 +142,7 @@ public class Autoleft2 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.inArmTrans();
                 })
-                .waitSeconds(0.5)
+                .waitSeconds(1.5)
                 .lineToLinearHeading(highBarPos2)
 
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
@@ -181,7 +183,7 @@ public class Autoleft2 extends LinearOpMode {
                     robot.arm.inArmTrans();
 
                 })
-                .waitSeconds(0.5)
+                .waitSeconds(1)
                 .lineToLinearHeading(highBarPos3)
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
                     robot.arm.highBasket();
@@ -205,30 +207,22 @@ public class Autoleft2 extends LinearOpMode {
 
 
 
-//
-//        TrajectorySequence FinalAuto4 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
-//
-////                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-////                    robot.arm.closeClaw();//关夹子
-////                })
-////                .waitSeconds(0.5)
-////                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> {
-////                    robot.arm.highBar();//把arm伸上去
-////                })
-////                .lineToLinearHeading(highBarPos3)//放的位置
-////                .UNSTABLE_addTemporalMarkerOffset(-0.3, () -> {
-////                    robot.arm.dropSpe();//挂上并松手
-////                })
-////                .waitSeconds(0.2)//操作等待时间
-//                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-//                    robot.arm.VtBack();//把arm收回来
-//                    robot.arm.frontIntake();
-//                    robot.arm.HzArmSet(0);
-//                })
-//
-//                //lineToLinearHeading(speIntakePos4)//夹样本位置
-//                //.waitSeconds(0.5)
-//                .build();
+
+        TrajectorySequence FinalAuto2 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.arm.highBar();
+
+                    //把arm收回来
+                })
+
+                .lineToLinearHeading(highBarPos4)//夹样本位置
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
+                    robot.arm.dropSpe();
+                    robot.arm.basketOut();
+                })
+                //.waitSeconds(0.5)
+
+                .build();
 
 
 
@@ -237,6 +231,8 @@ public class Autoleft2 extends LinearOpMode {
         robot.chassis.drive.setPoseEstimate(startPos);
         //while (!isStopRequested() && opModeIsActive()){
         robot.chassis.drive.followTrajectorySequence(FinalAuto1);
+        robot.chassis.drive.setPoseEstimate(startPos);
+        robot.chassis.drive.followTrajectorySequence(FinalAuto2);
 
     }
 

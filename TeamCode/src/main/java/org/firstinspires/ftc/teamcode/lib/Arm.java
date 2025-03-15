@@ -24,6 +24,8 @@ public class Arm {
     public Servo outArmRight = null;
     public int frontArmPos = 0;
     public boolean backPos = true;
+    public boolean hori = false;
+    public boolean delayhori = false;
     public Scheduler scheduler;
 
 
@@ -169,7 +171,7 @@ public class Arm {
             scheduler.addTaskAfter(200, new Runnable() {
                 @Override
                 public void run() {
-                    inClaw.setPosition(0.75);
+                    inClaw.setPosition(0.8);
                 }
             });
             scheduler.addTaskAfter(500, new Runnable() {
@@ -198,7 +200,25 @@ public class Arm {
         }
     }
 
+    public void vtArmlowreset(){
+        VtLeft.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+       // VtRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        //VtRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        VtRight.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        VtLeft.setPower(-0.2);
+        VtRight.setPower(0.2);
+    }
 
+    public void vtArmreset(){
+        VtLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        // VtRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        //VtRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        VtRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        VtLeft.setPower(0);
+        VtRight.setPower(0);
+        VtLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        VtRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
 
     public void frontIntakeDown() {//放下前面arm开始吸
         // 把两个 servo 放下去
@@ -217,7 +237,7 @@ public class Arm {
             scheduler.addTaskAfter(400, new Runnable() {
                 @Override
                 public void run() {
-                    inClaw.setPosition(0.75);
+                    inClaw.setPosition(0.8);
                 }
             });
             scheduler.addTaskAfter(600, new Runnable() {
@@ -263,7 +283,7 @@ public class Arm {
             scheduler.addTaskAfter(600, new Runnable() {
                 @Override
                 public void run() {
-                    inClaw.setPosition(0.75);
+                    inClaw.setPosition(0.8);
                 }
             });
             scheduler.addTaskAfter(1000, new Runnable() {
@@ -296,15 +316,41 @@ public class Arm {
         inAngleTurn.setPosition(0.5+num);
     }
 
+    public void switchinTurn(){
+        if(!delayhori) {
+            delayhori = true;
+            if (hori) {
+                inTurn(0);
+            } else {
+                inTurn(0.5);
+            }
+
+            scheduler.addTaskAfter(500, new Runnable() {
+                @Override
+                public void run() {
+                    delayhori = false;
+                    if (hori) {
+                        hori = false;
+                    } else {
+                        hori = true;
+                    }
+                }
+            });
+
+        }
+    }
+    public void releaseC(){
+        inClaw.setPosition(0.3);
+    }
 
     public void inArmTrans() {//收回arm并反转
         // 滚吸收回来
         // getIntake false 不再吸了
         HzArmSet(5);
-        if(-hzFront.getCurrentPosition()<5) {
-            ArmSet(-0.2);
-            TurnSet(0.9);
-            //inTurn (0.5);
+        if(-hzFront.getCurrentPosition()<10) {
+            ArmSet(-0.15);
+            TurnSet(1);
+//            inTurn (0);
             if(inAngleTurn.getPosition()>0.8){
                 inTurn(0.5);
             }
@@ -314,14 +360,24 @@ public class Arm {
 
 
 
-           scheduler.addTaskAfter(500, new Runnable() {
+           scheduler.addTaskAfter(600, new Runnable() {
                 @Override
                 public void run() {
-                    inClaw.setPosition(0.4);
+                    inClaw.setPosition(0.3);
+                    //inTurn(0.5);
+                    hori = true;
                     //backPos = true;
                 }
             });
-            scheduler.addTaskAfter(800, new Runnable() {
+            scheduler.addTaskAfter(1000, new Runnable() {
+                @Override
+                public void run() {
+                    ArmSet(-0.1);
+
+                    //backPos = true;
+                }
+            });
+            scheduler.addTaskAfter(1400, new Runnable() {
                 @Override
                 public void run() {
                     ArmSet(0.19);

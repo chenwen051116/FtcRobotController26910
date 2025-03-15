@@ -68,7 +68,7 @@ public class TeleOpT extends LinearOpMode {
 
             if (gamepad2.left_trigger > 0.5) {
                 intake_rotate = gamepad2.left_stick_x;
-                robot.arm.inTurn(gamepad2.left_stick_x);
+                robot.arm.switchinTurn();
             }
 //            if (gamepad2.right_trigger > 0.5) {
 //                telemetry.addData("controller", robot.v.getBlkAngAsRed());
@@ -80,9 +80,16 @@ public class TeleOpT extends LinearOpMode {
 //            telemetry.addData("Rect_detected: ", robot.v.hlGetAngle(robot.v.getBlockNear()));
 //            telemetry.addData("Actual angle: ", intake_rotate);
 
-            if (gamepad2.dpad_down) {
+            if (gamepad2.dpad_down&&-gamepad2.right_stick_y <-0.5) {
                 //robot.arm.frontIntake();
-                robot.arm.frontArmBack();
+                robot.arm.vtArmlowreset();
+            }
+            if (gamepad2.dpad_down&&-gamepad2.right_stick_y > 0.5) {
+                //robot.arm.frontIntake();
+                robot.arm.vtArmreset();
+            }
+            if(gamepad2.dpad_up){
+                robot.arm.releaseC();
             }
             if (gamepad2.dpad_up && (-gamepad2.right_stick_y > 0.5)) {
                 robot.arm.finalClimb();

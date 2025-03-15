@@ -60,8 +60,8 @@ public class AutoArm {
 
     public void VtArmSet(int pos) {
         if(pos < 100) {
-            VtLeft.setPower(0.5);
-            VtRight.setPower(0.5);
+            VtLeft.setPower(0.8);
+            VtRight.setPower(0.8);
         }
         else{
             VtLeft.setPower(1);
@@ -123,9 +123,9 @@ public class AutoArm {
         inClaw.setPosition(0.3);
         ArmSet(0.32);
         TurnSet(0);
-        sleep(300);
-        inClaw.setPosition(0.7);
-        sleep(200);
+        sleep(500);
+        inClaw.setPosition(0.8);
+        sleep(400);
         frontIntakeDown();
     }
 
@@ -202,11 +202,7 @@ public class AutoArm {
             // set 到 200 避免冲突
         }
 
-        VtArmSet(0); // 竖着
-        if (VtLeft.getCurrentPosition() < 5){
-            VtLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            VtRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        }
+        VtArmSet(5); // 竖着
 
     }
 
