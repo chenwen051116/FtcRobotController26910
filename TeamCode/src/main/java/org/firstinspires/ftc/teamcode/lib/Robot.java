@@ -14,7 +14,6 @@ public class Robot {
     public ElapsedTime timer = new ElapsedTime();
     public Arm arm = new Arm();
     public Chassis chassis;
-    public Visual v = new Visual();
     //public boolean SecondDriver = false;
     HardwareMap hardwareMap;
     private Telemetry telemetry;
@@ -40,7 +39,6 @@ public class Robot {
         arm.teleInit(hwm);
         timer.reset();
         this.telemetry = telemetry;
-        v.teleInit(hwm, telemetry);
 
         trajectorybar = chassis.drive.trajectorySequenceBuilder(new Pose2d(0,0,0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
