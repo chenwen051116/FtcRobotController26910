@@ -62,58 +62,58 @@ public class Autoright2 extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
         AutoRobot robot = new AutoRobot(hardwareMap);
-        TrajectorySequence FinalAuto1 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
+        TrajectorySequence FinalAuto1 = robot.getChassis().drive.trajectorySequenceBuilder(startPos)
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.highBar();//把arm伸上去
-                    robot.arm.speClaw.setPosition(0.15);
+                    robot.getArm().highBar();//把arm伸上去
+                    robot.getArm().speClaw.setPosition(0.15);
                 })
                 .waitSeconds(0.5)
                 .lineToLinearHeading(highBarPos)//走到杆前面
 
                 .UNSTABLE_addTemporalMarkerOffset(-0.3, () -> {
-                    robot.arm.dropSpe();//挂上并松手
+                    robot.getArm().dropSpe();//挂上并松手
                 })
                 .waitSeconds(0.2)//操作等待时间
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.VtBack();//把arm收回来
+                    robot.getArm().VtBack();//把arm收回来
                 })
 
 
                 .lineToLinearHeading(g1Pos)//准备吸取第一个地上的
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
-                    robot.arm.HzArmSet(arml1);
+                    robot.getArm().HzArmSet(arml1);
                 })
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
-                    robot.arm.frontIntakeDown();
+                    robot.getArm().frontIntakeDown();
                 })
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.frontIntake();
+                    robot.getArm().frontIntake();
 
                 })
                 .waitSeconds(1)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.frontArmBack();
+                    robot.getArm().frontArmBack();
 
                 })
                 .waitSeconds(1)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.inArmTrans();
+                    robot.getArm().inArmTrans();
                 })
                 .waitSeconds(1.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.basketOut();
+                    robot.getArm().basketOut();
                 })
                 .waitSeconds(1)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.basketBack();
-                    robot.arm.frontIntakeDown();
+                    robot.getArm().basketBack();
+                    robot.getArm().frontIntakeDown();
                 })
                 //.waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.HzArmSet(5);//收回前滑轨
-                    robot.arm.dropSpe();//打开夹子
-                    robot.arm.takeSpePos();//夹样本高度
+                    robot.getArm().HzArmSet(5);//收回前滑轨
+                    robot.getArm().dropSpe();//打开夹子
+                    robot.getArm().takeSpePos();//夹样本高度
                 })
                 .lineToLinearHeading(speIntakePos)//夹样本位置
                 .back(backl)
@@ -121,24 +121,24 @@ public class Autoright2 extends LinearOpMode {
                 .waitSeconds(0.5)
                 .build();
 
-        TrajectorySequence FinalAuto2 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
+        TrajectorySequence FinalAuto2 = robot.getChassis().drive.trajectorySequenceBuilder(startPos)
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.closeClaw();//关夹子
+                    robot.getArm().closeClaw();//关夹子
 
                 })
                 .waitSeconds(0.8)
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
-                    robot.arm.highBar();//把arm伸上去
+                    robot.getArm().highBar();//把arm伸上去
                 })
                 .lineToLinearHeading(highBarPos1)//放的位置
 
                 .UNSTABLE_addTemporalMarkerOffset(-0.3, () -> {
-                    robot.arm.dropSpe();//挂上并松手
+                    robot.getArm().dropSpe();//挂上并松手
                 })
                 .waitSeconds(0.2)//操作等待时间
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.takeSpePos();//把arm收回来
+                    robot.getArm().takeSpePos();//把arm收回来
                 })
 
                 .lineToLinearHeading(speIntakePos2)//夹样本位置
@@ -147,62 +147,62 @@ public class Autoright2 extends LinearOpMode {
                 .build();
 
 
-        TrajectorySequence FinalAuto3 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
+        TrajectorySequence FinalAuto3 = robot.getChassis().drive.trajectorySequenceBuilder(startPos)
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.closeClaw();//关夹子
+                    robot.getArm().closeClaw();//关夹子
 
                 })
                 .waitSeconds(0.8)
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
-                    robot.arm.highBar();//把arm伸上去
+                    robot.getArm().highBar();//把arm伸上去
                 })
                 .lineToLinearHeading(highBarPos2)//放的位置
 
                 .UNSTABLE_addTemporalMarkerOffset(-0.3, () -> {
-                    robot.arm.dropSpe();//挂上并松手
+                    robot.getArm().dropSpe();//挂上并松手
                 })
                 .waitSeconds(0.2)//操作等待时间
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.takeSpePos();//把arm收回来
+                    robot.getArm().takeSpePos();//把arm收回来
                 })
                 .forward(10)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.VtBack();//把arm收回来
+                    robot.getArm().VtBack();//把arm收回来
 
-                    robot.arm.HzArmSet(0);
+                    robot.getArm().HzArmSet(0);
                 })
                 .lineToLinearHeading(speIntakePos2)
                 .back(20)
                 .build();
 
-        TrajectorySequence FinalAuto4 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
+        TrajectorySequence FinalAuto4 = robot.getChassis().drive.trajectorySequenceBuilder(startPos)
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.closeClaw();//关夹子
+                    robot.getArm().closeClaw();//关夹子
                 })
                 .waitSeconds(0.8)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> {
-                    robot.arm.highBar();//把arm伸上去
+                    robot.getArm().highBar();//把arm伸上去
                 })
                 .lineToLinearHeading(highBarPos3)//放的位置
                 .UNSTABLE_addTemporalMarkerOffset(-0.3, () -> {
-                    robot.arm.dropSpe();//挂上并松手
-                    robot.arm.frontIntake();
+                    robot.getArm().dropSpe();//挂上并松手
+                    robot.getArm().frontIntake();
                 })
                 .waitSeconds(0.2)//操作等待时间
                 //.UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                //    robot.arm.takeSpePos();//把arm收回来
+                //    robot.getArm().takeSpePos();//把arm收回来
                 //})
 
                 //.lineToLinearHeading(speIntakePos2)//夹样本位置
                 //.waitSeconds(0.5)
                 .forward(2)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.VtBack();//把arm收回来
+                    robot.getArm().VtBack();//把arm收回来
 
-                    robot.arm.HzArmSet(0);
+                    robot.getArm().HzArmSet(0);
                 })
                 .lineToLinearHeading(speIntakePos2)
                 .back(20)
@@ -211,24 +211,24 @@ public class Autoright2 extends LinearOpMode {
 
 
 //
-//        TrajectorySequence FinalAuto4 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
+//        TrajectorySequence FinalAuto4 = robot.getChassis().drive.trajectorySequenceBuilder(startPos)
 //
 ////                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-////                    robot.arm.closeClaw();//关夹子
+////                    robot.getArm().closeClaw();//关夹子
 ////                })
 ////                .waitSeconds(0.5)
 ////                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> {
-////                    robot.arm.highBar();//把arm伸上去
+////                    robot.getArm().highBar();//把arm伸上去
 ////                })
 ////                .lineToLinearHeading(highBarPos3)//放的位置
 ////                .UNSTABLE_addTemporalMarkerOffset(-0.3, () -> {
-////                    robot.arm.dropSpe();//挂上并松手
+////                    robot.getArm().dropSpe();//挂上并松手
 ////                })
 ////                .waitSeconds(0.2)//操作等待时间
 //                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-//                    robot.arm.VtBack();//把arm收回来
-//                    robot.arm.frontIntake();
-//                    robot.arm.HzArmSet(0);
+//                    robot.getArm().VtBack();//把arm收回来
+//                    robot.getArm().frontIntake();
+//                    robot.getArm().HzArmSet(0);
 //                })
 //
 //                //lineToLinearHeading(speIntakePos4)//夹样本位置
@@ -239,15 +239,15 @@ public class Autoright2 extends LinearOpMode {
 
         robot.Autoinit(hardwareMap);
         waitForStart();
-        robot.chassis.drive.setPoseEstimate(startPos);
+        robot.getChassis().drive.setPoseEstimate(startPos);
         //while (!isStopRequested() && opModeIsActive()){
-        robot.chassis.drive.followTrajectorySequence(FinalAuto1);
-        robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));
-        robot.chassis.drive.followTrajectorySequence(FinalAuto2);
-        robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));
-        robot.chassis.drive.followTrajectorySequence(FinalAuto3);
-//        robot.chassis.drive.setPoseEstimate(new Pose2d(0,0,0));
-//        robot.chassis.drive.followTrajectorySequence(FinalAuto4);
+        robot.getChassis().drive.followTrajectorySequence(FinalAuto1);
+        robot.getChassis().drive.setPoseEstimate(new Pose2d(0,0,0));
+        robot.getChassis().drive.followTrajectorySequence(FinalAuto2);
+        robot.getChassis().drive.setPoseEstimate(new Pose2d(0,0,0));
+        robot.getChassis().drive.followTrajectorySequence(FinalAuto3);
+//        robot.getChassis().drive.setPoseEstimate(new Pose2d(0,0,0));
+//        robot.getChassis().drive.followTrajectorySequence(FinalAuto4);
 
     }
 

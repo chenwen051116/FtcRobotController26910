@@ -61,168 +61,168 @@ public class Autoleft2 extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
         AutoRobot robot = new AutoRobot(hardwareMap);
-        TrajectorySequence FinalAuto1 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
+        TrajectorySequence FinalAuto1 = robot.getChassis().drive.trajectorySequenceBuilder(startPos)
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.highBasket();//把arm伸上去
-                    robot.arm.speClaw.setPosition(0.15);
+                    robot.getArm().highBasket();//把arm伸上去
+                    robot.getArm().speClaw.setPosition(0.15);
                 })
                 .lineToLinearHeading(highBarPos1)//走到杆前面
 
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.basketOut();
+                    robot.getArm().basketOut();
                 })
                 .waitSeconds(1)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.basketBack();
-                    robot.arm.frontIntakeDown();
+                    robot.getArm().basketBack();
+                    robot.getArm().frontIntakeDown();
                 })
                 .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.VtBack();
+                    robot.getArm().VtBack();
                 })
 
 
                 .lineToLinearHeading(g1Pos)//准备吸取第一个地上的
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
-                    robot.arm.HzArmSet(arml1);
-                    robot.arm.frontIntakeDown();
+                    robot.getArm().HzArmSet(arml1);
+                    robot.getArm().frontIntakeDown();
                 })
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    synchronized (robot.blockList) {
-                        robot.trackBlock(AutoRobot.getBlockAtCenter(robot.blockList));
+                    synchronized (robot.getBlockList()) {
+                        robot.trackBlock(AutoRobot.Companion.getBlockAtCenter(robot.getBlockList()));
                     }
                 })
                 .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.frontIntake();
+                    robot.getArm().frontIntake();
 
                 })
                 .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.frontArmBack();
+                    robot.getArm().frontArmBack();
 
                 })
                 .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.inArmTrans();
+                    robot.getArm().inArmTrans();
                 })
                 .waitSeconds(1.5)
                 .lineToLinearHeading(highBarPos1)
                 //准备吸取第一个地上的
 
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
-                    robot.arm.highBasket();
+                    robot.getArm().highBasket();
                 })
 
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.basketOut();
+                    robot.getArm().basketOut();
                 })
                 .waitSeconds(1)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.basketBack();
-                    robot.arm.frontIntakeDown();
+                    robot.getArm().basketBack();
+                    robot.getArm().frontIntakeDown();
                 })
                 .waitSeconds(0.5)
                 .lineToLinearHeading(g2Pos)//准备吸取第一个地上的
                 .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
-                    robot.arm.HzArmSet(arml2);
-                    robot.arm.VtBack();
+                    robot.getArm().HzArmSet(arml2);
+                    robot.getArm().VtBack();
                 })
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
-                    robot.arm.frontIntakeDown();
+                    robot.getArm().frontIntakeDown();
                 })
                 .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.frontIntake();
+                    robot.getArm().frontIntake();
                 })
                 .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.frontArmBack();
+                    robot.getArm().frontArmBack();
                 })
                 .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.inArmTrans();
+                    robot.getArm().inArmTrans();
                 })
                 .waitSeconds(1.5)
                 .lineToLinearHeading(highBarPos2)
 
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
-                    robot.arm.highBasket();
+                    robot.getArm().highBasket();
                 })
 
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.basketOut();
+                    robot.getArm().basketOut();
                 })
                 .waitSeconds(1)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.basketBack();
-                    robot.arm.frontIntakeDown();
+                    robot.getArm().basketBack();
+                    robot.getArm().frontIntakeDown();
                 })
                 .waitSeconds(0.5)
                 .lineToLinearHeading(g3Pos)//准备吸取第一个地上的
                 .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
-                    robot.arm.HzArmSet(arml3);
-                    robot.arm.VtBack();
+                    robot.getArm().HzArmSet(arml3);
+                    robot.getArm().VtBack();
                 })
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
-                    robot.arm.frontIntakeDown();
-                    robot.arm.inTurn(1);
+                    robot.getArm().frontIntakeDown();
+                    robot.getArm().inTurn(1);
                 })
                 .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.frontIntake();
+                    robot.getArm().frontIntake();
                 })
                 .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.frontArmBack();
-                    robot.arm.inTurn(0.5);
+                    robot.getArm().frontArmBack();
+                    robot.getArm().inTurn(0.5);
                 })
                 .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
 
-                    robot.arm.inArmTrans();
+                    robot.getArm().inArmTrans();
 
                 })
                 .waitSeconds(1)
                 .lineToLinearHeading(highBarPos3)
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
-                    robot.arm.highBasket();
+                    robot.getArm().highBasket();
                 })
 
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.basketOut();
+                    robot.getArm().basketOut();
                 })
                 .waitSeconds(1)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.basketBack();
+                    robot.getArm().basketBack();
                 })
                 .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.VtBack();//把arm收回来
+                    robot.getArm().VtBack();//把arm收回来
 
-                    robot.arm.HzArmSet(0);
+                    robot.getArm().HzArmSet(0);
                 })
                 .build();
 
 
 
 
-        TrajectorySequence FinalAuto2 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
+        TrajectorySequence FinalAuto2 = robot.getChassis().drive.trajectorySequenceBuilder(startPos)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.highBar();
+                    robot.getArm().highBar();
 
                     //把arm收回来
                 })
 
                 .lineToLinearHeading(highBarPos4)//夹样本位置
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
-                    robot.arm.dropSpe();
-                    robot.arm.basketOut();
+                    robot.getArm().dropSpe();
+                    robot.getArm().basketOut();
                 })
                 //.waitSeconds(0.5)
 
@@ -232,11 +232,11 @@ public class Autoleft2 extends LinearOpMode {
 
         robot.Autoinit(hardwareMap);
         waitForStart();
-        robot.chassis.drive.setPoseEstimate(startPos);
+        robot.getChassis().drive.setPoseEstimate(startPos);
         //while (!isStopRequested() && opModeIsActive()){
-        robot.chassis.drive.followTrajectorySequence(FinalAuto1);
-        robot.chassis.drive.setPoseEstimate(startPos);
-        robot.chassis.drive.followTrajectorySequence(FinalAuto2);
+        robot.getChassis().drive.followTrajectorySequence(FinalAuto1);
+        robot.getChassis().drive.setPoseEstimate(startPos);
+        robot.getChassis().drive.followTrajectorySequence(FinalAuto2);
 
     }
 

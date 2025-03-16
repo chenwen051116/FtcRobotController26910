@@ -17,8 +17,8 @@ public class TestBlockTracking extends LinearOpMode {
 
         waitForStart();
         robot.startVisionThread();
-        synchronized (robot.blockList) {
-            robot.trackBlock(AutoRobot.getBlockAtCenter(robot.blockList));
+        synchronized (robot.getBlockList()) {
+            robot.trackBlock(AutoRobot.Companion.getBlockAtCenter(robot.getBlockList()));
         }
     }
 }

@@ -34,20 +34,20 @@ public class Autorightsimple extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
         AutoRobot robot = new AutoRobot(hardwareMap);
-        TrajectorySequence FinalAuto1 = robot.chassis.drive.trajectorySequenceBuilder(startPos)
+        TrajectorySequence FinalAuto1 = robot.getChassis().drive.trajectorySequenceBuilder(startPos)
 
                 .lineToLinearHeading(highBarPos)//走到杆前面
                 .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> {
-                    robot.arm.highBar();//把arm伸上去
+                    robot.getArm().highBar();//把arm伸上去
                 })
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.dropSpe();//挂上并松手
+                    robot.getArm().dropSpe();//挂上并松手
                 })
                 .waitSeconds(0.2)//操作等待时间
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.arm.VtBack();//把arm收回
-                    robot.arm.frontIntake();
-                    robot.arm.HzArmSet(0);
+                    robot.getArm().VtBack();//把arm收回
+                    robot.getArm().frontIntake();
+                    robot.getArm().HzArmSet(0);
                 })
                 .lineToLinearHeading(speIntakePos)//走到杆前面
                 .build();
@@ -55,9 +55,9 @@ public class Autorightsimple extends LinearOpMode {
 
         robot.Autoinit(hardwareMap);
         waitForStart();
-        robot.chassis.drive.setPoseEstimate(startPos);
+        robot.getChassis().drive.setPoseEstimate(startPos);
         //while (!isStopRequested() && opModeIsActive()){
-        robot.chassis.drive.followTrajectorySequence(FinalAuto1);
+        robot.getChassis().drive.followTrajectorySequence(FinalAuto1);
 
     }
 
