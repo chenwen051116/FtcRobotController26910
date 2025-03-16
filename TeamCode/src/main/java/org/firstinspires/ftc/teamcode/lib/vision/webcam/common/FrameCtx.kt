@@ -1,6 +1,5 @@
 package org.webcam_visual.common
 
-import Block
 import org.opencv.core.*
 import org.opencv.imgproc.Imgproc
 import org.opencv.video.DISOpticalFlow

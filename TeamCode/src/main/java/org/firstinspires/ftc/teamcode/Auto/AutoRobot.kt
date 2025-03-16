@@ -79,7 +79,10 @@ class AutoRobot(//public boolean SecondDriver = false;
         //v.apt();
     }
 
-    fun trackBlock(block: Block) {
+    fun trackBlock(block: Block?) {
+        if(block == null) {
+            return
+        }
         val unitToArmMovement = 100.0f
         val unitToWheelMovement = 0.8f
         val armCurrentPos = -arm.hzFront.currentPosition
