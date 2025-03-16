@@ -90,7 +90,9 @@ public class Autoleft2 extends LinearOpMode {
                     robot.arm.frontIntakeDown();
                 })
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.trackBlock(AutoRobot.getBlockAtCenter(robot.blockList));
+                    synchronized (robot.blockList) {
+                        robot.trackBlock(AutoRobot.getBlockAtCenter(robot.blockList));
+                    }
                 })
                 .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {

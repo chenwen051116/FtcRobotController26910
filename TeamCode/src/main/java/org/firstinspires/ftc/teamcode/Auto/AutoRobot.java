@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.lib.vision.common.Block;
 import org.firstinspires.ftc.teamcode.lib.vision.common.FrameCtx;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,7 +15,7 @@ import kotlin.Pair;
 
 
 public class AutoRobot {
-    public List<Block> blockList;
+    public final List<Block> blockList = new ArrayList<>();
     public void getBlocks() {
         // TODO: To be implemented with computer vision
     }
@@ -49,10 +50,15 @@ public class AutoRobot {
     }
 
     public void trackBlock(Block block) {
-        float unitToMovement = 100.0f;
+        float unitToArmMovement = 100.0f;
+        float unitToWheelMovement = 0.8f;
         int armCurrentPos = -arm.hzFront.getCurrentPosition();
-        int nextPosition = (int) (block.getCenter().getSecond() * unitToMovement) + armCurrentPos;
+        int nextPosition = (int) (block.getCenter().getSecond() * unitToArmMovement) + armCurrentPos;
         arm.HzArmSet(Math.max(0, Math.min(1450, nextPosition)));
+        double motorPower = block.getCenter().getFirst() * unitToWheelMovement;
+        chassis.drive.setMotorPowers(motorPower, -motorPower, -motorPower, motorPower);
+        sleep(200);
+        chassis.drive.setMotorPowers(0, 0, 0, 0);
     }
 
     public static Block getBlockAtCenter(List<Block> blocks) {
