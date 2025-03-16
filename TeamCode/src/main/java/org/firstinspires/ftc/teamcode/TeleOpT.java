@@ -14,7 +14,7 @@ public class TeleOpT extends LinearOpMode {
 
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
         Scheduler scheduler = new Scheduler();
         Robot robot = new Robot(hardwareMap, scheduler);
         robot.teleInit(hardwareMap, telemetry);
@@ -22,6 +22,7 @@ public class TeleOpT extends LinearOpMode {
         double intake_rotate = 0.0;
 
         waitForStart();
+        Thread visionThread = robot.startVisionThread();
         while (opModeIsActive()) {
             // check and execute all scheduled task at the beginning of each loop
             scheduler.elapse();
@@ -145,7 +146,12 @@ public class TeleOpT extends LinearOpMode {
             else if (gamepad2.right_bumper && -gamepad2.right_stick_y < -0.8)
                 robot.arm.lowBar();
 
+            if(gamepad2.right_stick_button) {
+                robot.alignClaw();
+            }
+
 //            telemetry.update();
         }
+        visionThread.join();
     }
 }
