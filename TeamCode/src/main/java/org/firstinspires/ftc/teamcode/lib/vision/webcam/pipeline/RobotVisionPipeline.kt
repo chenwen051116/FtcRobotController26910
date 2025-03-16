@@ -9,10 +9,10 @@ import org.webcam_visual.tracker.BlockTracker
 import org.webcam_visual.visualizer.BlockVisualizer
 
 class RobotVisionPipeline(
-    val preproc: PreprocPipeline?,
+    val preproc: PreprocPipeline? = null,
     val detector: BlockDetector,
-    val tracker: BlockTracker?,
-    val visualizer: BlockVisualizer?,
+    val tracker: BlockTracker? = null,
+    val visualizer: BlockVisualizer? = null,
 ) : DefaultImgDebuggable() {
     init {
         preproc?.let { addDbgChild(it) }

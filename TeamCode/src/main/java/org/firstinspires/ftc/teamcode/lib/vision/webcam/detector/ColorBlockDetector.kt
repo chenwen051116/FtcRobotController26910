@@ -18,7 +18,7 @@ import org.webcam_visual.utils.stdDev
  *   - "color_mask_<colorName>": the mask for that specific color.
  *   - "combined_color_mask": the combined mask for all colors.
  */
-class ColorDetector(
+class ColorBlockDetector(
     private val detectingColors: List<HsvColorRange>,
     private val config: Cfg = Cfg()
 ) : BlockDetector, DefaultImgDebuggable() {
