@@ -4,8 +4,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.lib.vision.common.Block;
-import org.firstinspires.ftc.teamcode.lib.vision.common.FrameCtx;
+import org.webcam_visual.common.Block;
 
 import java.util.ArrayList;
 import java.util.List;

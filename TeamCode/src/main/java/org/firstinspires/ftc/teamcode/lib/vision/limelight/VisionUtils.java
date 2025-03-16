@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.lib.vision;
+package org.firstinspires.ftc.teamcode.lib.vision.limelight;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 

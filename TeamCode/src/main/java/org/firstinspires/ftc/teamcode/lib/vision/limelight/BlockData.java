@@ -1,7 +1,4 @@
-package org.firstinspires.ftc.teamcode.lib.vision;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
+package org.firstinspires.ftc.teamcode.lib.vision.limelight;
 
 public class BlockData {
     public static final int COLOR_YELLOW = 1;

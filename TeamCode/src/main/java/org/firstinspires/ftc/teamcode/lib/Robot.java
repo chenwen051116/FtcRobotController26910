@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.ext.roadrunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.lib.schedule.Scheduler;
-import org.firstinspires.ftc.teamcode.lib.vision.Visual;
+import org.firstinspires.ftc.teamcode.lib.vision.limelight.Visual;
 
 
 public class Robot {
