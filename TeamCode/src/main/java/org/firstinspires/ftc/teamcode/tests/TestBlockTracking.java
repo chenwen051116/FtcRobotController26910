@@ -19,16 +19,16 @@ public class TestBlockTracking extends LinearOpMode {
         shTelemetry = telemetry;
         AutoRobot robot = new AutoRobot(hardwareMap);
         waitForStart();
-        robot.startVisionThread();
+//        robot.startVisionThread();
         telemetry.addLine("Vision thread started");
         telemetry.update();
         while(opModeIsActive()){
-            telemetry.addLine("into while");
             if (gamepad1.left_bumper){
-                telemetry.addLine("Tracking block");
-                synchronized (robot.getBlockList()) {
-                    robot.trackBlock(AutoRobot.Companion.getBlockAtCenter(robot.getBlockList()));
-                }
+                telemetry.addData("late frame", robot.getCameraHelper().getLatestFrame().dump());
+                telemetry.update();
+//               synchronized (robot.getBlockList()) {
+//                    robot.trackBlock(AutoRobot.Companion.getBlockAtCenter(robot.getBlockList()));
+//                }
             }
         }
     }

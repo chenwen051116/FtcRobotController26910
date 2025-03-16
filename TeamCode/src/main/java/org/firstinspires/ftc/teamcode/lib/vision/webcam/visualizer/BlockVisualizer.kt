@@ -7,6 +7,7 @@ import org.opencv.core.Scalar
 import org.opencv.core.Size
 import org.opencv.imgproc.Imgproc
 import org.webcam_visual.common.Block
+import org.webcam_visual.common.DefaultImgDebuggable
 import org.webcam_visual.common.FrameCtx
 import org.webcam_visual.common.ImgDebuggable
 
@@ -14,10 +15,7 @@ import org.webcam_visual.common.ImgDebuggable
  * Visualizes blocks by drawing contours, rotated bounding boxes and block info (color, angle, HSV stats)
  * onto a copy of the provided frame.
  */
-class BlockVisualizer : ImgDebuggable {
-    override val availableDbgOptions: MutableMap<String, Boolean> = mutableMapOf()
-    override val dbgData: MutableMap<String, Mat> = mutableMapOf()
-    override val dbgChildren: MutableList<ImgDebuggable> = mutableListOf()
+class BlockVisualizer : DefaultImgDebuggable() {
 
     init {
         setDbgOption("blocks", true)
@@ -37,8 +35,8 @@ class BlockVisualizer : ImgDebuggable {
      */
     fun visualizeBlocks(ctx: FrameCtx): Mat {
         val frame = ctx.frame
-        val blocks = ctx.curBlocks ?: return frame
-        val output = frame.clone()
+        val blocks = ctx.curBlocks ?: return frame!!
+        val output = frame!!.clone()
 
         for ((_, block) in blocks.withIndex()) {
             // Get the color for drawing from the block's color (assumes a Triple<Int, Int, Int> for BGR)

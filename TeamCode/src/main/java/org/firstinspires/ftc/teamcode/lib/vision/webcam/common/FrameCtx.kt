@@ -16,14 +16,16 @@ import org.webcam_visual.utils.mat.times
  * @property colorDisAfterMvec The per-pixel color difference (CV_32FC1) between frame and warpedByMvec.
  */
 data class FrameCtx(
-    var frame: Mat,
+    var frame: Mat? = null,
     var prevFrame: Mat? = null,
     var opticFlow: Mat? = null,
     var warpedByMvec: Mat? = null,
     var colorDisAfterMvec: Mat? = null,
     var curBlocks : List<Block>? = null,
-    var prevBlocks : List<Block>? = null
+    var prevBlocks : List<Block>? = null,
+    private var newestOpticFlow : Mat? = null
 ) {
+
     /**
      * Ensures that optical flow is computed.
      * If opticFlow is null, computes it from prevFrame and frame.
@@ -38,9 +40,16 @@ data class FrameCtx(
             Imgproc.cvtColor(prevFrame, prevGray, Imgproc.COLOR_BGR2GRAY)
             val flow = Mat(currGray.size(), CvType.CV_32FC2)
             // Compute optical flow using DISOpticalFlow (PRESET_ULTRAFAST)
-            DISOpticalFlow.create(DISOpticalFlow.PRESET_ULTRAFAST).calc(prevGray, currGray, flow)
+            try {
+                DISOpticalFlow.create(DISOpticalFlow.PRESET_ULTRAFAST).calc(prevGray, currGray, flow)
+            } catch (e: Exception) {
+                return newestOpticFlow!!
+            }
             opticFlow = flow
+            currGray.release()
+            prevGray.release()
         }
+        newestOpticFlow = opticFlow!!.clone()
         return opticFlow!!
     }
 
@@ -51,7 +60,7 @@ data class FrameCtx(
     fun ensureWarpedByMvec(): Mat {
         if (warpedByMvec == null) {
             val flow = ensureOpticFlow()
-            val size = frame.size()
+            val size = frame!!.size()
             // Create coordinate grids
             val gridX = Mat(size, CvType.CV_32FC1)
             val gridY = Mat(size, CvType.CV_32FC1)
@@ -66,10 +75,14 @@ data class FrameCtx(
             // Using our operator extensions: add operator (+) replaces Core.add.
             val flowMapX = flowChannels[0] + gridX
             val flowMapY = flowChannels[1] + gridY
-            val warped = Mat(frame.size(), frame.type())
+            val warped = Mat(frame!!.size(), frame!!.type())
             // Remap the previous frame using the computed flow maps.
             Imgproc.remap(prevFrame, warped, flowMapX, flowMapY, Imgproc.INTER_LINEAR, Core.BORDER_CONSTANT, Scalar(0.0, 0.0, 0.0))
             warpedByMvec = warped
+            gridX.release()
+            gridY.release()
+            flowMapX.release()
+            flowMapY.release()
         }
         return warpedByMvec!!
     }
@@ -94,15 +107,23 @@ data class FrameCtx(
             val distMat = Mat()
             Core.sqrt(sumOfSquares, distMat)
             colorDisAfterMvec = distMat
+            sumOfSquares.release()
+            diffSquared.release()
+            diffFloat.release()
+            diff.release()
         }
         return colorDisAfterMvec!!
     }
 
     fun updateFrame(nextFrame: Mat) {
+        prevFrame?.release()
         prevFrame = frame
         frame = nextFrame
+        opticFlow?.release()
         opticFlow = null
+        warpedByMvec?.release()
         warpedByMvec = null
+        colorDisAfterMvec?.release()
         colorDisAfterMvec = null
         prevBlocks = curBlocks
         curBlocks = null

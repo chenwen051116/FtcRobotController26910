@@ -11,6 +11,12 @@ interface ImgDebuggable {
 
     // Child nodes in the debug tree.
     val dbgChildren: MutableList<ImgDebuggable>
+    var isDebugDisabled : Boolean
+    fun disableDebug() {
+        availableDbgOptions.clear()
+        dbgData.forEach { it.value.release() }
+        dbgChildren.forEach { it.disableDebug() }
+    }
 
     /**
      * Sets the debug option for the given key.
@@ -79,6 +85,11 @@ open class DefaultImgDebuggable : ImgDebuggable {
     override val availableDbgOptions: MutableMap<String, Boolean> = mutableMapOf()
     override val dbgData: MutableMap<String, Mat> = mutableMapOf()
     override val dbgChildren: MutableList<ImgDebuggable> = mutableListOf()
+    override var isDebugDisabled: Boolean = false
+    override fun disableDebug() {
+        super.disableDebug()
+        isDebugDisabled = true
+    }
 }
 
 class RootImgDebuggable(vararg children: ImgDebuggable): DefaultImgDebuggable(){

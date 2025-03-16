@@ -9,10 +9,10 @@ import org.webcam_visual.tracker.BlockTracker
 import org.webcam_visual.visualizer.BlockVisualizer
 
 class RobotVisionPipeline(
-    val preproc: PreprocPipeline? = null,
+    val preproc: PreprocPipeline?,
     val detector: BlockDetector,
-    val tracker: BlockTracker? = null,
-    val visualizer: BlockVisualizer? = null,
+    val tracker: BlockTracker?,
+    val visualizer: BlockVisualizer?,
 ) : DefaultImgDebuggable() {
     init {
         preproc?.let { addDbgChild(it) }
@@ -20,18 +20,14 @@ class RobotVisionPipeline(
         visualizer?.let { addDbgChild(it) }
     }
 
-    private var frameCtx = FrameCtx(Mat())
+    private var frameCtx = FrameCtx()
 
     fun updateFrame(frame: Mat) : FrameCtx {
-        if (frameCtx.prevFrame == null) {
-            frameCtx = frameCtx.copy(prevFrame=frame)
-        }
-        frameCtx = frameCtx.copy(frame=frame)
-        preproc?.let { frameCtx = it.process(frameCtx) }
+        frameCtx.updateFrame(frame)
+        frameCtx = preproc?.process(frameCtx) ?: frameCtx
         frameCtx = detector.detectBlocks(frameCtx)
         tracker?.let { frameCtx = it.trackBlocks(frameCtx) }
         visualizer?.visualizeBlocks(frameCtx)
-        frameCtx.updateFrame(frame)
         frameCtx.curBlocks?.forEach{
             it.calcRelative(frame.width(), frame.height())
         }

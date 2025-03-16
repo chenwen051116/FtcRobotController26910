@@ -1,24 +1,19 @@
 package org.webcam_visual.preproc
 
 import org.opencv.core.Mat
+import org.webcam_visual.common.DefaultImgDebuggable
 import org.webcam_visual.common.ImgDebuggable
 import org.webcam_visual.common.FrameCtx
 
 class PreprocPipeline(
     vararg steps: PreprocStep
-) : ImgDebuggable {
-    private val steps: MutableList<PreprocStep> = steps.toMutableList()
-
-    // Debug images are stored here if a step is set to debug.
-    override val dbgChildren: MutableList<ImgDebuggable> = mutableListOf()
-    override val dbgData: MutableMap<String, Mat> = mutableMapOf()
-    override val availableDbgOptions: MutableMap<String, Boolean> = mutableMapOf()
-
+) : DefaultImgDebuggable(){
+    val steps: MutableList<PreprocStep> = steps.toMutableList()
     // Add a step dynamically.
     init {
         setDbgOption("original", true)
         for (step in steps) {
-            addStep(step)
+            dbgChildren.add(step)
         }
     }
 
@@ -29,7 +24,9 @@ class PreprocPipeline(
 
     // Process an image through all steps sequentially.
     fun process(ctx: FrameCtx): FrameCtx {
-        dbgData["original"] = ctx.frame
+        if (!isDebugDisabled) {
+            dbgData["original"] = ctx.frame!!
+        }
         var result = ctx.copy()
         for ((idx, step) in steps.withIndex()) {
             result = step.process(result)

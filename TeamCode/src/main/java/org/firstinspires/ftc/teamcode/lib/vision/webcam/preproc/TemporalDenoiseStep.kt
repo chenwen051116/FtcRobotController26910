@@ -31,7 +31,7 @@ class TemporalDenoiserStep(
      */
     override fun _process(ctx: FrameCtx): Mat {
         if (ctx.prevFrame == null) {
-            return ctx.frame.clone()
+            return ctx.frame!!.clone()
         }
 
         if (isDbgOptionEnabled("flow")){
@@ -53,14 +53,14 @@ class TemporalDenoiserStep(
 
         // Build a mask where the computed distance exceeds the threshold.
         val mask = ctx.ensureColorDisAfterMvec() gt Scalar(threshold)
-        if (isDbgOptionEnabled("mask"))
+        if (isDbgOptionEnabled("mask")) {
             addDbgEntry("mask", mask.clone())
-
+        }
         // Blend the current frame with the warped previous frame.
         val blended = Mat()
-        Core.addWeighted(ctx.frame, alpha, ctx.ensureWarpedByMvec(), 1.0 - alpha, 0.0, blended)
+        Core.addWeighted(ctx.frame!!, alpha, ctx.ensureWarpedByMvec(), 1.0 - alpha, 0.0, blended)
         // Override pixels in the blended image with the current frame where mask is set.
-        ctx.frame.copyTo(blended, mask)
+        ctx.frame!!.copyTo(blended, mask)
         if (isDbgOptionEnabled("output"))
             addDbgEntry("output", blended.clone())
 

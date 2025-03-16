@@ -16,7 +16,7 @@ import org.webcam_visual.utils.mat.times
  */
 class AutoWhiteBalanceStep(initDebug: Boolean = false) : PreprocStep("auto_wb", initDebug) {
     override fun _process(ctx: FrameCtx): Mat {
-        val image = ctx.frame
+        val image = ctx.frame!!
         return try {
             val xphotoClass = Class.forName("org.opencv.xphoto.Xphoto")
             val createSimpleWBMethod = xphotoClass.getMethod("createSimpleWB")
@@ -51,7 +51,7 @@ class AutoWhiteBalanceStep(initDebug: Boolean = false) : PreprocStep("auto_wb", 
  */
 class BrightnessStep(private val brightness: Int, initDebug: Boolean = false) : PreprocStep("brightness", initDebug) {
     override fun _process(ctx: FrameCtx): Mat {
-        val image = ctx.frame
+        val image = ctx.frame!!
         val result = Mat()
         Core.convertScaleAbs(image, result, 1.0, brightness.toDouble())
         return result
@@ -68,7 +68,7 @@ class BrightnessStep(private val brightness: Int, initDebug: Boolean = false) : 
  */
 class HistEqualizeStep(initDebug: Boolean = false) : PreprocStep("hist_equalize", initDebug) {
     override fun _process(ctx: FrameCtx): Mat {
-        val image = ctx.frame
+        val image = ctx.frame!!
         val result = if (image.channels() == 1) {
             val tmp = Mat()
             Imgproc.equalizeHist(image, tmp)
@@ -97,7 +97,7 @@ class HistEqualizeStep(initDebug: Boolean = false) : PreprocStep("hist_equalize"
 class CLAHEStep(private val clipLimit: Double, private val tileGridSize: Size, initDebug: Boolean = false)
     : PreprocStep("clahe", initDebug) {
     override fun _process(ctx: FrameCtx): Mat {
-        val image = ctx.frame
+        val image = ctx.frame!!
         val clahe = Imgproc.createCLAHE(clipLimit, tileGridSize)
         val result = if (image.channels() == 1) {
             val tmp = Mat()
@@ -127,7 +127,7 @@ class CLAHEStep(private val clipLimit: Double, private val tileGridSize: Size, i
 class GaussianBlurStep(private val ksize: Int, private val sigma: Double, initDebug: Boolean = false)
     : PreprocStep("gaussian", initDebug) {
     override fun _process(ctx: FrameCtx): Mat {
-        val image = ctx.frame
+        val image = ctx.frame!!
         val result = Mat()
         Imgproc.GaussianBlur(image, result, Size(ksize.toDouble(), ksize.toDouble()), sigma)
         return result
@@ -143,7 +143,7 @@ class GaussianBlurStep(private val ksize: Int, private val sigma: Double, initDe
 class MedianBlurStep(private val kernelSize: Int, initDebug: Boolean = false)
     : PreprocStep("median", initDebug) {
     override fun _process(ctx: FrameCtx): Mat {
-        val image = ctx.frame
+        val image = ctx.frame!!
         val result = Mat()
         Imgproc.medianBlur(image, result, kernelSize)
         return result
@@ -163,7 +163,7 @@ class BilateralFilterStep(
     initDebug: Boolean = false
 ) : PreprocStep("bilateral", initDebug) {
     override fun _process(ctx: FrameCtx): Mat {
-        val image = ctx.frame
+        val image = ctx.frame!!
         val result = Mat()
         Imgproc.bilateralFilter(image, result, d, sigmaColor, sigmaSpace)
         return result
@@ -180,7 +180,7 @@ class BilateralFilterStep(
 class GuidedFilterStep(private val radius: Int, private val eps: Double, initDebug: Boolean = false)
     : PreprocStep("guided", initDebug) {
     override fun _process(ctx: FrameCtx): Mat {
-        val image = ctx.frame
+        val image = ctx.frame!!
         val result = try {
             val ximgprocClass = Class.forName("org.opencv.ximgproc.Ximgproc")
             val guidedFilterMethod = ximgprocClass.getMethod("guidedFilter", Mat::class.java, Mat::class.java, Int::class.java, Double::class.java)
@@ -208,7 +208,7 @@ class LaplacianStep(
     initDebug: Boolean = false
 ) : PreprocStep("laplacian", initDebug) {
     override fun _process(ctx: FrameCtx): Mat {
-        val image = ctx.frame
+        val image = ctx.frame!!
         val lap = Mat()
         Imgproc.Laplacian(image, lap, CvType.CV_64F, kernelSize, scale)
         val absLap = Mat()
@@ -235,7 +235,7 @@ class MorphOpenStep(
     initDebug: Boolean = false
 ) : PreprocStep("morph_open", initDebug) {
     override fun _process(ctx: FrameCtx): Mat {
-        val image = ctx.frame
+        val image = ctx.frame!!
         val kernel = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, Size(kernelSize.toDouble(), kernelSize.toDouble()))
         val result = Mat()
         Imgproc.morphologyEx(image, result, Imgproc.MORPH_OPEN, kernel, Point(-1.0, -1.0), iterations)
@@ -255,7 +255,7 @@ class MorphCloseStep(
     initDebug: Boolean = false
 ) : PreprocStep("morph_close", initDebug) {
     override fun _process(ctx: FrameCtx): Mat {
-        val image = ctx.frame
+        val image = ctx.frame!!
         val kernel = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, Size(kernelSize.toDouble(), kernelSize.toDouble()))
         val result = Mat()
         Imgproc.morphologyEx(image, result, Imgproc.MORPH_CLOSE, kernel, Point(-1.0, -1.0), iterations)
@@ -276,7 +276,7 @@ class USMSharpeningStep(
     initDebug: Boolean = false
 ) : PreprocStep("usm", initDebug) {
     override fun _process(ctx: FrameCtx): Mat {
-        val image = ctx.frame
+        val image = ctx.frame!!
         val blurred = Mat()
         Imgproc.GaussianBlur(image, blurred, Size(kernelSize.toDouble(), kernelSize.toDouble()), sigma)
         val sharpened = Mat()
@@ -302,7 +302,7 @@ class ScaleStep(
     initDebug: Boolean = false
 ) : PreprocStep("scale", initDebug) {
     override fun _process(ctx: FrameCtx): Mat {
-        val image = ctx.frame
+        val image = ctx.frame!!
         val result = Mat()
         Imgproc.resize(image, result, Size(), factorX, factorY, interp)
         return result
