@@ -49,6 +49,9 @@ public class AutoRobot {
     }
 
     public void trackBlock(Block block) {
+        if(block == null) {
+            return;
+        }
         float unitToArmMovement = 100.0f;
         float unitToWheelMovement = 0.8f;
         int armCurrentPos = -arm.hzFront.getCurrentPosition();
