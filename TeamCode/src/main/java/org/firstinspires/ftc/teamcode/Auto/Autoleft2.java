@@ -87,10 +87,12 @@ public class Autoleft2 extends LinearOpMode {
                 .lineToLinearHeading(g1Pos)//准备吸取第一个地上的
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     robot.arm.HzArmSet(arml1);
-                })
-                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     robot.arm.frontIntakeDown();
                 })
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.trackBlock(AutoRobot.getBlockAtCenter(robot.blockList));
+                })
+                .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.arm.frontIntake();
 
