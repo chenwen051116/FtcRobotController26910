@@ -46,3 +46,30 @@ val YELLOW_R9000P = HsvColorRange(
 )
 
 val COLOR_DEF_R9000P = listOf(RED_R9000P, BLUE_R9000P, YELLOW_R9000P)
+
+val RED_ARDUCAM = HsvColorRange(
+    name = "RED_ARDUCAM",
+    hsvRanges = listOf(
+        Pair(Triple(0, 110, 35), Triple(10, 255, 250)),
+        Pair(Triple( 175, 110, 50), Triple(180, 255, 250))
+    ),
+    bgr = Triple(0, 0, 255)
+)
+
+val BLUE_ARDUCAM = HsvColorRange(
+    name = "BLUE_ARDUCAM",
+    hsvRanges = listOf(
+        Pair(Triple(100, 100, 35), Triple(120, 255, 255))
+    ),
+    bgr = Triple(255, 0, 0)
+)
+
+val YELLOW_ARDUCAM = HsvColorRange(
+    name = "YELLOW_ARDUCAM",
+    hsvRanges = listOf(
+        Pair(Triple(13, 100, 40), Triple(28, 255, 255))
+    ),
+    bgr = Triple(0, 255, 255)
+)
+
+val COLOR_DEF_ARDUCAM = listOf(RED_ARDUCAM, BLUE_ARDUCAM, YELLOW_ARDUCAM)
