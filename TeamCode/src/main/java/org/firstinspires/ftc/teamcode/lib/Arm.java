@@ -131,8 +131,8 @@ public class Arm {
     public void HzArmVel(double power) {
         // 控制目标点
         frontArmPos += 10 * power;
-        if (frontArmPos > 1250) {
-            HzArmSet(1250);
+        if (frontArmPos > 1450) {
+            HzArmSet(1450);
         } else if (frontArmPos < 0) {
             HzArmSet(0);
         } else {
@@ -403,7 +403,7 @@ public class Arm {
     }
 
     public void highBar() {
-        VtArmSet(1450);//高杆arm位置
+        VtArmSet(1250);//高杆arm位置
     }
 
     public void lowBar() {

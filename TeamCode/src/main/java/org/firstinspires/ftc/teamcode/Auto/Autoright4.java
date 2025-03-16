@@ -23,8 +23,8 @@ public class Autoright4 extends LinearOpMode {
     public static double spein1x = -7.13;
     public static double spein1y = 34.705;
     public static double spein1ang = 180;
-    public static int arml1 = 500;
-    public static int arml = 500;
+    public static int arml1 = 550;
+    public static int arml = 550;
     public static double backl = 19.5;
 
     public static double spein2x = 16;
@@ -38,7 +38,7 @@ public class Autoright4 extends LinearOpMode {
     public static double b1y = 40.29;
     public static double b1ang = 180;
     public static double b2x = 45.5;
-    public static double b2y = 38.29;
+    public static double b2y = 45.29;
     public static double b2ang = 180;
 
     public static double b3x = 45.5;

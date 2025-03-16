@@ -37,6 +37,9 @@ public class Autoleft2 extends LinearOpMode {
     public static double b3y = -48.58;
     public static double b3ang = 140;
 
+    public static double b4x = 74;
+    public static double b4y = 5.6;
+    public static double b4ang = 130;
 
     public Pose2d startPos = new Pose2d(0, 0, 0);
     public Pose2d highBarPos = new Pose2d(-29.7918, 10.8298, 0);
@@ -55,7 +58,7 @@ public class Autoleft2 extends LinearOpMode {
     public Pose2d highBarPos2 = new Pose2d(b2x, b2y, Math.toRadians(b2ang));//需要调整
     public Pose2d highBarPos3 = new Pose2d(b3x, b3y, Math.toRadians(b3ang));//需要调整
 
-    public Pose2d highBarPos4 = new Pose2d(63.189, -1.11, 2.226);//需要调整
+    public Pose2d highBarPos4 = new Pose2d(b4x, b4y, Math.toRadians(b4ang));//需要调整
 
     @Override
     public void runOpMode() throws InterruptedException {
