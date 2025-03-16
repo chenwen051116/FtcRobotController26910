@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Auto
 
-import CameraHelper
 import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.util.ElapsedTime
@@ -19,6 +18,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.*
 import org.firstinspires.ftc.vision.VisionPortal
 import org.opencv.core.Mat
 import org.webcam_visual.common.FrameCtx
+import org.yourorg.yourpackage.CameraHelper
 
 class AutoRobot(//public boolean SecondDriver = false;
     var hardwareMap: HardwareMap
@@ -49,9 +49,8 @@ class AutoRobot(//public boolean SecondDriver = false;
                 OpticFlowBlockTracker(),
                 null
             )
-            val frame = Mat()
             while (!Thread.interrupted()) {
-                val frame = cameraHelper.getCurrentFrameMat()
+                val frame = cameraHelper.getLatestFrame()
                 val ctx = pipeline.updateFrame(frame!!)
                 blockList = ctx.curBlocks!!
             }
